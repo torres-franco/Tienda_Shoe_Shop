@@ -1,5 +1,6 @@
 <?php 
 
+require_once 'Direccion.php';
 require_once 'MySQL.php';
 
 /**
@@ -8,6 +9,8 @@ require_once 'MySQL.php';
 class Persona {
 	
 	protected $_idPersona;
+
+    public $direccion;
 
 
     /**
@@ -40,6 +43,11 @@ class Persona {
 
         $this->_idPersona = $idInsertado;
     }
+
+    public function setDireccion() {
+        $this->direccion = Direccion::obtenerPorIdPersona($this->_idPersona);
+    }
+
 
     /*public function obtenerDireccion() {
         $sql = "SELECT * FROM persona INNER JOIN direccion ON direccion.id_direccion = persona.id_persona WHERE id_direccion";

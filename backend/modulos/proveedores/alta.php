@@ -1,6 +1,39 @@
 <!doctype html>
 <html lang="es">
 
+<script type="text/javascript">
+    function validarDatos() {
+    /*alert(88998989898);*/
+    var divMensajeError = document.getElementById("mensajeError");
+    var razonSocial = document.getElementById("txtRazonSocial").value;
+    if (razonSocial.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "La razón social no debe estar vacia *";
+        return;
+    } else if (razonSocial.length < 2) {
+      
+        divMensajeError.innerHTML = "La razón social debe tener al menos 3 carácteres *";
+        return;
+    }
+
+    var cuit = document.getElementById("txtCuit").value;
+    if (cuit.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El CUIT no debe estar vacio *";
+        return;
+    } else if (cuit.length < 9) {
+      
+        divMensajeError.innerHTML = "El CUIT debe tener al menos 10 carácteres *";
+        return;
+    }
+    
+
+    var form = document.getElementById("frmDatos");
+    form.submit();
+    }
+
+</script>
+
 <body>
 
 <?php
@@ -19,6 +52,27 @@
       </div><!-- /.container-fluid -->
     </section>
 
+    <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+    <div class="content">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas text-white fa-exclamation-triangle"></i>
+        <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
+
+            <?php
+                unset($_SESSION['mensaje_error']);
+                endif;
+            ?>
+
+    <h5 class="text-center">
+      <div id="mensajeError" class="text-danger"></div>
+    </h5>
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -32,7 +86,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" method="POST" action="procesar/guardar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
                 <div class="card-body">
 
                   
@@ -40,14 +94,14 @@
                     <div class="col-sm-6">
                     <div class="form-group">
                       <label for="txtRazonSocial">Razon Social:</label>
-                      <input type="text" class="form-control" name="txtRazonSocial">
+                      <input type="text" class="form-control" name="txtRazonSocial" id="txtRazonSocial">
                     </div>
                     </div>
                   
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtCuit">CUIT:</label>
-                        <input type="text" class="form-control" name="txtCuit">
+                        <input type="text" class="form-control" name="txtCuit" id="txtCuit">
                       </div>
                     </div>
                   </div>
@@ -57,10 +111,9 @@
 
                 <div class="card-body">
                 
-                      <a href="listadoProveedor.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="listado.php" class="btn btn-secondary" role="button">Cancelar</a>
                   
-                  
-                      <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatos();" value="Guardar">
                    
                 </div>
               </form>

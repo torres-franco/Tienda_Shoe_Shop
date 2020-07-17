@@ -1,7 +1,6 @@
 <?php
 
 require_once 'MySQL.php';
-require_once 'Persona.php';
 
 /**
  * 
@@ -12,11 +11,9 @@ class Direccion {
 	private $_calle;
 	private $_altura;
 	private $_manzana;
-	private $_torre;
 	private $_piso;
-	private $_numero_puerta;
-	private $_sector;
-	private $_referencia;
+    private $_idBarrio;
+    private $_idPersona;
 
 
     /**
@@ -199,45 +196,55 @@ class Direccion {
         return $this;
     }
 
-    public function obtenerTodo() {
-        $sql = "SELECT direccion.id_direccion, direccion.calle, direccion.altura, direccion.manzana, direccion.torre, direccion.piso, direccion.numero_puerta, direccion.sector, direccion.referencia, persona.id_persona FROM direccion INNER JOIN persona ON direccion.id_persona = persona.id_persona";
+    /**
+     * @return mixed
+     */
+    public function getIdBarrio()
+    {
+        return $this->_idBarrio;
+    }
+
+    /**
+     * @param mixed $_idBarrio
+     *
+     * @return self
+     */
+    public function setIdBarrio($_idBarrio)
+    {
+        $this->_idBarrio = $_idBarrio;
+
+        return $this;
+    }
+
+    public static function obtenerPorIdPersona($idPersona) {
+        $sql = "SELECT * FROM direccion WHERE id_persona = " . $idPersona;
 
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);
         $mysql->desconectar();
 
-        $listado = self::_generarListadoDireccion($datos);
+        $data = $datos->fetch_assoc();
+        $direccion = null;
 
-    return $listado;
-
-    }
-
-    private function _generarListadoDireccion($datos) {
-        $listado = array();
-        while ($registro = $datos->fetch_assoc()) {
+        if ($datos->num_rows > 0) {
             $direccion = new Direccion();
-            $direccion->_idDireccion = $registro['id_direccion'];
-            $direccion->_idPersona = $registro['id_persona'];
-            $direccion->_calle = $registro['calle'];
-            $direccion->_altura = $registro['altura'];
-            $direccion->_manzana = $registro['manzana'];
-            $direccion->_torre = $registro['torre'];
-            $direccion->_piso = $registro['piso'];
-            $direccion->_numero_puerta = $registro['numero_puerta'];
-            $direccion->_sector = $registro['sector'];
-            $direccion->_referencia = $registro['referencia'];
-            
-            $listado[] = $direccion;
-
+            $direccion->_idDireccion = $data['id_direccion'];
+            $direccion->_calle = $data['calle'];
+            $direccion->_altura = $data['altura'];
+            $direccion->_piso = $data['piso'];
+            $direccion->_manzana = $data['manzana'];
+            $direccion->_idBarrio = $data['id_barrio'];
+            $direccion->_idPersona = $data['id_persona'];
         }
 
-        return $listado;
+        return $direccion;
     }
 
-
     public function guardar() {
-        parent::guardar();
-        $sql = "INSERT INTO direccion (id_direccion, id_persona, calle, altura, manzana, torre, piso, numero_puerta, sector, referencia) VALUES (NULL, $this->_idPersona, '$this->_calle', '$this->_altura', '$this->_manzana', '$this->_torre', $this->_piso, $this->_numero_puerta, '$this->_sector', '$this->_referencia')";
+
+
+        $sql = "INSERT INTO direccion (id_direccion, calle, altura, piso, manzana, id_barrio, id_persona) "
+            . "VALUES (NULL, '$this->_calle','$this->_altura', '$this->_piso','$this->_manzana', $this->_idBarrio, $this->_idPersona)";
 
         $mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
@@ -245,6 +252,43 @@ class Direccion {
         $this->_idDireccion = $idInsertado;
     }
 
+    public function actualizar(){
+
+        $sql = "UPDATE direccion SET calle = '$this->_calle', altura = '$this->_altura', piso = '$this->_piso', manzana = '$this->_manzana', id_barrio = $this->_idBarrio"
+        ." WHERE id_direccion = $this->_idDireccion";
+
+        //echo $sql;
+        //exit;
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+
+    }
+
+
+    public function __toString(){
+        return $this->_calle . " " . $this->_altura;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getIdPersona()
+    {
+        return $this->_idPersona;
+    }
+
+    /**
+     * @param mixed $_idPersona
+     *
+     * @return self
+     */
+    public function setIdPersona($_idPersona)
+    {
+        $this->_idPersona = $_idPersona;
+
+        return $this;
+    }
 }
 
 ?>

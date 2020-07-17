@@ -2,7 +2,7 @@
 
 require_once '../../class/Direccion.php';
 
-$listadoDirecciones= Direccion::obtenerTodo();
+$listadoDirecciones = Direccion::obtenerTodo();
 
 
 

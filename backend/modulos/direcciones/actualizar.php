@@ -1,10 +1,19 @@
 <?php
 
-require_once '../../class/Cliente.php';
+require_once '../../class/Direccion.php';
+require_once '../../class/Barrio.php';
+require_once '../../class/Ciudad.php';
+require_once '../../class/Provincia.php';
 
-$id = $_GET['id'];
 
-$cliente = Cliente::obtenerPorId($id);
+$idPersona = $_GET['idPersona'];
+$idCliente = $_GET['idCliente'];
+
+$direccion = direccion::obtenerPorIdPersona($idPersona);
+
+$listadoBarrio = Barrio::obtenerTodos();
+$listadoCiudad = Ciudad::obtenerTodos();
+$listadoProvincia = Provincia::obtenerTodos();
 
 ?>
 
@@ -24,7 +33,7 @@ $cliente = Cliente::obtenerPorId($id);
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Actualizar Cliente</h1>
+            <h1 class="m-0 text-dark">Actualizar dirección del cliente</h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -45,64 +54,152 @@ $cliente = Cliente::obtenerPorId($id);
               <!-- form start -->
               <form name="frmDatos" method="POST" action="procesar/modificar.php">
                 <div class="card-body">
+
+                  <div class="row">
+                    <div class="col-md-4 mb-3">
+                      <div class="form-group">
+                        <label for="txtProvincia">Provincia:</label>
+                          <select name="cboProvincia" class="form-control">
+                              <option value="0">Seleccionar</option>
+
+                              <?php foreach ($listadoProvincia as $provincia):
+                                $selected = '';
+                                
+                                if ($provincia->getIdProvincia() == $provincia->getIdProvincia()) {
+                                  
+                                    $selected = "SELECTED";
+                                
+                                }
+                              ?>
+                            
+                              <option value="<?php echo $provincia->getIdProvincia(); ?>"
+                                <?php echo $selected; ?>>
+                                <?php echo $provincia; ?>
+                              </option>
+
+                              <?php endforeach ?>
+
+                          </select>
+                      </div>
+                    </div>
                   
-                  <div class="#">
-                    <label for="txtId"></label>
-                    <input type="hidden" class="form-control" name="txtId" value="<?php echo $cliente->getIdCliente(); ?>">
+                    <div class="col-md-4 mb-3">
+                      <div class="form-group">
+                        <label for="txtCiudad">Ciudad:</label>
+                          <select name="cboCiudad" class="form-control">
+                              <option value="0">Seleccionar</option>
+
+                              <?php foreach ($listadoCiudad as $ciudad):
+                                $selected = '';
+                                
+                                if ($ciudad->getIdCiudad() == $ciudad->getIdCiudad()) {
+                                  
+                                    $selected = "SELECTED";
+                                
+                                }
+                              ?>
+                            
+                              <option value="<?php echo $ciudad->getIdCiudad(); ?>"
+                                <?php echo $selected; ?>>
+                                <?php echo $ciudad; ?>
+                              </option>
+
+                              <?php endforeach ?>
+
+                          </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <div class="form-group">
+                        <label for="txtBarrio">Barrio:</label>
+                          <select name="cboBarrio" class="form-control">
+                              <option value="0">Seleccionar</option>
+
+                              <?php foreach ($listadoBarrio as $barrio):
+                                $selected = '';
+                                
+                                if ($direccion->getIdBarrio() == $barrio->getIdBarrio()) {
+                                  
+                                    $selected = "SELECTED";
+                                
+                                }
+                              ?>
+                            
+                              <option value="<?php echo $barrio->getIdBarrio(); ?>"
+                                <?php echo $selected; ?>>
+                                <?php echo $barrio; ?>
+                              </option>
+
+                              <?php endforeach ?>
+
+                          </select>
+                      </div>
+                    </div>
+
                   </div>
+
+                  <hr/>
                   
+                  <div class="row">
+
+                    <div>
+                      <label for="txtIdPersona"></label>
+                      <input type="hidden" name="txtIdPersona" value="<?php echo $idPersona ?>">
+                    </div>
+                    
+                    <div>
+                      <label for="txtIdDireccion"></label>
+                      <input type="hidden" name="txtIdDireccion" value="<?php /*echo*/ $idDireccion ?>">
+                    </div>
+
+                    <div>
+                      <label for="txtIdCliente"></label>
+                      <input type="hidden" name="txtIdCliente" value="<?php echo $idCliente ?>">
+                    </div>
+
+                    <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="txtCalle">Calle:</label>
+                      <input type="text" class="form-control" name="txtCalle" value="<?php echo $direccion->getCalle(); ?>">
+                    </div>
+                    </div>
+                  
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="txtAltura">Altura:</label>
+                        <input type="text" class="form-control" name="txtAltura" value="<?php echo $direccion->getAltura(); ?>">
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="row">
                     <div class="col-sm-6">
                     <div class="form-group">
-                      <label for="txtNombre">Nombre:</label>
-                      <input type="text" class="form-control" name="txtNombre" value="<?php echo $cliente->getNombre(); ?>">
+                      <label for="txtPiso">Piso:</label>
+                      <input type="text" class="form-control" name="txtPiso" value="<?php echo $direccion->getPiso(); ?>">
                     </div>
                     </div>
                   
                     <div class="col-sm-6">
                       <div class="form-group">
-                        <label for="txtApellido">Apellido:</label>
-                        <input type="text" class="form-control" name="txtApellido" value="<?php echo $cliente->getApellido(); ?>">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label for="txtDni">Número de DNI:</label>
-                        <input type="number" class="form-control" name="txtDni" value="<?php echo $cliente->getDni(); ?>">
+                        <label for="txtManzana">Manzana:</label>
+                        <input type="text" class="form-control" name="txtManzana" value="<?php $direccion->getAltura(); ?>">
                       </div>
                     </div>
 
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label for="txtFechaNacimiento">Fecha de Nacimiento:</label>
-                        <input type="date" class="form-control" name="txtFechaNacimiento" value="<?php echo $cliente->getFechaNacimiento(); ?>">
-                      </div>
-                    </div>
+                    
                   </div>
 
-                  <!--<div class="form-group">
-                    <label>Género:</label>
-                    <input type="txt" class="form-control" name="txtGenero" value="<?php echo $cliente->getGenero(); ?>">
-                  </div>-->
 
-                  <div class="form-group">
-                    <label>Género</label>
-                    <select class="form-control" name="txtGenero">
-                      <option><?php echo $cliente->getGenero(); ?></option>
-                      <option for="txtGenero">Masculino</option>
-                      <option for="txtGenero">Femenino</option>
-                    </select>
-                  </div>
+
 
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-body">
                 
-                      <a href="listadoCliente.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="../clientes/listado.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
                   
                   
                       <button type="submit" class="btn btn-primary float-right">Actualizar <i class="fas fa-sync"></i></button>

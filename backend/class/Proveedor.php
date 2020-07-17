@@ -141,11 +141,11 @@ class Proveedor extends Persona {
     public function actualizar() {
         
         $sql = "UPDATE proveedor SET razon_social = '$this->_razon_social', cuit = '$this->_cuit' WHERE id_proveedor = $this->_idProveedor";
-    
+        
+
         $mysql = new MySQL();
         $mysql->actualizar($sql);
 
-        //echo $sql;
 
     }
 

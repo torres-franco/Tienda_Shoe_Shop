@@ -10,6 +10,12 @@ class Barrio {
 	private $_idBarrio;
 	private $_descripcion;
 
+    private $_idCiudad;
+
+    public function __construct($descripcion) {
+        $this->_descripcion = $descripcion;
+    }
+
 	 /**
      * @return mixed
      */
@@ -50,19 +56,68 @@ class Barrio {
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getIdCiudad()
+    {
+        return $this->_idCiudad;
+    }
+
+    /**
+     * @param mixed $_idCiudad
+     *
+     * @return self
+     */
+    public function setIdCiudad($_idCiudad)
+    {
+        $this->_idCiudad = $_idCiudad;
+
+        return $this;
+    }
+
+
+    public static function obtenerTodos() {
+        $sql = "SELECT * FROM barrio";
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListado($datos);
+        return $listado;
+    }
+
+    private function _generarListado($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $barrio = new Barrio($registro['descripcion']);
+            $barrio->_idBarrio = $registro['id_barrio'];
+            $barrio->_idCiudad = $registro['id_ciudad'];
+            $listado[] = $barrio;
+        }
+        return $listado;
+    }
+
+    
+
+    public function __toString() {
+        return $this->_descripcion;
+    }  
+
 
     public function guardar() {
-        $sql = "INSERT INTO Barrio (id_barrio, descripcion) VALUES (NULL, $this->_descripcion)";
 
-        //echo $sql;
+        $sql = "INSERT INTO barrio (id_barrio, id_ciudad, descripcion) VALUES (NULL, $this->_idCiudad, '$this->_descripcion')";
+
+
         $mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
-        $this->_idPersona = $idInsertado;
+        $this->_idBarrio = $idInsertado;
     }
-     
 
-   
+
 }
 
 

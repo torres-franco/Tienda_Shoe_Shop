@@ -2,36 +2,32 @@
 
 require_once "../../../class/Direccion.php";
 
+$idPersona = $_POST['txtIdPersona'];
+$idCliente = $_POST['txtIdCliente'];
+$barrio = $_POST['cboBarrio'];
+$modulo = $_POST['txtModulo'];
 $calle = $_POST['txtCalle'];
 $altura = $_POST['txtAltura'];
-$manzana = $_POST['txtManzana'];
-$torre = $_POST['txtTorre'];
 $piso = $_POST['txtPiso'];
-$numeroPuerta = $_POST['txtNumeroPuerta'];
-$sector = $_POST['sector'];
-$referencia = $_POST['referencia'];
+$manzana = $_POST['txtManzana'];
 
 
-if (empty(trim($calle))) {
-	echo "ERROR NOMBRE VACIO";
-	exit;
-}
+$provincia = $_POST['cboProvincia'];
 
 
-$direccion = new Direccion ();
+$direccion = new Direccion();
+$direccion->setIdBarrio($barrio);
 $direccion->setCalle($calle);
 $direccion->setAltura($altura);
-$direccion->setTorre($torre);
 $direccion->setPiso($piso);
-$direccion->setNumeroPuerta($numeroPuerta);
-$direccion->setSector($sector);
-$direccion->setReferencia($referencia);
+$direccion->setManzana($manzana);
+$direccion->setIdPersona($idPersona);
 
 $direccion->guardar();
 
-header("location: ../listadoDireccion.php");
+header("location: /proyecto_shoe_shop/backend/modulos/$modulo/detalle.php?id=$idCliente");
 
-//highlight_string(var_export($cliente, true));
+//highlight_string(var_export($direccion, true));
 
 
 

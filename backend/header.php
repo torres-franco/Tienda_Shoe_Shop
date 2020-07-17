@@ -1,3 +1,17 @@
+<?php
+
+require_once "class/Usuario.php";
+
+session_start();
+
+if (!isset($_SESSION['usuario'])) {
+  header('location: /proyecto_shoe_shop/backend/index.php');
+}
+
+$usuario = $_SESSION['usuario'];
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,9 +52,9 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="/proyecto_shoe_shop/backend/modulos/dashboard/dashboard.php" class="nav-link">Inicio</a>
-      </li>
+      <!--<li class="nav-item d-none d-sm-inline-block">
+        <a href="/proyecto_shoe_shop/backend/modulos/dashboard/listado.php" class="nav-link">Inicio</a>
+      </li>-->
     </ul>
 
     <!-- Right navbar links -->
@@ -60,7 +74,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a href="" class="dropdown-item dropdown-footer"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+        <a href="/proyecto_shoe_shop/backend/logout.php" class="dropdown-item dropdown-footer"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
       </li>
     </ul>
   </nav>
@@ -81,8 +95,9 @@
         <div class="image">
           <img src="../../static/dist/img/user.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
-        <div class="info">
-          <a href="#" class="d-block">Torres Franco</a>
+        <div class="info d-block">
+          <h5 class="m-0 text-light"> Hola, <?php echo $usuario; ?></h5>
+          
         </div>
       </div>
 
@@ -91,16 +106,18 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item active">
-            <a href="/proyecto_shoe_shop/backend/modulos/dashboard/dashboard.php" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Panel de Control
-              </p>
-            </a>
-            
-          </li>
+          
+          <?php foreach ($usuario->perfil->getModulos() as $modulo): ?>
           <li class="nav-item">
+            <a href="/proyecto_shoe_shop/backend/modulos/<?php echo $modulo->getDirectorio() ?> /listado.php" class="nav-link">
+              <i class="nav-icon fab fa-codepen"></i>
+              <p>
+              <?php echo $modulo;  ?>
+              </p>
+            </a>            
+          </li>
+          <?php endforeach ?>
+          <!--<li class="nav-item">
             <a href="/proyecto_shoe_shop/backend/modulos/clientes/listadoCliente.php" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
@@ -286,9 +303,9 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li>-->
 
-          <li class="nav-item has-treeview">
+          <!--<li class="nav-item has-treeview">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-file-signature"></i>
               <p>
@@ -322,7 +339,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li>-->
           
         </ul>
       </nav>

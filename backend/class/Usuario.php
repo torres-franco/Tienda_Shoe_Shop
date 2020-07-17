@@ -1,5 +1,6 @@
 <?php 
 
+require_once 'Perfil.php';
 require_once 'PersonaFisica.php';
 require_once 'MySQL.php';
 
@@ -10,6 +11,10 @@ class Usuario extends PersonaFisica {
 	private $_user;
 	private $_clave;
 	private $_UltimaConexion;
+    private $_idPerfil;
+    private $_estaLogueado;
+
+    public $perfil;
 
     /**
      * @return mixed
@@ -100,7 +105,7 @@ class Usuario extends PersonaFisica {
         $datos = $mysql->consultar($sql);
         $mysql->desconectar();
 
-       //$encontrado = self::_generarListadoId($datos);
+        //$usuario = self::_generarListadoUsuario($datos);
 
         $registro = $datos->fetch_assoc();
 
@@ -111,8 +116,8 @@ class Usuario extends PersonaFisica {
         $usuario = new Usuario($registro['nombre'], $registro['apellido']);
         $usuario->_idUsuario = $registro['id_usuario'];
         $usuario->_idPersonaFisica = $registro['id_persona_fisica'];
-        $usuario->_dni = $registro['dni'];
         $usuario->_user = $registro['user'];
+        $usuario->_dni = $registro['dni'];
 
 
         return $usuario;
@@ -162,7 +167,7 @@ class Usuario extends PersonaFisica {
 
     public function guardar() {
         parent::guardar();
-        $sql = "INSERT INTO usuario (id_usuario,id_persona_fisica, user, clave) VALUES (NULL, $this->_idPersonaFisica, '$this->_user', '$this->_clave')";
+        $sql = "INSERT INTO usuario (id_usuario,id_persona_fisica,id_perfil,user, clave) VALUES (NULL, $this->_idPersonaFisica,$this->_idPerfil, '$this->_user', '$this->_clave')";
 
         $mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
@@ -181,7 +186,71 @@ class Usuario extends PersonaFisica {
         //echo $sql;
 
     }
+
+    public static function login($user, $clave) {
+        $sql = "SELECT * FROM usuario "
+             . "INNER JOIN personafisica on personafisica.id_persona_fisica = usuario.id_persona_fisica "
+             . "WHERE user = '$user' "
+             . "AND clave = '$clave' "
+             . "AND personafisica.estado = 1";
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        if ($datos->num_rows > 0) {
+            $registro = $datos->fetch_assoc();
+            $usuario = new Usuario($registro['nombre'], $registro['apellido']);
+            $usuario->_idUsuario = $registro['id_usuario'];
+            $usuario->_idPersona = $registro['id_persona'];
+            $usuario->_idPersonaFisica = $registro['id_persona_fisica'];
+            $usuario->_user = $registro['user'];
+            $usuario->_dni = $registro['dni'];
+            $usuario->_idPerfil = $registro['id_perfil'];
+            $usuario->_UltimaConexion = $registro['ultima_conexion'];
+            $usuario->_estaLogueado = true;
+
+            $usuario->perfil = Perfil::obtenerPorId($usuario->_idPerfil);
+            $usuario->setDireccion();
+        } else {
+            $usuario = new Usuario('', '');
+            $usuario->_estaLogueado = false;
+        }
+
+        return $usuario;
+    }
+
+    public function __toString() {
+        return $this->_user;
+    }
     
+
+    /**
+     * @return mixed
+     */
+    public function getIdPerfil()
+    {
+        return $this->_idPerfil;
+    }
+
+    /**
+     * @param mixed $_idPerfil
+     *
+     * @return self
+     */
+    public function setIdPerfil($_idPerfil)
+    {
+        $this->_idPerfil = $_idPerfil;
+
+        return $this;
+    }
+
+   
+    public function EstaLogueado()
+    {
+        return $this->_estaLogueado;
+    }
+   
 }
 
 

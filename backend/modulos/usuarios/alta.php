@@ -1,7 +1,67 @@
 <!doctype html>
 <html lang="es">
 
+<script type="text/javascript">
+    function validarDatosUsuario() {
+    /*alert(88998989898);*/
+    var divMensajeError = document.getElementById("mensajeError");
+    
+    var nombre = document.getElementById("txtNombre").value;
+    if (nombre.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El nombre no debe estar vacio *";
+        return;
+    } else if (nombre.length < 3) {
+      
+        divMensajeError.innerHTML = "El nombre debe tener al menos 3 carácteres *";
+        return;
+    }
+
+    var apellido = document.getElementById("txtApellido").value;
+    if (apellido.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El apellido no debe estar vacio *";
+        return;
+    } else if (apellido.length < 3) {
+      
+        divMensajeError.innerHTML = "El apellido debe tener al menos 3 carácteres *";
+        return;
+    }
+
+
+    var user = document.getElementById("txtUser").value;
+    if (user.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El usario no debe estar vacio *";
+        return;
+    } else if (user.length < 6) {
+      
+        divMensajeError.innerHTML = "El usario debe tener al menos 6 carácteres *";
+        return;
+    }
+
+    var clave = document.getElementById("txtClave").value;
+    if (clave.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "La clave no debe estar vacia *";
+        return;
+    } else if (clave.length < 7) {
+      
+        divMensajeError.innerHTML = "La clave debe tener al menos 7 carácteres *";
+        return;
+    }
+
+
+    var form = document.getElementById("frmDatos");
+    form.submit();
+    }
+
+
+</script>
+
 <body>
+
+
 
 <?php
   include('../../header.php');
@@ -19,6 +79,27 @@
       </div><!-- /.container-fluid -->
     </section>
 
+    <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+    <div class="content">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas text-white fa-exclamation-triangle"></i>
+        <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
+
+            <?php
+                unset($_SESSION['mensaje_error']);
+                endif;
+            ?>
+
+    <h5 class="text-center">
+      <div id="mensajeError" class="text-danger"></div>
+    </h5>
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -32,7 +113,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" method="POST" action="procesar/guardar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
                 <div class="card-body">
 
                   
@@ -40,40 +121,37 @@
                     <div class="col-sm-6">
                     <div class="form-group">
                       <label for="txtNombre">Nombre:</label>
-                      <input type="text" class="form-control" name="txtNombre">
+                      <input type="text" class="form-control" name="txtNombre" id="txtNombre">
                     </div>
                     </div>
                   
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtApellido">Apellido:</label>
-                        <input type="text" class="form-control" name="txtApellido">
+                        <input type="text" class="form-control" name="txtApellido" id="txtApellido">
                       </div>
                     </div>
                   </div>
 
                   <div class="row">
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <div class="form-group">
-                          <label for="txtDni">DNI:</label>
-                          <input type="number" class="form-control" name="txtDni">
-                        </div>
-                      </div>
-                    </div>
-
+                    
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtUser">Usuario:</label>
-                        <input type="text" class="form-control" name="txtUser">
+                        <input type="text" class="form-control" name="txtUser" id="txtUser">
                       </div>
                     </div>
+
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="txtClave">Clave:</label>
+                        <input type="password" class="form-control" name="txtClave" id="txtClave">
+                      </div>
+                    </div>
+
                   </div>
 
-                  <div class="form-group">
-                        <label for="txtClave">Clave:</label>
-                        <input type="password" class="form-control" name="txtClave">
-                      </div>
+                  
 
 
                 </div>
@@ -81,10 +159,10 @@
 
                 <div class="card-body">
                 
-                      <a href="listadoUsuario.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="listado.php" class="btn btn-secondary" role="button"> Cancelar</a>
                   
                   
-                      <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatosUsuario();" value="Guardar">
                    
                 </div>
               </form>

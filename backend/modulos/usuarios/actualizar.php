@@ -11,6 +11,51 @@ $usuario = Usuario::obtenerPorId($id);
 <!doctype html>
 <html lang="es">
 
+<script type="text/javascript">
+    function validarDatos() {
+    /*alert(88998989898);*/
+    var divMensajeError = document.getElementById("mensajeError");
+    var nombre = document.getElementById("txtNombre").value;
+    if (nombre.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El nombre no debe estar vacio *";
+        return;
+    } else if (nombre.length < 3) {
+      
+        divMensajeError.innerHTML = "El nombre debe tener al menos 3 carácteres *";
+        return;
+    }
+
+    var apellido = document.getElementById("txtApellido").value;
+    if (apellido.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El apellido no debe estar vacio *";
+        return;
+    } else if (apellido.length < 3) {
+      
+        divMensajeError.innerHTML = "El apellido debe tener al menos 3 carácteres *";
+        return;
+    }
+
+
+    var user = document.getElementById("txtUser").value;
+    if (user.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El usario no debe estar vacio *";
+        return;
+    } else if (user.length < 6) {
+      
+        divMensajeError.innerHTML = "El usario debe tener al menos 6 carácteres *";
+        return;
+    }
+
+    var form = document.getElementById("frmDatos");
+    form.submit();
+    }
+
+
+</script>
+
 <body>
 
 <?php
@@ -29,6 +74,27 @@ $usuario = Usuario::obtenerPorId($id);
       </div><!-- /.container-fluid -->
     </section>
 
+    <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+    <div class="content">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas text-white fa-exclamation-triangle"></i>
+        <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
+
+            <?php
+                unset($_SESSION['mensaje_error']);
+                endif;
+            ?>
+
+    <h5 class="text-center">
+      <div id="mensajeError" class="text-danger"></div>
+    </h5>
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -42,7 +108,7 @@ $usuario = Usuario::obtenerPorId($id);
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" method="POST" action="procesar/modificar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/modificar.php">
                 <div class="card-body">
 
                   <div class="#">
@@ -54,35 +120,27 @@ $usuario = Usuario::obtenerPorId($id);
                     <div class="col-sm-6">
                     <div class="form-group">
                       <label for="txtNombre">Nombre:</label>
-                      <input type="text" class="form-control" name="txtNombre" value="<?php echo $usuario->getNombre(); ?>">
+                      <input type="text" class="form-control" name="txtNombre" value="<?php echo $usuario->getNombre(); ?>" id="txtNombre">
                     </div>
                     </div>
                   
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtApellido">Apellido:</label>
-                        <input type="text" class="form-control" name="txtApellido" value="<?php echo $usuario->getApellido(); ?>">
+                        <input type="text" class="form-control" name="txtApellido" value="<?php echo $usuario->getApellido(); ?>" id="txtApellido">
                       </div>
                     </div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <div class="form-group">
-                          <label for="txtDni">DNI:</label>
-                          <input type="number" class="form-control" name="txtDni" value="<?php echo $usuario->getDni(); ?>">
-                        </div>
-                      </div>
-                    </div>
+                
 
-                    <div class="col-sm-6">
+                   
                       <div class="form-group">
                         <label for="txtUser">Usuario:</label>
-                        <input type="text" class="form-control" name="txtUser" value="<?php echo $usuario->getUser(); ?>">
+                        <input type="text" class="form-control" name="txtUser" value="<?php echo $usuario->getUser(); ?>" id="txtUser">
                       </div>
-                    </div>
-                  </div>
+                    
+                  
 
 
                 </div>
@@ -90,10 +148,10 @@ $usuario = Usuario::obtenerPorId($id);
 
                 <div class="card-body">
                 
-                      <a href="listadoUsuario.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="listado.php" class="btn btn-secondary" role="button"> Cancelar</a>
                   
                   
-                      <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatos();" value="Guardar">
                    
                 </div>
               </form>

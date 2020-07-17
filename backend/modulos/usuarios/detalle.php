@@ -28,7 +28,7 @@ $usuario = Usuario::obtenerPorId($id);
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right pt-2">
-              <li class="breadcrumb-item"><a href="listadoUsuario.php"><i class="fas fa-arrow-left pt-2"></i> Volver</a></li>   
+              <li class="breadcrumb-item"><a href="listado.php"><i class="fas fa-arrow-left pt-2"></i> Volver</a></li>   
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -49,7 +49,7 @@ $usuario = Usuario::obtenerPorId($id);
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
-                    <th>DNI</th>
+                    <!--<th>DNI</th>-->
                     <th>Usuario</th>
                     <th>Estado</th>
                   </tr>
@@ -60,7 +60,7 @@ $usuario = Usuario::obtenerPorId($id);
                     <td> <?php echo $usuario->getIdUsuario(); ?> </td>
                     <td> <?php echo $usuario->getNombre(); ?> </td>
                     <td> <?php echo $usuario->getApellido(); ?> </td>
-                    <td> <?php echo $usuario->getDni(); ?> </td>
+                    <!--<td> <?php echo $usuario->getDni(); ?> </td>-->
                     <td> <?php echo $usuario->getUser(); ?> </td>
                     <td> <?php echo $usuario->getEstado(); ?> </td>
                   </tr>

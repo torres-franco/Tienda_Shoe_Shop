@@ -2,16 +2,18 @@
 
 require_once "../../../class/Direccion.php";
 
-$id = $_POST['txtId'];
-$nombre = $_POST['txtNombre'];
-$apellido = $_POST['txtApellido'];
-$dni = $_POST['txtDni'];
-$fechaNacimiento = $_POST['txtFechaNacimiento'];
-$genero = $_POST['txtGenero'];
+$idPersona = $_POST['txtIdPersona'];
+$idDireccion = $_POST['txtIdDireccion'];
+$idCliente = $_POST['txtIdCliente'];
+$barrio = $_POST['cboBarrio'];
+$calle = $_POST['txtCalle'];
+$altura = $_POST['txtAltura'];
+$piso = $_POST['txtPiso'];
+$manzana = $_POST['txtManzana'];
 
 
-if (empty(trim($nombre))) {
-	echo "ERROR NOMBRE VACIO";
+if (empty(trim($calle))) {
+	echo "ERROR, EL CAMPO CALLE ESTÁ VACIO";
 	exit;
 }
 
@@ -25,16 +27,19 @@ if (empty(trim($nombre))) {
 <body>
 <?php
 
-$cliente = Cliente::obtenerPorId($id);
-$cliente->setNombre($nombre);
-$cliente->setApellido($apellido);
-$cliente->setDni($dni);
-$cliente->setFechaNacimiento($fechaNacimiento);
-$cliente->setGenero($genero);
+$direccion = Direccion::obtenerPorIdPersona($idPersona);
+$direccion->setIdBarrio($barrio);
+$direccion->setCalle($calle);
+$direccion->setAltura($altura);
+$direccion->setPiso($piso);
+$direccion->setManzana($manzana);
 
-$cliente->actualizar();
+$direccion->actualizar($idDireccion);
 
-header("location: ../listadoDireccion.php");
+//highlight_string(var_export($direccion, true));
+//exit;
+
+header("location: /proyecto_shoe_shop/backend/modulos/clientes/detalle.php?id=$idCliente");
 
 ?>
 

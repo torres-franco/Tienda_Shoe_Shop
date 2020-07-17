@@ -28,7 +28,7 @@ $proveedor = Proveedor::obtenerPorId($id);
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right pt-2">
-              <li class="breadcrumb-item"><a href="listadoProveedor.php"><i class="fas fa-arrow-left pt-2"></i> Volver</a></li>   
+              <li class="breadcrumb-item"><a href="listado.php"><i class="fas fa-arrow-left pt-2"></i> Volver</a></li>   
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->

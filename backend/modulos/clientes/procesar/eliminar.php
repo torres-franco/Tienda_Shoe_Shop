@@ -13,6 +13,6 @@ $cliente = Cliente::obtenerPorId($id);
 
 $cliente->eliminar();
 
-header("location: ../listadoCliente.php?mensaje=3");
+header("location: ../listado.php?mensaje=3");
 
 ?>
