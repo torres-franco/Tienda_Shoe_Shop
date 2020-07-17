@@ -28,7 +28,10 @@ class Cliente extends PersonaFisica {
         $datos = $mysql->consultar($sql);
         $mysql->desconectar();
 
-       //$encontrado = self::_generarListadoId($datos);
+        $data = $datos->fetch_assoc();
+        $cliente = self::_generarCliente($data);
+        return $cliente;
+
 
         $registro = $datos->fetch_assoc();
 
@@ -38,11 +41,11 @@ class Cliente extends PersonaFisica {
 
         $cliente = new Cliente($registro['nombre'], $registro['apellido']);   
         $cliente->_idCliente = $registro['id_cliente'];
+        $cliente->_idPersona = $registro['id_persona'];
         $cliente->_idPersonaFisica = $registro['id_persona_fisica'];
         $cliente->_dni = $registro['dni'];
         $cliente->_fechaNacimiento = $registro['fecha_nacimiento'];
         $cliente->_genero = $registro['genero'];
-
 
         return $cliente;
 
@@ -64,6 +67,19 @@ class Cliente extends PersonaFisica {
 
     }
 
+    private function _generarCliente($data) {
+        $cliente = new Cliente($data['nombre'], $data['apellido']);
+        $cliente->_idCliente = $data['id_cliente'];
+        $cliente->_idPersona = $data['id_persona'];
+        $cliente->_idPersonaFisica = $data['id_persona_fisica'];
+        $cliente->_dni = $data['dni'];
+        $cliente->_fechaNacimiento = $data['fecha_nacimiento'];
+        $cliente->_genero = $data['genero'];
+        $cliente->setDireccion();
+        
+        return $cliente;
+    }
+
     private function _generarListadoCliente($datos) {
     	$listado = array();
 		while ($registro = $datos->fetch_assoc()) {
@@ -73,10 +89,12 @@ class Cliente extends PersonaFisica {
 			$cliente->_dni = $registro['dni'];
             $cliente->_fechaNacimiento = $registro['fecha_nacimiento'];
             $cliente->_genero= $registro['genero'];
+
 			$listado[] = $cliente;
 		}
 		return $listado;
     }
+
 
     public function guardar() {
         parent::guardar();
@@ -88,7 +106,15 @@ class Cliente extends PersonaFisica {
         $this->_idCliente = $idInsertado;
     }
 
-   
+    public function actualizar() {
+        parent::actualizar();
+
+        $sql = "UPDATE cliente SET id_persona_fisica = $this->_idPersonaFisica WHERE id_cliente = $this->_idCliente";
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+
+
+    }  
     
 }
 
