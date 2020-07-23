@@ -78,12 +78,64 @@ class Provincia {
     }
 
 
-    
+    public static function obtenerPorId($id) {
+
+        $sql = "SELECT * FROM provincia WHERE id_provincia =" . $id;
+
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+       //$encontrado = self::_generarListadoId($datos);
+
+        $registro = $datos->fetch_assoc();
+
+        //highlight_string(var_export($registro, true));
+
+        //exit();
+
+        $provincia = new Provincia($registro['nombre']);
+        $provincia->_idProvincia = $registro['id_provincia'];
+
+        return $provincia;
+
+
+    }
+
 
     public function __toString() {
         return $this->_nombre;
     }   
 
+
+    public function guardar() {
+
+        $sql = "INSERT INTO provincia (id_provincia, nombre) VALUES (NULL, '$this->_nombre')";
+
+
+        $mysql = new MySQL();
+        $idInsertado = $mysql->insertar($sql);
+
+        $this->_idProvincia = $idInsertado;
+    }
+
+    public function actualizar() {
+        
+        $sql = "UPDATE provincia SET nombre = '$this->_nombre' WHERE id_provincia = $this->_idProvincia";
+        
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+
+
+    }
+
+    public function eliminar(){
+        $sql = "DELETE FROM provincia WHERE id_provincia = $this->_idProvincia";
+        $mysql = new MySQL();
+        $mysql->eliminar($sql);
+    }
 
 }
 

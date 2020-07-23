@@ -1,6 +1,7 @@
 <?php
 
 require_once 'MySQL.php';
+require_once 'Provincia.php';
 
 /**
  * 
@@ -235,10 +236,12 @@ class Direccion {
             $direccion->_manzana = $data['manzana'];
             $direccion->_idBarrio = $data['id_barrio'];
             $direccion->_idPersona = $data['id_persona'];
+    
         }
 
         return $direccion;
     }
+
 
     public function guardar() {
 
@@ -289,6 +292,7 @@ class Direccion {
 
         return $this;
     }
+
 }
 
 ?>

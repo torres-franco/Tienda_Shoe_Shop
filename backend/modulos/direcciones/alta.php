@@ -41,8 +41,8 @@ $listadoProvincia = Provincia::obtenerTodos();
                     <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Provincia
                     </button>
                     <div class="dropdown-menu">
-                      <!--<a class="dropdown-item" href="#">Agregar</a>-->
-                      <a class="dropdown-item" href="#">Ver listado</a>
+                      <a class="dropdown-item" href="../provincias/alta.php">Agregar</a>
+                      <a class="dropdown-item" href="../provincias/listado.php">Ver listado</a>
                     </div>
                   </div>
 
@@ -50,7 +50,7 @@ $listadoProvincia = Provincia::obtenerTodos();
                     <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ciudad
                     </button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">Agregar</a>
+                      <a class="dropdown-item" href="../ciudades/alta.php">Agregar</a>
                       <a class="dropdown-item" href="../ciudades/listado.php">Ver listado</a>
                     </div>
                   </div>
@@ -59,7 +59,7 @@ $listadoProvincia = Provincia::obtenerTodos();
                     <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Barrio
                     </button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">Agregar</a>
+                      <a class="dropdown-item" href="../barrios/alta.php">Agregar</a>
                       <a class="dropdown-item" href="../barrios/listado.php">Ver listado</a>
                     </div>
                   </div>

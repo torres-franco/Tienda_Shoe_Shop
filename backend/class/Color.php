@@ -76,6 +76,31 @@ class Color {
         return $listado;
     }
 
+    public static function obtenerPorId($id) {
+
+        $sql = "SELECT * FROM color WHERE id_color =" . $id;
+
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+       //$encontrado = self::_generarListadoId($datos);
+
+        $registro = $datos->fetch_assoc();
+
+        //highlight_string(var_export($registro, true));
+
+        //exit();
+
+        $color = new Color($registro['descripcion']);
+        $color->_idColor = $registro['id_color'];
+
+        return $color;
+
+
+    }
+
     public static function obtenerPorIdProducto($idProducto) {
         
         $sql = "SELECT * FROM producto 
@@ -97,6 +122,35 @@ class Color {
 
     public function __toString() {
         return $this->_descripcion;
+    }
+
+
+    public function guardar() {
+
+    $sql = "INSERT INTO color (id_color, descripcion) VALUES (NULL, '$this->_descripcion')";
+
+    $mysql = new MySQL();
+    $idInsertado = $mysql->insertar($sql);
+
+    $this->_idColor = $idInsertado;
+
+    }
+
+    public function actualizar() {
+        
+        $sql = "UPDATE color SET descripcion = '$this->_descripcion' WHERE id_color = $this->_idColor";
+        
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+
+
+    }
+
+    public function eliminar(){
+        $sql = "DELETE FROM color WHERE id_color = $this->_idColor";
+        $mysql = new MySQL();
+        $mysql->eliminar($sql);
     }
 
   

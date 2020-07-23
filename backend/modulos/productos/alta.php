@@ -38,8 +38,8 @@ $listadoColor = Color::obtenerTodos();
                     <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Marcas
                     </button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">Agregar</a>
-                      <a class="dropdown-item" href="#">Ver listado</a>
+                      <a class="dropdown-item" href="../marcas/alta.php">Agregar</a>
+                      <a class="dropdown-item" href="../marcas/listado.php">Ver listado</a>
                     </div>
                   </div>
 
@@ -47,8 +47,8 @@ $listadoColor = Color::obtenerTodos();
                     <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorías
                     </button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">Agregar</a>
-                      <a class="dropdown-item" href="#">Ver listado</a>
+                      <a class="dropdown-item" href="../categorias/alta.php">Agregar</a>
+                      <a class="dropdown-item" href="../categorias/listado.php">Ver listado</a>
                     </div>
                   </div>
 
@@ -56,8 +56,8 @@ $listadoColor = Color::obtenerTodos();
                     <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Colores
                     </button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">Agregar</a>
-                      <a class="dropdown-item" href="#">Ver listado</a>
+                      <a class="dropdown-item" href="../colores/alta.php">Agregar</a>
+                      <a class="dropdown-item" href="../colores/listado.php">Ver listado</a>
                     </div>
                   </div>
 
@@ -65,8 +65,8 @@ $listadoColor = Color::obtenerTodos();
                   <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Talles
                   </button>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Agregar</a>
-                    <a class="dropdown-item" href="#">Ver listado</a>
+                    <a class="dropdown-item" href="../talles/alta.php">Agregar</a>
+                    <a class="dropdown-item" href="../talles/listado.php">Ver listado</a>
                   </div>
                 </div>
                   

@@ -99,20 +99,63 @@ class Ciudad {
         return $listado;
     }
 
+    public static function obtenerPorId($id) {
+
+        $sql = "SELECT * FROM ciudad WHERE id_ciudad =" . $id;
+
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+       //$encontrado = self::_generarListadoId($datos);
+
+        $registro = $datos->fetch_assoc();
+
+        //highlight_string(var_export($registro, true));
+
+        //exit();
+
+        $ciudad = new Ciudad($registro['nombre'], $registro['codigo_postal']);
+        $ciudad->_idCiudad = $registro['id_ciudad'];
+
+        return $ciudad;
+
+
+    }
+
     public function __toString() {
         return $this->_nombre . ", " . $this->_codigoPostal;
     } 
 
 
-    /*public function guardar() {
-        $sql = "INSERT INTO Barrio (id_barrio, descripcion) VALUES (NULL, $this->_descripcion)";
+    public function guardar() {
 
-        //echo $sql;
+        $sql = "INSERT INTO ciudad (id_ciudad, nombre, codigo_postal) VALUES (NULL, '$this->_nombre', $this->_codigoPostal)";
+
+
         $mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
-        $this->_idPersona = $idInsertado;
-    }*/
+        $this->_idBarrio = $idInsertado;
+    }
+
+    public function actualizar() {
+        
+        $sql = "UPDATE ciudad SET nombre = '$this->_nombre', codigo_postal = $this->_codigoPostal WHERE id_ciudad = $this->_idCiudad";
+        
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+
+
+    }
+
+    public function eliminar(){
+        $sql = "DELETE FROM ciudad WHERE id_ciudad = $this->_idCiudad";
+        $mysql = new MySQL();
+        $mysql->eliminar($sql);
+    }
      
 
 }

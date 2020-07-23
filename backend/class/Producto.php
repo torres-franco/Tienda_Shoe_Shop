@@ -173,20 +173,6 @@ require_once 'Talle.php';
 
         $sql = "SELECT * FROM producto WHERE id_producto =" . $id;
 
-        /*$sql = "SELECT 
-                producto.id_producto, producto.descripcion, producto.precio,
-                producto.stock_actual, producto.stock_minimo,
-                marca.id_marca, 
-                categoria.id_categoria, categoria.descripcion,
-                color.id_color, color.descripcion,
-                talle.id_talle, talle.descripcion
-                FROM producto 
-                INNER JOIN marca ON producto.id_marca = marca.id_marca 
-                INNER JOIN categoria ON producto.id_categoria = categoria.id_categoria 
-                INNER JOIN color ON producto.id_color = color.id_color 
-                INNER JOIN talle ON producto.id_talle = talle.id_talle 
-                WHERE id_producto =" . $id;*/
-
 
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);

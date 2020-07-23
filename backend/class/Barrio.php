@@ -99,6 +99,31 @@ class Barrio {
         return $listado;
     }
 
+    public static function obtenerPorId($id) {
+
+        $sql = "SELECT * FROM barrio WHERE id_barrio =" . $id;
+
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+       //$encontrado = self::_generarListadoId($datos);
+
+        $registro = $datos->fetch_assoc();
+
+        //highlight_string(var_export($registro, true));
+
+        //exit();
+
+        $barrio = new Barrio($registro['descripcion']);
+        $barrio->_idBarrio = $registro['id_barrio'];
+
+        return $barrio;
+
+
+    }
+
     
 
     public function __toString() {
@@ -108,13 +133,30 @@ class Barrio {
 
     public function guardar() {
 
-        $sql = "INSERT INTO barrio (id_barrio, id_ciudad, descripcion) VALUES (NULL, $this->_idCiudad, '$this->_descripcion')";
+        $sql = "INSERT INTO barrio (id_barrio, descripcion) VALUES (NULL, '$this->_descripcion')";
 
 
         $mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
         $this->_idBarrio = $idInsertado;
+    }
+
+    public function actualizar() {
+        
+        $sql = "UPDATE barrio SET descripcion = '$this->_descripcion' WHERE id_barrio = $this->_idBarrio";
+        
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+
+
+    }
+
+    public function eliminar(){
+        $sql = "DELETE FROM barrio WHERE id_barrio = $this->_idBarrio";
+        $mysql = new MySQL();
+        $mysql->eliminar($sql);
     }
 
 

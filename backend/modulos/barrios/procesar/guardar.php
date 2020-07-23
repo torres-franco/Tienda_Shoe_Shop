@@ -16,9 +16,10 @@ $descripcion = $_POST['txtDescripcion'];
 
 $barrio = new Barrio($descripcion);
 
-
 $barrio->guardar();
 
-//header("location: ../listado.php");
+header("location: ../listado.php");
 
-highlight_string(var_export($barrio, true));
+//highlight_string(var_export($barrio, true));
+
+?>

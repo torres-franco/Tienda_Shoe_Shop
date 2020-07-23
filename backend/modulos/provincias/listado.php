@@ -40,8 +40,7 @@ $listadoProvincia = Provincia::obtenerTodos();
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
-                  Sólo se puede vender en esta provincia.
-                	<!--<a href="alta.php" class="btn btn-primary btn-sm" role="button">+ Agregar</a>-->
+                  <a href="alta.php" class="btn btn-primary btn-sm" role="button">+ Agregar</a>
                 </h3>
 
                 
@@ -54,7 +53,7 @@ $listadoProvincia = Provincia::obtenerTodos();
 
                       <th>ID</th>
 						          <th>Provincia</th>
-                      <!--<th>Acciones</th>-->
+                      <th>Acciones</th>
 
                     </tr>
                   </thead>
@@ -66,7 +65,7 @@ $listadoProvincia = Provincia::obtenerTodos();
                       <tr>
 						            <td> <?php echo $provincia->getIdProvincia(); ?> </td>
 						            <td> <?php echo $provincia->getNombre(); ?> </td>
-                        <!--<td>
+                        <td>
 
                           <a class="btn btn-success btn-sm" href="actualizar.php?id=<?php echo $provincia->getIdProvincia(); ?>" role="button" title="Editar">
                               <i class="fas fa-pen"></i>
@@ -76,7 +75,7 @@ $listadoProvincia = Provincia::obtenerTodos();
                               <i class="fas fa-trash-alt"></i>
                           </a>
 								           
-							          </td>-->
+							          </td>
 						          </tr>
                     
                 	</tbody>

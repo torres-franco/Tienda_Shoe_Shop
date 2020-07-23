@@ -6,6 +6,9 @@ $id = $_GET['id'];
 
 $cliente = Cliente::obtenerPorId($id);
 
+/*highlight_string(var_export($cliente, true));
+exit;*/
+
 
 ?>
 

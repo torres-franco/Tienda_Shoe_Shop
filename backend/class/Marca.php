@@ -74,6 +74,32 @@ class Marca {
     }
 
 
+    public static function obtenerPorId($id) {
+
+        $sql = "SELECT * FROM marca WHERE id_marca =" . $id;
+
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+       //$encontrado = self::_generarListadoId($datos);
+
+        $registro = $datos->fetch_assoc();
+
+        //highlight_string(var_export($registro, true));
+
+        //exit();
+
+        $marca = new Marca($registro['descripcion']);
+        $marca->_idMarca = $registro['id_marca'];
+
+        return $marca;
+
+
+    }
+
+
     public static function obtenerPorIdProducto($idProducto) {
         
         $sql = "SELECT * FROM producto 
@@ -95,6 +121,35 @@ class Marca {
 
     public function __toString(){
     	return $this->_descripcion;
+    }
+
+
+    public function guardar() {
+
+    $sql = "INSERT INTO marca (id_marca, descripcion) VALUES (NULL, '$this->_descripcion')";
+
+    $mysql = new MySQL();
+    $idInsertado = $mysql->insertar($sql);
+
+    $this->_idMarca = $idInsertado;
+
+    }
+
+    public function actualizar() {
+        
+        $sql = "UPDATE marca SET descripcion = '$this->_descripcion' WHERE id_marca = $this->_idMarca";
+        
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+
+
+    }
+
+    public function eliminar(){
+        $sql = "DELETE FROM marca WHERE id_marca = $this->_idMarca";
+        $mysql = new MySQL();
+        $mysql->eliminar($sql);
     }
 
 

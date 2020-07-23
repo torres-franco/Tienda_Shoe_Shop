@@ -76,6 +76,32 @@ class Talle {
         return $listado;
     }
 
+
+    public static function obtenerPorId($id) {
+
+        $sql = "SELECT * FROM talle WHERE id_talle =" . $id;
+
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+       //$encontrado = self::_generarListadoId($datos);
+
+        $registro = $datos->fetch_assoc();
+
+        //highlight_string(var_export($registro, true));
+
+        //exit();
+
+        $talle = new Talle($registro['descripcion']);
+        $talle->_idTalle = $registro['id_talle'];
+
+        return $talle;
+
+
+    }
+
     public static function obtenerPorIdProducto($idProducto) {
         
         $sql = "SELECT * FROM producto 
@@ -99,7 +125,34 @@ class Talle {
         return $this->_descripcion;
     }
 
-  
+
+    public function guardar() {
+
+        $sql = "INSERT INTO talle (id_talle, descripcion) VALUES (NULL, '$this->_descripcion')";
+
+
+        $mysql = new MySQL();
+        $idInsertado = $mysql->insertar($sql);
+
+        $this->_idTalle = $idInsertado;
+    }
+
+    public function actualizar() {
+        
+        $sql = "UPDATE talle SET descripcion = '$this->_descripcion' WHERE id_talle = $this->_idTalle";
+        
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+
+
+    }
+
+    public function eliminar(){
+        $sql = "DELETE FROM talle WHERE id_talle = $this->_idTalle";
+        $mysql = new MySQL();
+        $mysql->eliminar($sql);
+    }
 
     
 }

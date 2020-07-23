@@ -33,6 +33,7 @@ $direccion->setCalle($calle);
 $direccion->setAltura($altura);
 $direccion->setPiso($piso);
 $direccion->setManzana($manzana);
+$direccion->setProvincia();
 
 $direccion->actualizar($idDireccion);
 

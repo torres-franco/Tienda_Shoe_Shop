@@ -71,9 +71,39 @@ class Categoria {
 			$categoria = new Categoria($registro['descripcion']);
 			$categoria->_idCategoria = $registro['id_categoria'];
 			$listado[] = $categoria;
-		}
-		return $listado;
+
+		  }
+		
+    return $listado;
+
     }
+
+
+    public static function obtenerPorId($id) {
+
+        $sql = "SELECT * FROM categoria WHERE id_categoria =" . $id;
+
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+       //$encontrado = self::_generarListadoId($datos);
+
+        $registro = $datos->fetch_assoc();
+
+        //highlight_string(var_export($registro, true));
+
+        //exit();
+
+        $categoria = new Categoria($registro['descripcion']);
+        $categoria->_idCategoria = $registro['id_categoria'];
+
+        return $categoria;
+
+
+    }
+
 
     public static function obtenerPorIdProducto($idProducto) {
         
@@ -96,6 +126,34 @@ class Categoria {
 
     public function __toString() {
     	return $this->_descripcion;
+    }
+
+    public function guardar() {
+
+        $sql = "INSERT INTO categoria (id_categoria, descripcion) VALUES (NULL, '$this->_descripcion')";
+
+
+        $mysql = new MySQL();
+        $idInsertado = $mysql->insertar($sql);
+
+        $this->_idTalle = $idInsertado;
+    }
+
+    public function actualizar() {
+        
+        $sql = "UPDATE categoria SET descripcion = '$this->_descripcion' WHERE id_categoria = $this->_idCategoria";
+        
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+
+
+    }
+
+    public function eliminar(){
+        $sql = "DELETE FROM categoria WHERE id_categoria = $this->_idCategoria";
+        $mysql = new MySQL();
+        $mysql->eliminar($sql);
     }
 
   
