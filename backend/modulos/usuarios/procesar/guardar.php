@@ -6,7 +6,6 @@ require_once "../../../class/Usuario.php";
 
 $nombre = $_POST['txtNombre'];
 $apellido = $_POST['txtApellido'];
-/*$dni = $_POST['txtDni'];*/
 $user = $_POST['txtUser'];
 $clave = $_POST['txtClave'];
 
@@ -32,12 +31,6 @@ if (empty(trim($apellido))) {
 	exit;
 }
 
-/*if (empty(trim($dni))) {
-	$_SESSION['mensaje_error'] = "El DNI no debe estar vacio";
-	header("location: ../alta.php");
-	exit;
-}*/
-
 if (empty(trim($user))) {
 	$_SESSION['mensaje_error'] = "El usuario no debe estar vacio";
 	header("location: ../alta.php");
@@ -59,7 +52,6 @@ if (empty(trim($clave))) {
 }
 
 $usuario = new Usuario($nombre, $apellido);
-$usuario->setDni($dni);
 $usuario->setUser($user);
 $usuario->setClave($clave);
 
