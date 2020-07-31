@@ -112,7 +112,7 @@ $listadoUsuarios = Usuario::obtenerTodo();
                       <tr>
                          <td> <?php echo $usuario->getNombre(); ?> </td>
                          <td> <?php echo $usuario->getApellido(); ?> </td>
-                         <!--<td> <?php echo $usuario->getDni(); ?> </td>-->
+                         
                          <td> <?php echo $usuario->getUser(); ?> </td>
                       
                          <td> 

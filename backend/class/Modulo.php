@@ -125,7 +125,7 @@ class Modulo {
     }
 
 
-    public function obtenerTodos(){
+    public function obtenerTodos() {
 
         $sql = "SELECT * FROM modulo";
 

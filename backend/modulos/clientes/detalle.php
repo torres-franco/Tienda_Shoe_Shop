@@ -57,6 +57,10 @@ exit;*/
                     <th>Fecha de Nacimiento</th>
                     <th>Género</th>
                     <th>Dirección</th>
+                    <th>Contacto <a href="/proyecto_shoe_shop/backend/modulos/contactos/alta.php?idPersona=<?php echo $cliente->getIdPersona(); ?>&idLlamada=<?php echo $cliente->getIdCliente(); ?>&modulo=clientes">
+                        <i class="fas fa-plus-circle"></i> Agregar
+                      </a>
+                      </th>
                     <th>Estado</th>
                   </tr>
                 </thead>
@@ -87,6 +91,20 @@ exit;*/
                       </a>
 
                     <?php endif ?>
+
+                    </td>
+
+                    <td class="text-center">
+
+                      <?php foreach ($cliente->arrContactos as $contacto) : ?>
+
+                      <?= utf8_encode($contacto); ?>
+
+                        <a class="btn btn-danger btn-sm" href="/proyecto_shoe_shop/backend/modulos/contactos/procesar/eliminar.php?id=<?php echo $contacto->getIdTipoContactoPersona(); ?>" role="button" title="Eliminar">
+                      <i class="fas fa-trash-alt"></i>
+                      </a>
+
+                      <?php endforeach?>
 
                     </td>
 

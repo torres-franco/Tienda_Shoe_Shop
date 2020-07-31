@@ -105,13 +105,9 @@ class Usuario extends PersonaFisica {
         $datos = $mysql->consultar($sql);
         $mysql->desconectar();
 
-        //$usuario = self::_generarListadoUsuario($datos);
-
-        $registro = $datos->fetch_assoc();
-
-        //highlight_string(var_export($registro, true));
-
-        //exit();
+        $data = $datos->fetch_assoc();
+        $usuarop = self::_generarCliente($data);
+        return $usuarop;
 
         $usuario = new Usuario($registro['nombre'], $registro['apellido']);
         $usuario->_idUsuario = $registro['id_usuario'];
@@ -123,6 +119,16 @@ class Usuario extends PersonaFisica {
         return $usuario;
 
 
+    }
+
+    private function _generarCliente($data) {
+        $usuario = new Usuario($data['nombre'], $data['apellido']);
+        $usuario->_idUsuario = $data['id_usuario'];
+        $usuario->_idPersonaFisica = $data['id_persona_fisica'];
+        $usuario->_user = $data['user'];
+        $usuario->_dni = $data['dni'];
+        
+        return $usuario;
     }
 
     public function obtenerTodo(){
@@ -167,7 +173,7 @@ class Usuario extends PersonaFisica {
 
     public function guardar() {
         parent::guardar();
-        $sql = "INSERT INTO usuario (id_usuario,id_persona_fisica,id_perfil,user, clave) VALUES (NULL, $this->_idPersonaFisica,$this->_idPerfil, '$this->_user', '$this->_clave')";
+        $sql = "INSERT INTO usuario (id_usuario,id_persona_fisica,user, clave) VALUES (NULL, $this->_idPersonaFisica, '$this->_user', '$this->_clave')";
 
         $mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);

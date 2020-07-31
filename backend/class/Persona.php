@@ -1,6 +1,7 @@
 <?php 
 
 require_once 'Direccion.php';
+require_once 'Contacto.php';
 require_once 'MySQL.php';
 
 /**
@@ -11,6 +12,8 @@ class Persona {
 	protected $_idPersona;
 
     public $direccion;
+
+    public $arrContactos;
 
 
     /**
@@ -48,14 +51,9 @@ class Persona {
         $this->direccion = Direccion::obtenerPorIdPersona($this->_idPersona);
     }
 
-
-    /*public function obtenerDireccion() {
-        $sql = "SELECT * FROM persona INNER JOIN direccion ON direccion.id_direccion = persona.id_persona WHERE id_direccion";
-
-        $mysql = new MySQL();
-        $datos = $mysql->consultar($sql);
-        $mysql->desconectar();
-    }*/
+    public function setContactos() {
+        $this->arrContactos = Contacto::obtenerPorIdPersona($this->_idPersona);
+    }
 
      
 }

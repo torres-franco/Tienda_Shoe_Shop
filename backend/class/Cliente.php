@@ -76,6 +76,7 @@ class Cliente extends PersonaFisica {
         $cliente->_fechaNacimiento = $data['fecha_nacimiento'];
         $cliente->_genero = $data['genero'];
         $cliente->setDireccion();
+        $cliente->setContactos();
         
         return $cliente;
     }

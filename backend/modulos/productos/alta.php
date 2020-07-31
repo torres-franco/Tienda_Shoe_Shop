@@ -14,6 +14,86 @@ $listadoColor = Color::obtenerTodos();
 <!doctype html>
 <html lang="es">
 
+<!--<script type="text/javascript">
+    function validarDatos() {
+    /*alert(88998989898);*/
+    var divMensajeError = document.getElementById("mensajeError");
+    
+    var marca = document.getElementById("cboMarca").value;
+    if (marca.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El campo marca no debe estar vacio *";
+        return;
+    } else if (marca.length < 3) {
+      
+        divMensajeError.innerHTML = "El campo marca debe tener al menos 3 carácteres *";
+        return;
+    }
+
+    var descripcion = document.getElementById("txtDescripcion").value;
+    if (descripcion.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El campo descripción no debe estar vacio *";
+        return;
+    } else if (descripcion.length < 3) {
+      
+        divMensajeError.innerHTML = "El campo descripción debe tener al menos 3 carácteres *";
+        return;
+    }
+
+    var precio = document.getElementById("txtPrecio").value;
+    if (precio.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El campo precio no debe estar vacio *";
+        return;
+
+    var stockActual = document.getElementById("txtStockActual").value;
+    if (stockActual.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El campo stock actual no debe estar vacio *";
+        return;
+
+    var stockMinimo = document.getElementById("txtStockMinimo").value;
+    if (stockMinimo.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El campo stock minimo no debe estar vacio *";
+        return;
+
+    var categoria = document.getElementById("cboCategoria").value;
+    if (categoria.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El campo categoría no debe estar vacio *";
+        return;
+    } else if (categoria.length < 2) {
+      
+        divMensajeError.innerHTML = "El campo categoría debe tener al menos 3 carácteres *";
+        return;
+    }
+
+    var color = document.getElementById("cboColor").value;
+    if (color.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El campo color no debe estar vacio *";
+        return;
+    } else if (color.length < 3) {
+      
+        divMensajeError.innerHTML = "El campo color debe tener al menos 3 carácteres *";
+        return;
+    }
+
+    var talle = document.getElementById("cboTalle").value;
+    if (talle.trim() == "") {
+        //alert("El nombre no debe estar vacio");
+        divMensajeError.innerHTML = "El campo talle no debe estar vacio *";
+        return;
+
+
+    var form = document.getElementById("frmDatos");
+    form.submit();
+    }
+
+</script>-->
+
 <body>
 
 <?php
@@ -79,6 +159,27 @@ $listadoColor = Color::obtenerTodos();
       </div><!-- /.container-fluid -->
     </section>
 
+    <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+    <div class="content">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas text-white fa-exclamation-triangle"></i>
+        <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
+
+            <?php
+                unset($_SESSION['mensaje_error']);
+                endif;
+            ?>
+
+    <h5 class="text-center">
+      <div id="mensajeError" class="text-danger"></div>
+    </h5>
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -92,15 +193,15 @@ $listadoColor = Color::obtenerTodos();
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" method="POST" action="procesar/guardar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
                 <div class="card-body">
 
                   
                   <div class="row">
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
-                        <label for="txtMarca">Marca:</label>
-                          <select name="cboMarca" class="form-control">
+                        <label for="cboMarca">Marca:</label>
+                          <select name="cboMarca" class="form-control" id="cboMarca">
                               <option value="0">Seleccionar</option>
 
                               <?php foreach ($listadoMarca as $marca): ?>
@@ -118,14 +219,14 @@ $listadoColor = Color::obtenerTodos();
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
                         <label for="txtDescripcion">Descripción:</label>
-                        <input type="text" class="form-control" name="txtDescripcion">
+                        <input type="text" class="form-control" name="txtDescripcion" id="txtDescripcion">
                       </div>
                     </div>
 
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
                         <label for="txtPrecio">Precio:</label>
-                        <input type="text" class="form-control" name="txtPrecio">
+                        <input type="text" class="form-control" name="txtPrecio" id="txtPrecio">
                       </div>
                     </div>
 
@@ -135,14 +236,14 @@ $listadoColor = Color::obtenerTodos();
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtStockActual">Stock Actual:</label>
-                        <input type="number" class="form-control" name="txtStockActual">
+                        <input type="number" class="form-control" name="txtStockActual" id="txtStockActual">
                       </div>
                     </div>
                   
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtStockMinimo">Stock Mínimo:</label>
-                        <input type="number" class="form-control" name="txtStockMinimo">
+                        <input type="number" class="form-control" name="txtStockMinimo" id="txtStockMinimo">
                       </div>
                     </div>
                   </div>
@@ -150,8 +251,8 @@ $listadoColor = Color::obtenerTodos();
                   <div class="row">
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
-                        <label for="optCategoria">Categorías:</label>
-                          <select name="cboCategoria" class="form-control">
+                        <label for="cboCategoria">Categorías:</label>
+                          <select name="cboCategoria" class="form-control" id="cboCategoria">
                               <option value="0">Seleccionar</option>
 
                               <?php foreach ($listadoCategoria as $categoria): ?>
@@ -169,7 +270,7 @@ $listadoColor = Color::obtenerTodos();
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
                         <label for="txtColor">Color:</label>
-                          <select name="cboColor" class="form-control">
+                          <select name="cboColor" class="form-control" id="cboColor">
                               <option value="0">Seleccionar</option>
 
                               <?php foreach ($listadoColor as $color): ?>
@@ -189,7 +290,7 @@ $listadoColor = Color::obtenerTodos();
                       <div class="form-group">
 
                         <label for="txtTalle">Talle:</label>
-                          <select name="cboTalle" class="form-control">
+                          <select name="cboTalle" class="form-control" id="cboTalle">
                               <option value="0">Seleccionar</option>
 
                               <?php foreach ($listadoTalle as $talle): ?>

@@ -59,7 +59,6 @@ if (empty(trim($clave))) {
 }
 
 $usuario = new Usuario($nombre, $apellido);
-$usuario->setDni($dni);
 $usuario->setUser($user);
 $usuario->setClave($clave);
 

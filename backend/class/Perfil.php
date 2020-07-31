@@ -54,6 +54,39 @@ class Perfil {
         return $this;
     }
 
+    public function guardar(){
+        $sql = "INSERT INTO perfil (id_perfil, descripcion) VALUES (NULL, '$this->_descripcion')";
+
+        $mysql = new MySQL();
+        $idInsertado = $mysql->insertar($sql);
+
+        $this->_idPerfil = $idInsertado;
+    }
+
+    public function obtenerTodos() {
+
+        $sql = "SELECT * FROM perfil";
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoPerfiles($datos);
+
+        return $listado;
+
+    }
+
+    private function _generarListadoPerfiles($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+            $perfil = new Perfil($registro['descripcion']);
+            $perfil->_idPerfil = $registro['id_perfil'];
+            $listado[] = $perfil;
+        }
+        return $listado;
+    }
+
     public static function obtenerPorId($idPerfil) {
         $sql = "SELECT * FROM perfil WHERE id_perfil = " . $idPerfil;
 

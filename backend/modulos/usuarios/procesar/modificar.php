@@ -5,7 +5,6 @@ require_once "../../../class/Usuario.php";
 $id = $_POST['txtId'];
 $nombre = $_POST['txtNombre'];
 $apellido = $_POST['txtApellido'];
-/*$dni = $_POST['txtDni'];*/
 $user = $_POST['txtUser'];
 
 
@@ -29,11 +28,6 @@ if (empty(trim($apellido))) {
 	exit;
 }
 
-/*if (empty(trim($dni))) {
-	$_SESSION['mensaje_error'] = "El DNI no debe estar vacio";
-	//header("location: ../actualizar.php");
-	exit;
-}*/
 
 if (empty(trim($user))) {
 	$_SESSION['mensaje_error'] = "El usuario no debe estar vacio";
@@ -58,7 +52,6 @@ if (empty(trim($user))) {
 $usuario = Usuario::obtenerPorId($id);
 $usuario->setNombre($nombre);
 $usuario->setApellido($apellido);
-$usuario->setDni($dni);
 $usuario->setUser($user);
 
 $usuario->actualizar();
