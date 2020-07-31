@@ -59,4 +59,3 @@ $usuario->actualizar();
 header("location: ../listado.php?mensaje=2");
 
 ?>
-
