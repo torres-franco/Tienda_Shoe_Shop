@@ -37,6 +37,6 @@ $producto->actualizar();
 //highlight_string(var_export($producto, true));
 
 
-header("location: ../listado.php");
+header("location: ../listado.php?mensaje=2");
 
 ?>

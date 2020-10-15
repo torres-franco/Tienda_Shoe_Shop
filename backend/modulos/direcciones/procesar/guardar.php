@@ -3,9 +3,9 @@
 require_once "../../../class/Direccion.php";
 
 $idPersona = $_POST['txtIdPersona'];
-$idCliente = $_POST['txtIdCliente'];
-$barrio = $_POST['cboBarrio'];
+$idLlamada = $_POST['txtIdLlamada'];
 $modulo = $_POST['txtModulo'];
+$barrio = $_POST['cboBarrio'];
 $calle = $_POST['txtCalle'];
 $altura = $_POST['txtAltura'];
 $piso = $_POST['txtPiso'];
@@ -25,7 +25,7 @@ $direccion->setIdPersona($idPersona);
 
 $direccion->guardar();
 
-header("location: /proyecto_shoe_shop/backend/modulos/$modulo/detalle.php?id=$idCliente");
+header("location: /proyecto_shoe_shop/backend/modulos/$modulo/detalle.php?id=$idLlamada");
 
 //highlight_string(var_export($direccion, true));
 

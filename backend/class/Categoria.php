@@ -5,8 +5,8 @@ require_once 'MySQL.php';
 
 class Categoria {
 
-	private $_idCategoria;
-	private $_descripcion;
+	public $_idCategoria;
+	public $_descripcion;
 
 	public function __construct($descripcion) {
 		$this->_descripcion = $descripcion;

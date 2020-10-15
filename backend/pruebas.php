@@ -1,45 +1,25 @@
 <?php
 
+require_once "class/PedidoDetalle.php";
+require_once "class/Pedido.php";
 
-require_once 'class/Cliente.php';
+$detallePedido = new PedidoDetalle(2, 10000);
+$detallePedido->setIdProducto(1);
+$detallePedido->setIdPedido(3);
 
+$detallePedido->guardar();
 
-//$listadoUsuario = Usuario::obtenerUsuario();
+$pedido = new Pedido();
+$pedido->setIdCliente(14);
+$pedido->setIdPedidoEstado(1);
+$pedido->setFecha('2020/09/24');
 
-//$listadoClientesActivos = Cliente::obtenerActivos();
-
-//$cliente = Cliente::obtenerPorId(5);
-//$cliente->getNombre();
-
-$cliente = new Cliente("Nicolas", "Colo");
-
-//$listadoCliente = $cliente->obtenerTodos();
-
-highlight_string(var_export($cliente, true));
-
-//$cliente->setCbu("888888");
-
-
-$cliente->guardar();
+$pedido->guardar();
 
 
 
- /*$cliente = Cliente::buscarPorId(1);
- if($cliente){
-    echo $cliente->getNombre();
-    echo '<br />';
-    echo $cliente->getApellido();
- }else{
-    echo 'El cliente no ha podido ser encontrado';
- }*/
+highlight_string(var_export($detallePedido, true));
 
-
-/*$cliente = Cliente::obtenerPorId(9);
-
-$cliente->eliminar();*/
-
-
-//highlight_string(var_export($cliente, true));
 
 
 ?>

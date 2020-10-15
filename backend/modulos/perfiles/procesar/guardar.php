@@ -20,6 +20,6 @@ foreach ($listaModulos as $modulo_id) {
 	$perfilModulo->guardar();
 }
 
-header("location: ../listado.php");
+header("location: ../listado.php?mensaje=1");
 
 ?>

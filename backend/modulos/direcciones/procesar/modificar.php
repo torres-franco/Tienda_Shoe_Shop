@@ -3,8 +3,9 @@
 require_once "../../../class/Direccion.php";
 
 $idPersona = $_POST['txtIdPersona'];
+$idLlamada = $_POST['txtIdLlamada'];
+$modulo = $_POST['txtModulo'];
 $idDireccion = $_POST['txtIdDireccion'];
-$idCliente = $_POST['txtIdCliente'];
 $barrio = $_POST['cboBarrio'];
 $calle = $_POST['txtCalle'];
 $altura = $_POST['txtAltura'];
@@ -33,14 +34,13 @@ $direccion->setCalle($calle);
 $direccion->setAltura($altura);
 $direccion->setPiso($piso);
 $direccion->setManzana($manzana);
-$direccion->setProvincia();
 
 $direccion->actualizar($idDireccion);
 
 //highlight_string(var_export($direccion, true));
 //exit;
 
-header("location: /proyecto_shoe_shop/backend/modulos/clientes/detalle.php?id=$idCliente");
+header("location: /proyecto_shoe_shop/backend/modulos/$modulo/detalle.php?id=$idLlamada");
 
 ?>
 

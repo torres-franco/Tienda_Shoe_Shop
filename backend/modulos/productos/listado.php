@@ -2,6 +2,19 @@
 
 require_once '../../class/Producto.php';
 
+const PRODUCTO_GUARDADO = 1;
+const PRODUCTO_MODIFICADO = 2;
+const PRODUCTO_ELIMINADO = 3;
+
+if (isset($_GET['mensaje'])) {
+    $mensaje = $_GET['mensaje'];
+
+} else {
+    
+    $mensaje = 0;
+
+}
+
 $listadoProducto = Producto::obtenerTodo();
 
 //highlight_string(var_export($listadoProducto,true));
@@ -36,6 +49,38 @@ $listadoProducto = Producto::obtenerTodo();
     </div><!-- /.container-fluid -->
   </div>
 
+  <?php if ($mensaje == PRODUCTO_GUARDADO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Producto guardado correctamente.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+    <?php elseif ($mensaje == PRODUCTO_MODIFICADO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Producto actualizado correctamente.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+    <?php elseif ($mensaje == PRODUCTO_ELIMINADO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Producto eliminado correctamente.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+    <?php endif ?>
+
 	<section class="content">
       <div class="row">
           <div class="col-12">
@@ -46,18 +91,18 @@ $listadoProducto = Producto::obtenerTodo();
                 </h3>
 
                 <div class="card-tools">
-                  <div class="input-group input-group-sm pt-1" style="width: 150px;">
+                  <!--<div class="input-group input-group-sm pt-1" style="width: 150px;">
                     <input type="text" name="table_search" class="form-control float-right" placeholder="Buscar...">
 
                     <div class="input-group-append">
                       <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                     </div>
-                  </div>
+                  </div>-->
                 </div>
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-center">
+              <div class="card-body p-0">
+                <table class="table table-responsive-lg table-hover text-center">
                   <thead>
                     <tr>
 

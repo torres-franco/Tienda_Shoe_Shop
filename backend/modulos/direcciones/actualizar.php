@@ -5,9 +5,10 @@ require_once '../../class/Barrio.php';
 require_once '../../class/Ciudad.php';
 require_once '../../class/Provincia.php';
 
-
+$id = $_GET['idDireccion'];
 $idPersona = $_GET['idPersona'];
-$idCliente = $_GET['idCliente'];
+$idLlamada = $_GET['idLlamada'];
+$moduloLlamada = $_GET['modulo'];
 
 $direccion = direccion::obtenerPorIdPersona($idPersona);
 
@@ -33,7 +34,7 @@ $listadoProvincia = Provincia::obtenerTodos();
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Actualizar dirección del cliente</h1>
+            <h1 class="m-0 text-dark">Actualizar dirección</h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -150,12 +151,17 @@ $listadoProvincia = Provincia::obtenerTodos();
                     
                     <div>
                       <label for="txtIdDireccion"></label>
-                      <input type="hidden" name="txtIdDireccion" value="<?php /*echo*/ $idDireccion ?>">
+                      <input type="hidden" name="txtIdDireccion" value="<?php echo $id ?>">
                     </div>
 
                     <div>
-                      <label for="txtIdCliente"></label>
-                      <input type="hidden" name="txtIdCliente" value="<?php echo $idCliente ?>">
+                      <label for="txtIdLlamada"></label>
+                      <input type="hidden" name="txtIdLlamada" value="<?php echo $idLlamada ?>">
+                    </div>
+                  
+                    <div>
+                      <label for="txtModulo"></label>
+                      <input type="hidden" name="txtModulo" value="<?php echo $moduloLlamada ?>">
                     </div>
 
                     <div class="col-sm-6">
@@ -199,7 +205,7 @@ $listadoProvincia = Provincia::obtenerTodos();
 
                 <div class="card-body">
                 
-                      <a href="../clientes/listado.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="../<?php echo $moduloLlamada ?>/detalle.php?id=<?php echo $idLlamada ?>" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
                   
                   
                       <button type="submit" class="btn btn-primary float-right">Actualizar <i class="fas fa-sync"></i></button>

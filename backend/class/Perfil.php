@@ -63,6 +63,25 @@ class Perfil {
         $this->_idPerfil = $idInsertado;
     }
 
+    public function actualizar(){
+        $sql = "UPDATE perfil SET descripcion = '$this->_descripcion' WHERE id_perfil = $this->_idPerfil";
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+    }
+
+    public function eliminar(){
+        $sql = "DELETE FROM perfil WHERE id_perfil = $this->_idPerfil";
+        $mysql = new MySQL();
+        $mysql->eliminar($sql);
+    }
+
+    public function eliminarModulos(){
+        $sql = "DELETE FROM perfil_modulo WHERE id_perfil = $this->_idPerfil";
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+    }
+
     public function obtenerTodos() {
 
         $sql = "SELECT * FROM perfil";
@@ -104,6 +123,22 @@ class Perfil {
     public function getModulos() {
     	return $this->_arrModulos;
     }
+
+    public function tieneModulo($idModulo){
+        $sql = "SELECT * FROM perfil_modulo "
+            . "WHERE id_modulo = $idModulo "
+            . "AND id_perfil = $this->_idPerfil";
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        return $result->num_rows > 0;
+    }
+
+    public function __toString() {
+        return $this->_descripcion;
+    }
+
 
 }
 

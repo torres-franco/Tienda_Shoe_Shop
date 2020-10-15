@@ -18,7 +18,7 @@ $talle = new Talle($descripcion);
 
 $talle->guardar();
 
-header("location: ../listado.php");
+header("location: ../../productos/alta.php");
 
 //highlight_string(var_export($barrio, true));
 

@@ -79,7 +79,10 @@ class Proveedor extends Persona {
         $datos = $mysql->consultar($sql);
         $mysql->desconectar();
 
-       //$encontrado = self::_generarListadoId($datos);
+        $data = $datos->fetch_assoc();
+        $proveedor = self::_generarProveedor($data);
+        return $proveedor;
+
 
         $registro = $datos->fetch_assoc();
 
@@ -92,12 +95,25 @@ class Proveedor extends Persona {
         $proveedor->_idPersona = $registro['id_persona'];
         $proveedor->_cuit = $registro['cuit'];
         $proveedor->_razon_social = $registro['razon_social'];
+        $proveedor->setContactos();
+        $proveedor->setDireccion();
 
         return $proveedor;
 
 
     }
 
+        private function _generarProveedor($data) {
+        $proveedor = new Proveedor();
+        $proveedor->_idProveedor = $data['id_proveedor'];
+        $proveedor->_idPersona = $data['id_persona'];
+        $proveedor->_razon_social = $data['razon_social'];
+        $proveedor->_cuit = $data['cuit'];
+        $proveedor->setContactos();
+        $proveedor->setDireccion();
+        
+        return $proveedor;
+    }
 
     public function obtenerProveedor(){
 
@@ -147,6 +163,35 @@ class Proveedor extends Persona {
         $mysql->actualizar($sql);
 
 
+    }
+
+    public static function obtenerPorIdCompra($idCompra) {
+        
+        $sql = "SELECT * FROM compra 
+            INNER JOIN proveedor ON compra.id_proveedor = proveedor.id_proveedor
+            INNER JOIN persona ON proveedor.id_persona = persona.id_persona
+            WHERE id_compra = " . $idCompra;
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $registro = $datos->fetch_assoc();
+        
+        $proveedor = new Proveedor();   
+        $proveedor->_idProveedor = $data['id_proveedor'];
+        $proveedor->_idPersona = $data['id_persona'];
+        $proveedor->_razon_social = $data['razon_social'];
+        $proveedor->_cuit = $data['cuit'];
+        $proveedor->setContactos();
+        $proveedor->setDireccion();
+
+        return $proveedor;
+
+    }
+
+    public function __toString() {
+        return $this->_razon_social;
     }
 
 }

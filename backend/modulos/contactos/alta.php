@@ -96,7 +96,7 @@ $moduloLlamada = $_GET['modulo'];
 
                 <div class="card-body">
                 
-                      <a href="../clientes/listado.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="../<?php echo $moduloLlamada ?>/detalle.php?id=<?php echo $idLlamada ?>" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
                   
                   
                       <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>

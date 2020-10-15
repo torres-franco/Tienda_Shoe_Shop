@@ -18,7 +18,7 @@ $categoria = new Categoria($descripcion);
 
 $categoria->guardar();
 
-header("location: ../listado.php");
+header("location: ../../productos/alta.php");
 
 //highlight_string(var_export($barrio, true));
 

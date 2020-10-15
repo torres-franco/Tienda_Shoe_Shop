@@ -21,7 +21,7 @@ $modulo = new Modulo($descripcion, $directorio);
 
 $modulo->guardar();
 
-header("location: ../listado.php");
+header("location: ../listado.php?mensaje=1");
 
 //highlight_string(var_export($cliente, true));
 

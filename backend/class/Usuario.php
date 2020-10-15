@@ -13,6 +13,7 @@ class Usuario extends PersonaFisica {
 	private $_UltimaConexion;
     private $_idPerfil;
     private $_estaLogueado;
+    private $_imagen;
 
     public $perfil;
 
@@ -96,24 +97,48 @@ class Usuario extends PersonaFisica {
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getImagen()
+    {
+        return $this->_imagen;
+    }
+
+    /**
+     * @param mixed $_imagen
+     *
+     * @return self
+     */
+    public function setImagen($_imagen)
+    {
+        $this->_imagen = $_imagen;
+
+        return $this;
+    }
+
     public static function obtenerPorId($id) {
 
-        $sql = "SELECT * FROM usuario AS u JOIN personafisica AS p ON u.id_persona_fisica = p.id_persona_fisica WHERE id_usuario =" . $id;
+        $sql = "SELECT u.id_usuario, u.id_perfil, u.user, u.clave, u.ultima_conexion, u.imagen, p.id_persona_fisica, p.id_persona, p.nombre, p.apellido, p.dni FROM usuario AS u JOIN personafisica AS p ON u.id_persona_fisica = p.id_persona_fisica WHERE id_usuario =" . $id;
 
 
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);
         $mysql->desconectar();
 
-        $data = $datos->fetch_assoc();
-        $usuarop = self::_generarCliente($data);
-        return $usuarop;
+
+        $registro = $datos->fetch_assoc();
+
 
         $usuario = new Usuario($registro['nombre'], $registro['apellido']);
         $usuario->_idUsuario = $registro['id_usuario'];
         $usuario->_idPersonaFisica = $registro['id_persona_fisica'];
+        $usuario->_idPerfil = $registro['id_perfil'];
         $usuario->_user = $registro['user'];
-        $usuario->_dni = $registro['dni'];
+        $usuario->_imagen = $registro['imagen'];
+
+        $usuario->perfil = Perfil::obtenerPorId($usuario->_idPerfil);
+        //$usuario->_dni = $registro['dni'];
 
 
         return $usuario;
@@ -121,19 +146,14 @@ class Usuario extends PersonaFisica {
 
     }
 
-    private function _generarCliente($data) {
-        $usuario = new Usuario($data['nombre'], $data['apellido']);
-        $usuario->_idUsuario = $data['id_usuario'];
-        $usuario->_idPersonaFisica = $data['id_persona_fisica'];
-        $usuario->_user = $data['user'];
-        $usuario->_dni = $data['dni'];
-        
-        return $usuario;
+    public function setPerfil() {
+        $this->usuario = Perfil::obtenerPorId($this->_idPerfil);
     }
+
 
     public function obtenerTodo(){
 
-        $sql = "SELECT personafisica.id_persona_fisica, personafisica.nombre, personafisica.apellido, personafisica.dni, usuario.id_usuario, usuario.user, usuario.ultima_conexion "
+        $sql = "SELECT personafisica.id_persona_fisica, personafisica.nombre, personafisica.apellido, personafisica.dni, usuario.id_usuario, usuario.user, usuario.ultima_conexion, usuario.imagen "
              . "FROM personafisica "
              . "INNER JOIN usuario ON usuario.id_persona_fisica = personafisica.id_persona_fisica";
 
@@ -162,8 +182,10 @@ class Usuario extends PersonaFisica {
             $usuario = new Usuario($registro['nombre'], $registro['apellido']);
             $usuario->_idUsuario = $registro['id_usuario'];
             $usuario->_idPersonaFisica = $registro['id_persona_fisica'];
+            //$usuario->_idPerfil = $registro['id_perfil'];
             $usuario->_user = $registro['user'];
-            $usuario->_dni = $registro['dni'];
+            $usuario->_imagen = $registro['imagen'];
+            //$usuario->_dni = $registro['dni'];
 
             $listado[] = $usuario;
         }
@@ -173,23 +195,24 @@ class Usuario extends PersonaFisica {
 
     public function guardar() {
         parent::guardar();
-        $sql = "INSERT INTO usuario (id_usuario,id_persona_fisica,user, clave) VALUES (NULL, $this->_idPersonaFisica, '$this->_user', '$this->_clave')";
+        $sql = "INSERT INTO usuario (id_usuario,id_persona_fisica,id_perfil,user, clave, imagen) VALUES (NULL, $this->_idPersonaFisica, $this->_idPerfil, '$this->_user', '$this->_clave', '$this->_imagen')";
 
         $mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
-        $this->_idUsuario = $idUsuario;
+        $this->_idUsuario = $idInsertado;
     }
 
     public function actualizar() {
         parent::actualizar();
-        $sql = "UPDATE usuario SET user = '$this->_user' "
+        $sql = "UPDATE usuario SET user = '$this->_user', imagen = '$this->_imagen', id_perfil = $this->_idPerfil "
         . "WHERE id_usuario = $this->_idUsuario";
     
         $mysql = new MySQL();
         $mysql->actualizar($sql);
 
         //echo $sql;
+        //exit;
 
     }
 
@@ -211,9 +234,10 @@ class Usuario extends PersonaFisica {
             $usuario->_idPersona = $registro['id_persona'];
             $usuario->_idPersonaFisica = $registro['id_persona_fisica'];
             $usuario->_user = $registro['user'];
-            $usuario->_dni = $registro['dni'];
+            //$usuario->_dni = $registro['dni'];
             $usuario->_idPerfil = $registro['id_perfil'];
             $usuario->_UltimaConexion = $registro['ultima_conexion'];
+            $usuario->_imagen = $registro['imagen'];
             $usuario->_estaLogueado = true;
 
             $usuario->perfil = Perfil::obtenerPorId($usuario->_idPerfil);
@@ -257,6 +281,7 @@ class Usuario extends PersonaFisica {
         return $this->_estaLogueado;
     }
    
+
 }
 
 

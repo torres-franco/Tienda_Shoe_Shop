@@ -3,11 +3,30 @@
 session_start();
 
 require_once "../../../class/Usuario.php";
+require_once "../../../config.php";
 
 $nombre = $_POST['txtNombre'];
 $apellido = $_POST['txtApellido'];
+$perfil = $_POST['cboPerfil'];
 $user = $_POST['txtUser'];
 $clave = $_POST['txtClave'];
+$imagen = $_FILES['fileImagen'];
+
+
+$extension = pathinfo($imagen['name'], PATHINFO_EXTENSION);
+
+
+$fechaHora = date("dmYHis");
+
+$nombreImagen = $fechaHora . "_" .$imagen['name'];
+
+$rutaImagen = DIR_IMAGENES . $nombreImagen;
+
+move_uploaded_file($imagen['tmp_name'], $rutaImagen);
+
+
+//highlight_string(var_export($imagen, true));
+//exit;
 
 
 
@@ -52,14 +71,18 @@ if (empty(trim($clave))) {
 }
 
 $usuario = new Usuario($nombre, $apellido);
+$usuario->setIdPerfil($perfil);
 $usuario->setUser($user);
 $usuario->setClave($clave);
+$usuario->setImagen($nombreImagen);
 
 $usuario->guardar();
 
+
 header("location: ../listado.php?mensaje=1");
 
-//highlight_string(var_export($cliente, true));
+//highlight_string(var_export($usuario, true));
+//exit;
 
 
 

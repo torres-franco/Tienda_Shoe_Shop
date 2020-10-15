@@ -48,5 +48,10 @@
 <script src="../../static/dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../static/dist/js/demo.js"></script>
+<!--Validaciones JS-->
+<script src="../../static/dist/validaciones/cliente.js"></script>
+<script src="../../static/dist/validaciones/producto.js"></script>
+<script src="../../static/dist/validaciones/proveedor.js"></script>
+<script src="../../static/dist/validaciones/usuario.js"></script>
 </body>
 </html>

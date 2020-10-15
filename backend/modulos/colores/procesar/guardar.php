@@ -18,7 +18,7 @@ $color = new Color($descripcion);
 
 $color->guardar();
 
-header("location: ../listado.php");
+header("location: ../../productos/alta.php");
 
 //highlight_string(var_export($barrio, true));
 

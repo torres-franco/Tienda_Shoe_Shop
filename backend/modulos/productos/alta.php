@@ -226,7 +226,7 @@ $listadoColor = Color::obtenerTodos();
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
                         <label for="txtPrecio">Precio:</label>
-                        <input type="text" class="form-control" name="txtPrecio" id="txtPrecio">
+                        <input type="number" class="form-control" name="txtPrecio" id="txtPrecio">
                       </div>
                     </div>
 
@@ -311,11 +311,10 @@ $listadoColor = Color::obtenerTodos();
                 <!-- /.card-body -->
 
                 <div class="card-body">
-                
-                      <a href="listado.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      
+                      <a href="listado.php" class="btn btn-secondary" role="button">Cancelar</a>
                   
-                  
-                      <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatosProductos();" value="Guardar">
                    
                 </div>
               </form>

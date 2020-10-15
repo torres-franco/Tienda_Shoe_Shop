@@ -7,7 +7,7 @@ require_once 'PersonaFisica.php';
 
 class Cliente extends PersonaFisica {
 
-	private $_idCliente;
+	public $_idCliente;
 
 
     /**
@@ -95,6 +95,36 @@ class Cliente extends PersonaFisica {
 		}
 		return $listado;
     }
+
+
+    public static function obtenerPorIdPedido($idPedido) {
+        
+        $sql = "SELECT pedido.id_pedido, pedido.id_pedido_estado, cliente.id_cliente, personafisica.id_persona_fisica, personafisica.id_persona, personafisica.nombre, personafisica.apellido, personafisica.dni, personafisica.fecha_nacimiento, personafisica.genero FROM pedido 
+            INNER JOIN cliente ON pedido.id_cliente = cliente.id_cliente
+            INNER JOIN personafisica ON cliente.id_persona_fisica = personafisica.id_persona_fisica
+            WHERE id_pedido = " . $idPedido;
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $registro = $datos->fetch_assoc();
+        
+        $cliente = new Cliente($registro['nombre'], $registro['apellido']);   
+        $cliente->_idCliente = $registro['id_cliente'];
+        $cliente->_idPersona = $registro['id_persona'];
+        $cliente->_idPersonaFisica = $registro['id_persona_fisica'];
+        $cliente->_dni = $registro['dni'];
+        $cliente->_fechaNacimiento = $registro['fecha_nacimiento'];
+        $cliente->_genero = $registro['genero'];
+        $cliente->setDireccion();
+        $cliente->setContactos();
+
+        return $cliente;
+
+    }
+
+    
 
 
     public function guardar() {

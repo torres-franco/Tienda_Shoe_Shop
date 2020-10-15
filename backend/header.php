@@ -2,6 +2,7 @@
 
 require_once "class/Usuario.php";
 
+
 session_start();
 
 if (!isset($_SESSION['usuario'])) {
@@ -37,6 +38,7 @@ $usuario = $_SESSION['usuario'];
   <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="../../static/plugins/daterangepicker/daterangepicker.css">
+
   <!-- summernote -->
   <link rel="stylesheet" href="../../static/plugins/summernote/summernote-bs4.css">
   <!-- Google Font: Source Sans Pro -->
@@ -83,7 +85,7 @@ $usuario = $_SESSION['usuario'];
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-      <img src="../../static/dist/img/logo.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      <img src="../../static/dist/img/logo/logo.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">Shoe Shop</span>
     </a>
@@ -92,11 +94,11 @@ $usuario = $_SESSION['usuario'];
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
+        <!--<div class="image">
           <img src="../../static/dist/img/user.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
+        </div>-->
         <div class="info d-block">
-          <h5 class="m-0 text-light"> Hola, <?php echo $usuario; ?></h5>
+          <h5 class="m-0 text-light"> Usuario: <?php echo $usuario; ?></h5>
           
         </div>
       </div>

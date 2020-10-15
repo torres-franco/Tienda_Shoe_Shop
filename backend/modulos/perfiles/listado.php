@@ -3,6 +3,19 @@
 require_once '../../class/Perfil.php';
 //require_once '../../class/PerfilModulo.php';
 
+const PERFIL_GUARDADO = 1;
+const PERFIL_MODIFICADO = 2;
+const PERFIL_ELIMINADO = 3;
+
+if (isset($_GET['mensaje'])) {
+    $mensaje = $_GET['mensaje'];
+
+} else {
+    
+    $mensaje = 0;
+
+}
+
 $listadoPerfil = Perfil::obtenerTodos();
 
 //$listadoPerfilModulo = PerfilModulo::obtenerTodos();
@@ -35,6 +48,38 @@ $listadoPerfil = Perfil::obtenerTodos();
       </div><!-- /.container-fluid -->
     </div>
 
+    <?php if ($mensaje == PERFIL_GUARDADO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Perfil guardado correctamente.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+    <?php elseif ($mensaje == PERFIL_MODIFICADO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Perfil actualizado correctamente.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+    <?php elseif ($mensaje == PERFIL_ELIMINADO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Perfil eliminado correctamente.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+    <?php endif ?>
+
 
     <section class="content">
     	<div class="row">
@@ -46,13 +91,13 @@ $listadoPerfil = Perfil::obtenerTodos();
                 </h3>
 
                 <div class="card-tools">
-                  <div class="input-group input-group-sm pt-1" style="width: 150px;">
+                  <!--<div class="input-group input-group-sm pt-1" style="width: 150px;">
                     <input type="text" name="table_search" class="form-control float-right" placeholder="Buscar...">
 
                     <div class="input-group-append">
                       <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                     </div>
-                  </div>
+                  </div>-->
                 </div>
               </div>
               <!-- /.card-header -->

@@ -46,8 +46,8 @@ exit;*/
             <div class="card">
               
 
-            <div class="card-body table-responsive p-0">
-              <table class="table table-hover text-center">
+            <div class="card-body p-0">
+              <table class="table table-hover text-center table-responsive-lg">
   		          <thead>
                   <tr>
                     <th>ID</th>
@@ -56,11 +56,6 @@ exit;*/
                     <th>DNI</th>
                     <th>Fecha de Nacimiento</th>
                     <th>Género</th>
-                    <th>Dirección</th>
-                    <th>Contacto <a href="/proyecto_shoe_shop/backend/modulos/contactos/alta.php?idPersona=<?php echo $cliente->getIdPersona(); ?>&idLlamada=<?php echo $cliente->getIdCliente(); ?>&modulo=clientes">
-                        <i class="fas fa-plus-circle"></i> Agregar
-                      </a>
-                      </th>
                     <th>Estado</th>
                   </tr>
                 </thead>
@@ -73,53 +68,135 @@ exit;*/
                     <td> <?php echo $cliente->getDni(); ?> </td>
                     <td> <?php echo $cliente->getFechaNacimiento(); ?> </td>
                     <td> <?php echo $cliente->getGenero(); ?> </td>
-                    <td> 
-
-                    <?php if (is_null($cliente->direccion)) : ?>
-
-
-                      <a href="/proyecto_shoe_shop/backend/modulos/direcciones/alta.php?idPersona=<?php echo $cliente->getIdPersona(); ?>&idCliente=<?php echo $cliente->getIdCliente(); ?>&modulo=clientes">
-                      <i class="fas fa-plus-circle"></i> Agregar
-                      </a>
-
-                    <?php else: ?>
-
-                      <?php echo $cliente->direccion; ?>
-                      
-                      <a href="/proyecto_shoe_shop/backend/modulos/direcciones/actualizar.php?idDireccion=<?php echo $cliente->direccion->getIdDireccion(); ?>&idPersona=<?php echo $cliente->getIdPersona(); ?>&idCliente=<?php echo $cliente->getIdCliente(); ?>">
-                      <i class="fas fa-edit" title="Editar dirección"></i>
-                      </a>
-
-                    <?php endif ?>
-
-                    </td>
-
-                    <td class="text-center">
-
-                      <?php foreach ($cliente->arrContactos as $contacto) : ?>
-
-                      <?= utf8_encode($contacto); ?>
-
-                        <a class="btn btn-danger btn-sm" href="/proyecto_shoe_shop/backend/modulos/contactos/procesar/eliminar.php?id=<?php echo $contacto->getIdTipoContactoPersona(); ?>" role="button" title="Eliminar">
-                      <i class="fas fa-trash-alt"></i>
-                      </a>
-
-                      <?php endforeach?>
-
-                    </td>
-
-                    <td> <?php echo $cliente->getEstado(); ?> </td>
-                    
+                    <td> <?php echo $cliente->getEstado(); ?> </td>           
                   </tr>
                 </tbody>
               </table>
             </div>
+
+
+
     <!-- /.card-body -->
           </div>
             <!-- /.card -->
         </div>
   
       </div>
+
+    </section>
+
+  <section class="content">
+
+      <div class="row">
+          <div class="col-6">
+            <div class="card">
+              
+
+            <div class="card-body p-0">
+              <table class="table">
+                <thead>
+                  <tr>
+                    
+                    <th>Contactos
+
+                      <a href="/proyecto_shoe_shop/backend/modulos/contactos/alta.php?idPersona=<?php echo $cliente->getIdPersona(); ?>&idLlamada=<?php echo $cliente->getIdCliente(); ?>&modulo=clientes">
+
+                      <i class="fas fa-plus-circle"></i> Agregar
+
+                      </a>
+
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody class="text-center">
+                  <tr>    
+
+                    <td>
+
+                      <?php foreach ($cliente->arrContactos as $contacto) : ?>
+
+                      <?= utf8_encode($contacto); ?>
+
+                        <a class="btn btn-link btn-sm text-danger" href="/proyecto_shoe_shop/backend/modulos/contactos/procesar/eliminar.php?id=<?php echo $contacto->getIdTipoContactoPersona(); ?>&idLlamada=<?php echo $cliente->getIdCliente(); ?>&modulo=clientes" role="button" title="Eliminar">
+                          <i class="fas fa-times"></i>
+                        </a> 
+
+                        <br>
+
+                      <?php endforeach?>
+
+                    </td>                   
+                    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+    <!-- /.card-body -->
+          </div>
+            <!-- /.card -->
+        </div>
+
+      
+        <div class="col-6">
+          <div class="card">
+
+            <div class="card-body p-0">
+              <table class="table">
+                <thead>
+                  <tr>
+                    
+                    <th>Dirección
+
+                      <?php if (is_null($cliente->direccion)) : ?>
+
+
+                      <a href="/proyecto_shoe_shop/backend/modulos/direcciones/alta.php?idPersona=<?php echo $cliente->getIdPersona(); ?>&idLlamada=<?php echo $cliente->getIdCliente(); ?>&modulo=clientes">
+                      <i class="fas fa-plus-circle"></i> Agregar
+                      </a>
+
+                      <?php else: ?>
+
+                        <a href="/proyecto_shoe_shop/backend/modulos/direcciones/actualizar.php?idDireccion=<?php echo $cliente->direccion->getIdDireccion(); ?>&idPersona=<?php echo $cliente->getIdPersona(); ?>&idLlamada=<?php echo $cliente->getIdCliente(); ?>&modulo=clientes">
+                      <i class="fas fa-edit" title="Editar dirección"></i>
+                      </a>
+
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody class="text-center">
+                  <tr>    
+
+                    <td> 
+
+                    
+
+                      <?php echo $cliente->direccion; ?>
+                      
+                      
+
+                    <?php endif ?>
+
+                    </td>                  
+                    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+            
+    <!-- /.card-body -->
+          </div>
+            <!-- /.card -->
+        </div>
+  
+      <!--</div>-->
+
+      </div>
+
 
     </section>
 

@@ -4,7 +4,7 @@ require_once '../../class/Usuario.php';
 
 $id = $_GET['id'];
 
-$usuario = Usuario::obtenerPorId($id);
+$usuarioDetalle = Usuario::obtenerPorId($id);
 
 ?>
 
@@ -37,44 +37,49 @@ $usuario = Usuario::obtenerPorId($id);
 	
 	    
     <section class="content">
-      <div class="row">
-          <div class="col-12">
-            <div class="card">
-              
+      <div class="row justify-content-center mt-3 pt-3">
+          
 
-            <div class="card-body table-responsive p-0">
-              <table class="table table-hover text-center">
-  		          <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <!--<th>DNI</th>-->
-                    <th>Usuario</th>
-                    <th>Estado</th>
-                  </tr>
-                </thead>
+        <div class="col-md-5 .offset-md-3">
+          <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle"
+                       src="../../imagenes/usuario/<?php echo $usuarioDetalle->getImagen(); ?>"
+                       alt="User profile picture">
+                </div>
 
-                <tbody>
-                  <tr>
-                    <td> <?php echo $usuario->getIdUsuario(); ?> </td>
-                    <td> <?php echo $usuario->getNombre(); ?> </td>
-                    <td> <?php echo $usuario->getApellido(); ?> </td>
-                    <!--<td> <?php echo $usuario->getDni(); ?> </td>-->
-                    <td> <?php echo $usuario->getUser(); ?> </td>
-                    <td> <?php echo $usuario->getEstado(); ?> </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-    <!-- /.card-body -->
-          </div>
-            <!-- /.card -->
-        </div>
+                <h3 class="profile-username text-center">
+                  <?php echo $usuarioDetalle->getNombre(); ?>
+                  <?php echo $usuarioDetalle->getApellido(); ?> 
+                </h3>
+
+                <p class="text-muted text-center"><b>User:</b> <?php echo $usuarioDetalle->getUser(); ?> </p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                  <li class="list-group-item">
+                    <b>ID</b> <a class="float-right"> <?php echo $usuarioDetalle->getIdUsuario(); ?> </a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Perfil</b> <a class="float-right"> <?php echo $usuarioDetalle->perfil->getDescripcion(); ?> </a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Estado</b> <a class="float-right"> <?php echo $usuarioDetalle->getEstado(); ?> </a>
+                  </li>
+                </ul>
+
+                <!--<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>-->
+              </div>
+              <!-- /.card-body -->
+      </div>
+    </div>
   
       </div>
 
+
     </section>
+
+
 
   </div>
 

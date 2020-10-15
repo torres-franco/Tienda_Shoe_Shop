@@ -70,6 +70,122 @@ $proveedor = Proveedor::obtenerPorId($id);
 
     </section>
 
+    <section class="content">
+
+
+      <div class="row">
+          <div class="col-6">
+            <div class="card">
+              
+
+            <div class="card-body p-0">
+              <table class="table">
+                <thead>
+                  <tr>
+                    
+                    <th>Contactos
+
+                      <a href="/proyecto_shoe_shop/backend/modulos/contactos/alta.php?idPersona=<?php echo $proveedor->getIdPersona(); ?>&idLlamada=<?php echo $proveedor->getIdProveedor(); ?>&modulo=proveedores">
+
+                      <i class="fas fa-plus-circle"></i> Agregar
+
+                      </a>
+
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody class="text-center">
+                  <tr>    
+
+                    <td>
+
+                      <?php foreach ($proveedor->arrContactos as $contacto) : ?>
+
+                      <?= utf8_encode($contacto); ?>
+
+                        <a class="btn btn-link text-danger" href="/proyecto_shoe_shop/backend/modulos/contactos/procesar/eliminar.php?id=<?php echo $contacto->getIdTipoContactoPersona(); ?>&idLlamada=<?php echo $proveedor->getIdProveedor(); ?>&modulo=proveedores" role="button" title="Eliminar">
+                          <i class="fas fa-times"></i>
+                        </a> 
+
+                        <br>
+
+                      <?php endforeach?>
+
+                    </td>                   
+                    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+    <!-- /.card-body -->
+          </div>
+            <!-- /.card -->
+        </div>
+
+        <div class="col-6">
+          <div class="card">
+
+            <div class="card-body p-0">
+              <table class="table">
+                <thead>
+                  <tr>
+                    
+                    <th>Dirección
+
+                      <?php if (is_null($proveedor->direccion)) : ?>
+
+
+                      <a href="/proyecto_shoe_shop/backend/modulos/direcciones/alta.php?idPersona=<?php echo $proveedor->getIdPersona(); ?>&idLlamada=<?php echo $proveedor->getIdProveedor(); ?>&modulo=proveedores">
+                      <i class="fas fa-plus-circle"></i> Agregar
+                      </a>
+
+                      <?php else: ?>
+
+                        <a href="/proyecto_shoe_shop/backend/modulos/direcciones/actualizar.php?idDireccion=<?php echo $proveedor->direccion->getIdDireccion(); ?>&idPersona=<?php echo $proveedor->getIdPersona(); ?>&idLlamada=<?php echo $proveedor->getIdProveedor(); ?>&modulo=proveedores">
+                      <i class="fas fa-edit" title="Editar dirección"></i>
+                      </a>
+
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody class="text-center">
+                  <tr>    
+
+                    <td> 
+
+                    
+
+                      <?php echo $proveedor->direccion; ?>
+                      
+                      
+
+                    <?php endif ?>
+
+                    </td>                  
+                    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+            
+    <!-- /.card-body -->
+          </div>
+            <!-- /.card -->
+        </div>
+
+  
+      <!--</div>-->
+
+      </div>
+
+
+    </section>
+
   </div>
 
 <?php

@@ -1,11 +1,14 @@
 <?php
 
+//require_once '../../class/Cliente.php';
+
+
 require_once '../../class/Barrio.php';
 require_once '../../class/Ciudad.php';
 require_once '../../class/Provincia.php';
 
 $idPersona = $_GET['idPersona'];
-$idCliente = $_GET['idCliente'];
+$idLlamada = $_GET['idLlamada'];
 $moduloLlamada = $_GET['modulo'];
 
 $listadoBarrio = Barrio::obtenerTodos();
@@ -156,9 +159,13 @@ $listadoProvincia = Provincia::obtenerTodos();
                       <input type="hidden" name="txtIdPersona" value="<?php echo $idPersona ?>">
                     </div>
                     <div>
-                      <label for="txtIdCliente"></label>
-                      <input type="hidden" name="txtIdCliente" value="<?php echo $idCliente ?>">
+                      <label for="txtIdLlamada"></label>
+                      <input type="hidden" name="txtIdLlamada" value="<?php echo $idLlamada ?>">
                     </div>
+                    <!--<div>
+                      <label for="txtIdProveedor"></label>
+                      <input type="hidden" name="txtIdProovedor" value="<?php echo $idProovedor ?>">
+                    </div>-->
                     <div>
                       <label for="txtModulo"></label>
                       <input type="hidden" name="txtModulo" value="<?php echo $moduloLlamada ?>">
@@ -203,7 +210,7 @@ $listadoProvincia = Provincia::obtenerTodos();
 
                 <div class="card-body">
                 
-                      <a href="../clientes/listado.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="../<?php echo $moduloLlamada ?>/detalle.php?id=<?php echo $idLlamada ?>" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
                   
                   
                       <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>

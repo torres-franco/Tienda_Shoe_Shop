@@ -93,8 +93,8 @@ $listadoClientes = Cliente::obtenerTodos();
                 </div>
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-center">
+              <div class="card-body p-0">
+                <table class="table table-responsive-lg table-hover text-center">
                   <thead>
                     <tr>
                       <th>DNI</th>
@@ -121,7 +121,7 @@ $listadoClientes = Cliente::obtenerTodos();
                             
 								            <a class="btn btn-success btn-sm" href="actualizar.php?id=<?php echo $cliente->getIdCliente(); ?>" role="button" title="Editar">    <i class="fas fa-pen"></i>
                             </a>
-								            <!--<a class="btn btn-danger btn-sm" href="procesar/eliminar.php?id=<?php echo $cliente->getIdCliente(); ?>" role="button" title="Eliminar"><i class="fas fa-trash-alt"></i></a>-->
+								            
 							           </td>
 						          </tr>
                     

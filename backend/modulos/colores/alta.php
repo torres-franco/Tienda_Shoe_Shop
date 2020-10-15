@@ -15,7 +15,16 @@
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">Carga de colores</h1>
           </div><!-- /.col -->
-
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right pt-2">
+              <li class="breadcrumb-item">
+                <a class="btn btn-outline-primary btn-sm" href="listado.php">
+                  <i class="fas fa-list"></i>
+                  Listado
+                </a>
+              </li> 
+            </ol>
+          </div>
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </section>
@@ -56,7 +65,7 @@
 
                 <div class="card-body">
                 
-                      <a href="../colores/listado.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="../productos/alta.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
                   
                   
                       <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>

@@ -5,21 +5,22 @@ require_once 'Marca.php';
 require_once 'Categoria.php';
 require_once 'Color.php';
 require_once 'Talle.php';
+//require_once 'Config.php';
 
 /**
   * 
   */
  class Producto {
 	
-	private $_idProducto;
-	private $_precio;
-	private $_stockActual;
-    private $_idMarca;
-	private $_stockMinimo;
-	private $_descripcion;
-	private $_idCategoria;
-	private $_idTalle; /*clase Talle*/
-	private $_idColor;
+	public $_idProducto;
+	public $_precio;
+	public $_stockActual;
+    public $_idMarca;
+	public $_stockMinimo;
+	public $_descripcion;
+	public $_idCategoria;
+	public $_idTalle;
+	public $_idColor;
 
     public $marca; /*clase Marca*/
     public $categoria; /*clase Categoria*/
@@ -187,13 +188,13 @@ require_once 'Talle.php';
 
         $producto = new Producto();
         $producto->_idProducto = $registro['id_producto'];
-        //$producto->_idMarca = $registro['id_marca'];
+        $producto->_idMarca = $registro['id_marca'];
         $producto->setMarca();
-        //$producto->_idCategoria = $registro['id_categoria'];
+        $producto->_idCategoria = $registro['id_categoria'];
         $producto->setCategoria();
-        //$producto->_idColor = $registro['id_color'];
+        $producto->_idColor = $registro['id_color'];
         $producto->setColor();
-        //$producto->_idTalle = $registro['id_talle'];
+        $producto->_idTalle = $registro['id_talle'];
         $producto->setTalle();
         $producto->_descripcion = $registro['descripcion'];
         $producto->_precio = $registro['precio'];
@@ -224,10 +225,14 @@ require_once 'Talle.php';
 		while ($registro = $datos->fetch_assoc()) {
 			$producto = new Producto();
 			$producto->_idProducto = $registro['id_producto'];
+            $producto->_idMarca = $registro['id_marca'];
 			$producto->setMarca();
+            $producto->_idCategoria = $registro['id_categoria'];
             $producto->setCategoria();
+            $producto->_idColor = $registro['id_color'];
             $producto->setColor();
-			$producto->setTalle();
+            $producto->_idTalle = $registro['id_talle'];
+            $producto->setTalle();
             $producto->_descripcion = $registro['descripcion'];
 			$producto->_precio = $registro['precio'];
 			$producto->_stockActual = $registro['stock_actual'];
@@ -237,6 +242,35 @@ require_once 'Talle.php';
 		}
 		return $listado;
     }
+
+    public static function obtenerPorIdPedidoDetalle($idPedidoDetalle) {
+        
+        $sql = "SELECT pedidodetalle.id_pedido_detalle, producto.id_producto, producto.descripcion, producto.precio FROM pedidoDetalle INNER JOIN producto ON pedidoDetalle.id_producto = producto.id_producto WHERE id_pedido_detalle = " . $idPedidoDetalle;
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $registro = $datos->fetch_assoc();
+
+        $producto = new Producto();   
+        $producto->_idProducto = $registro['id_producto'];
+        $producto->_idPedidoDetalle = $registro['id_pedido_detalle'];
+        $producto->_idMarca = $registro['id_marca'];
+        $producto->setMarca();
+        $producto->_idCategoria = $registro['id_categoria'];
+        $producto->setCategoria();
+        $producto->_idColor = $registro['id_color'];
+        $producto->setColor();
+        $producto->_idTalle = $registro['id_talle'];
+        $producto->setTalle();
+        $producto->_precio = $registro['precio'];
+        $producto->_descripcion = $registro['descripcion'];
+
+        return $producto;
+
+    }
+
 
     public function guardar() {
 
@@ -280,6 +314,10 @@ require_once 'Talle.php';
 
     public function setTalle() {
         $this->talle = Talle::obtenerPorIdProducto($this->_idProducto);
+    }
+
+    public function __toString() {
+        return $this->_descripcion;
     }
     
 
@@ -340,6 +378,31 @@ require_once 'Talle.php';
 
         return $this;
     }
+
+    
+    public function buscarPorDescripcion($descripcion){
+        /*
+        obtiene todos los productos para el listado
+        */
+        $sql = "SELECT * FROM producto WHERE descripcion LIKE '% ".$descripcion." %'";
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoProducto($datos);
+
+        return $listado;
+    }
+
+    /*public function consultarStock(){
+        $sql = "";
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+    }*/
+
+
 }
 
 

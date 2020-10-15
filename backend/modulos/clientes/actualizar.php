@@ -154,11 +154,6 @@ $cliente = Cliente::obtenerPorId($id);
                     </div>
                   </div>
 
-                  <!--<div class="form-group">
-                    <label>Género:</label>
-                    <input type="txt" class="form-control" name="txtGenero" value="<?php echo $cliente->getGenero(); ?>">
-                  </div>-->
-
                   <div class="form-group">
                     <label>Género</label>
                     <select for="txtGenero" class="form-control" name="txtGenero">
