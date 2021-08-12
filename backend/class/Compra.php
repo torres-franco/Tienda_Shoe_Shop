@@ -160,6 +160,8 @@ require_once 'TipoPago.php';
     {
         $this->_arrDetalleCompra = DetalleCompra::obtenerPorIdCompra($this->_idCompra);
 
+        //var_dump($this->_arrDetalleCompra);
+
         return $this;
     }
 
@@ -167,7 +169,7 @@ require_once 'TipoPago.php';
     
 
     public static function obtenerTodos() {
-    	$sql = "SELECT * FROM compra";
+    	$sql = "SELECT * FROM compra ORDER BY id_compra DESC LIMIT 6";
 
     	$mysql = new MySQL();
     	$datos = $mysql->consultar($sql);

@@ -5,6 +5,7 @@ session_start();
 require_once "../../../class/Modulo.php";
 
 $descripcion = $_POST['txtDescripcion'];
+$comprobar = Modulo::comprobarExistenciaModulo($descripcion);
 $directorio = $_POST['txtDirectorio'];
 
 

@@ -1,6 +1,15 @@
 <?php
 
 require_once "class/Usuario.php";
+//require_once "class/Perfil.php";
+
+//$perfil = Perfil::obtenerPorId(1);
+//$usuario = Usuario::obtenerTodo();
+
+
+//highlight_string(var_export($perfil,true));
+
+//exit;
 
 
 session_start();
@@ -43,6 +52,7 @@ $usuario = $_SESSION['usuario'];
   <link rel="stylesheet" href="../../static/plugins/summernote/summernote-bs4.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -54,9 +64,9 @@ $usuario = $_SESSION['usuario'];
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <!--<li class="nav-item d-none d-sm-inline-block">
-        <a href="/proyecto_shoe_shop/backend/modulos/dashboard/listado.php" class="nav-link">Inicio</a>
-      </li>-->
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="../../../frontend/dist/index.html" class="nav-link"><i class="fas fa-globe"></i> Ir a la página</a>
+      </li>
     </ul>
 
     <!-- Right navbar links -->
@@ -112,13 +122,15 @@ $usuario = $_SESSION['usuario'];
           <?php foreach ($usuario->perfil->getModulos() as $modulo): ?>
           <li class="nav-item">
             <a href="/proyecto_shoe_shop/backend/modulos/<?php echo $modulo->getDirectorio() ?> /listado.php" class="nav-link">
-              <i class="nav-icon fab fa-codepen"></i>
+              <i class="nav-icon fa fa-circle"></i>
               <p>
               <?php echo $modulo;  ?>
               </p>
-            </a>            
-          </li>
+            </a>
+
+          </li> 
           <?php endforeach ?>
+
           <!--<li class="nav-item">
             <a href="/proyecto_shoe_shop/backend/modulos/clientes/listadoCliente.php" class="nav-link">
               <i class="nav-icon fas fa-users"></i>

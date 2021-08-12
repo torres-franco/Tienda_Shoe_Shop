@@ -8,12 +8,12 @@ require_once 'TipoPago.php';
   */
  class Factura {
 	
-	private $_idFactura;
-    private $_numero;
-    private $_fechaEmsion;
-    private $_tipo;
-    private $_idTipoPago;
-    private $_idPedido;
+	public $_idFactura;
+    public $_numero;
+    public $_fechaEmision;
+    public $_tipo;
+    public $_idTipoPago;
+    public $_idPedido;
 
     public $pedido;
     public $tipoPago;
@@ -62,9 +62,9 @@ require_once 'TipoPago.php';
     /**
      * @return mixed
      */
-    public function getFechaEmsion()
+    public function getFechaEmision()
     {
-        return $this->_fechaEmsion;
+        return $this->_fechaEmision;
     }
 
     /**
@@ -72,9 +72,9 @@ require_once 'TipoPago.php';
      *
      * @return self
      */
-    public function setFechaEmsion($_fechaEmsion)
+    public function setFechaEmision($_fechaEmision)
     {
-        $this->_fechaEmsion = $_fechaEmsion;
+        $this->_fechaEmision = $_fechaEmision;
 
         return $this;
     }
@@ -137,7 +137,7 @@ require_once 'TipoPago.php';
         
 
     public static function obtenerTodos() {
-    	$sql = "SELECT * FROM Factura";
+    	$sql = "SELECT * FROM factura ORDER BY id_factura DESC LIMIT 6";
 
     	$mysql = new MySQL();
     	$datos = $mysql->consultar($sql);
@@ -148,6 +148,19 @@ require_once 'TipoPago.php';
     	return $listado;
 
     }
+
+    /*public static function obtenerInforme() {
+        $sql = "SELECT factura.fecha_emision, dp.cantidad, pro.descripcion as Producto, c.descripcion as Categoria, m.descripcion as Marca, SUM(dp.cantidad * dp.precio) as total FROM factura INNER JOIN pedido as p ON p.id_pedido = factura.id_pedido INNER JOIN pedidodetalle as dp ON dp.id_pedido = p.id_pedido INNER JOIN producto as pro ON dp.id_producto = pro.id_producto INNER JOIN categoria as c ON pro.id_categoria = c.id_categoria INNER JOIN marca as m ON pro.id_marca = m.id_marca WHERE factura.fecha_emision BETWEEN '$fechaDesde' AND '$fechaHasta' AND m.id_marca = $marca GROUP BY factura.id_factura";
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoFactura($datos);
+
+        return $listado;
+
+    }*/
 
     /*private function _generarListadoFactura($datos) {
     	$listado = array();
@@ -168,16 +181,42 @@ require_once 'TipoPago.php';
 		return $listado;
     }*/
 
-    public static function obtenerPorId($id) {
+    public function obtenerPorIdNotaCredito($idNotaCredito){
 
-        $sql = "SELECT * FROM factura WHERE id_factura =" . $id;
+        $sql = "SELECT * FROM notacredito INNER JOIN factura ON notacredito.id_factura = factura.id_factura WHERE id_nota_credito = " . $idNotaCredito;
+
 
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);
         $mysql->desconectar();
 
-        $factura = self::_generarListadoFactura($datos);
+        $registro = $datos->fetch_assoc();
 
+        $listado = self::_generarFactura($registro);
+
+        //highlight_string(var_export($registro, true));
+
+        //exit();
+
+        return $listado;
+
+    }
+
+    public static function obtenerPorId($idFactura) {
+
+        $sql = "SELECT * FROM factura WHERE id_factura =" . $idFactura;
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $registro = $datos->fetch_assoc();
+
+        $factura = self::_generarFactura($registro);
+
+        //highlight_string(var_export($registro, true));
+
+        //exit();
 
         return $factura;
 
@@ -186,19 +225,31 @@ require_once 'TipoPago.php';
 
     public function _generarListadoFactura($datos){
         $listado = array();
-        while ($registro = $datos->fetch_assoc())
-            {
-            $factura = self::_generarFactura($registro);
+        while ($registro = $datos->fetch_assoc()) {
+            $factura = new Factura();
+            $factura->_idFactura = $registro['id_factura'];
+            $factura->_numero = $registro['numero'];
+            $factura->_fechaEmision = $registro['fecha_emision'];
+            $factura->_tipo = $registro['tipo'];
+            $factura->_idPedido = $registro['id_pedido'];
+            $factura->setPedido();
+            $factura->_idTipoPago = $registro['id_tipo_pago'];
+            $factura->setTipoPago();
+            
+
             $listado[] = $factura;
-            }
-        return $listado;
+
+          }
+          
+    return $listado;
     }
+
 
     public function _generarFactura ($registro){
         $factura = new Factura();
         $factura->_idFactura = $registro['id_factura'];
         $factura->_numero = $registro['numero'];
-        $factura->_fechaEmsion = $registro['fecha_emision'];
+        $factura->_fechaEmision = $registro['fecha_emision'];
         $factura->_tipo = $registro['tipo'];
         $factura->_idPedido = $registro['id_pedido'];
         $factura->setPedido();
@@ -211,8 +262,8 @@ require_once 'TipoPago.php';
 
     public function guardar() {
 
-        $sql = "INSERT INTO factura (id_factura, id_pedido, numero, fecha_emision) "
-             . "VALUES (NULL, $this->_idPedido, $this->_numero, '$this->_tipo')";
+        $sql = "INSERT INTO factura (id_factura, id_pedido, id_tipo_pago, numero, tipo, fecha_emision) "
+             . "VALUES (NULL, $this->_idPedido, $this->_idTipoPago, $this->_numero, '$this->_tipo', '$this->_fechaEmision')";
 
         //echo $sql;
         //exit;
@@ -273,6 +324,10 @@ require_once 'TipoPago.php';
         $this->_idPedido = $_idPedido;
 
         return $this;
+    }
+
+    public function __toString(){
+        return $this->_tipo;
     }
 }
 

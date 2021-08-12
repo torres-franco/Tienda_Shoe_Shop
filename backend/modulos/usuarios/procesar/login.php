@@ -14,12 +14,22 @@ $usuario = Usuario::login($user, $clave);
 
 
 if ($usuario->estaLogueado()) {
+	$idPerfil = $usuario->perfil->getIdPerfil();
 	session_start();
 	$_SESSION['usuario'] = $usuario;
-	header("location: ../../../modulos/dashboard/listado.php");
+
+	if ($idPerfil == 1) {
+		header("location: ../../../modulos/dashboard/listado.php");
+	} else {
+		header("location: ../../../modulos/bienvenida/listado.php");
+	} 
+
 } else {
-	header("location: ../../../index.php?mensaje=1");
+    
+    header("location: ../../../index.php?mensaje=1");
 
 }
+
+    
 
 ?>

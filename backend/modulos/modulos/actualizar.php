@@ -33,6 +33,27 @@ $modulos = Modulo::obtenerPorId($id);
       </div><!-- /.container-fluid -->
     </section>
 
+      <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+      <div class="content">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="fas text-white fa-exclamation-triangle"></i>
+          <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+      <?php
+          unset($_SESSION['mensaje_error']);
+          endif;
+      ?>
+
+      <h5 class="text-center">
+        <div id="mensajeError" class="text-danger"></div>
+      </h5>
+
 
     <!-- Main content -->
     <section class="content">
@@ -47,7 +68,7 @@ $modulos = Modulo::obtenerPorId($id);
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" method="POST" action="procesar/modificar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/modificar.php">
                 <div class="card-body">
 
                   
@@ -60,14 +81,14 @@ $modulos = Modulo::obtenerPorId($id);
                     <div class="col-sm-6">
                     <div class="form-group">
                       <label for="txtDescripcion">Módulo:</label>
-                      <input type="text" class="form-control" name="txtDescripcion" value="<?php echo $modulos->getDescripcion(); ?>">
+                      <input type="text" class="form-control" name="txtDescripcion" value="<?php echo $modulos->getDescripcion(); ?>" id="txtDescripcion">
                     </div>
                     </div>
                   
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtDirectorio">Directorio:</label>
-                        <input type="text" class="form-control" name="txtDirectorio" value="<?php echo $modulos->getDirectorio(); ?>" >
+                        <input type="text" class="form-control" name="txtDirectorio" value="<?php echo $modulos->getDirectorio(); ?>" id="txtDirectorio">
                       </div>
                     </div>
                   </div>
@@ -79,7 +100,7 @@ $modulos = Modulo::obtenerPorId($id);
                 
                       <a href="listado.php" class="btn btn-secondary" role="button">Cancelar</a>
                   
-                      <input class="btn btn-primary float-right" type="submit" value="Guardar">
+                      <input class="btn btn-primary float-right" type="button" onclick="validarModulo();" value="Guardar">
                    
                 </div>
               </form>

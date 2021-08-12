@@ -90,7 +90,7 @@ $pedido = Pedido::obtenerPorId($id);
                 </div>
 
                 <div class="col-sm-2 float-sm-right">
-                      <b>Fecha emisión:</b> 
+                      <b>Fecha de pedido:</b> 
                         
                         <?php echo $pedido->getFechaPedido(); ?> 
                      
@@ -108,8 +108,8 @@ $pedido = Pedido::obtenerPorId($id);
 
                     <thead>
                       <tr>
-                        <th>Cantidad</th>
                         <th>Descripción</th>
+                        <th>Cantidad</th>
                         <th>Importe Unitario</th>
                         <th>Subtotal</th>
                       </tr>
@@ -118,16 +118,18 @@ $pedido = Pedido::obtenerPorId($id);
                     <tbody>
                       <?php foreach($pedido->getArrDetallePedido() as $detallePedido) :?>
                       <tr>
-                        <td> 
-
-                          <?php echo $detallePedido->getCantidad(); ?>
-
-                        </td>
+                        
                         <td> 
                           <?php echo $detallePedido->producto->categoria->getDescripcion(); ?>
 
                           <?php echo $detallePedido->producto->marca->getDescripcion(); ?>
                           <?php echo $detallePedido->producto->getDescripcion(); ?>
+
+                        </td>
+
+                        <td> 
+
+                          <?php echo $detallePedido->getCantidad(); ?>
 
                         </td>
 

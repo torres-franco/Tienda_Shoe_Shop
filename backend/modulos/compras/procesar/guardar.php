@@ -1,6 +1,7 @@
 <?php
 require_once "../../../class/Compra.php";
 
+
 	$fechaCompra = $_POST['fecha'];
 	$proveedor = $_POST['proveedor'];
     $estadoCompra = $_POST['estado'];
@@ -14,7 +15,7 @@ require_once "../../../class/Compra.php";
     $compra->setIdTipoPago($tipoPago);
     $compra->guardar();
 
-    var_dump($compra);  
+    //var_dump($compra);  
     
    //$detallePedido = new PedidoDetalle($item['id_producto']); // guardamos los detalles
    
@@ -30,6 +31,16 @@ require_once "../../../class/Compra.php";
 		$detalleCompra->guardar();
 
     }
+
+    //$idCompra = $compra->getIdCompra();
+
+    //$producto = Producto::obtenerPorIdCompra($idCompra);
+
+    //$producto->aumentarStock($idCompra);
+
+
+
+    //highlight_string(var_export($producto, true));
 
 
 ?>

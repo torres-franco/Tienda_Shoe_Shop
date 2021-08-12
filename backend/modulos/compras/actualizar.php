@@ -70,6 +70,14 @@ $listadoTipoPago = TipoPago::obtenerTodos();
 
                     <div class="col-md-3 mb-3">
                       <div class="form-group">
+                        <label for="txtFecha">Fecha:</label>
+                        <input type="date" class="form-control" name="txtFecha" id="txtFecha" value="<?php echo $compra->getFechaCompra(); ?>">
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <div class="form-group">
                         <label for="cboProveedor">Proveedor:</label>
                           <select name="cboProveedor" class="form-control" id="cboProveedor">
                             <?php foreach ($listadoProveedor as $proveedor):
@@ -94,13 +102,6 @@ $listadoTipoPago = TipoPago::obtenerTodos();
                       </div>
                     </div>
                   
-                    <div class="col-md-3 mb-3">
-                      <div class="form-group">
-                        <label for="txtFecha">Fecha:</label>
-                        <input type="date" class="form-control" name="txtFecha" id="txtFecha" value="<?php echo $compra->getFechaCompra(); ?>">
-
-                      </div>
-                    </div>
 
                     <div class="col-md-3 mb-3">
                       <div class="form-group">
@@ -386,10 +387,10 @@ function setCantidadProducto(id, descripcion, precio){
   if (cantidad == null || cantidad == ""){ //validación de agregar productos
     return false;
   }
-  /*if(cantidad > stockActual){
-      alert("Uups! el stock insuficiente.");
-      return;
-  }*/
+  if(isNaN(cantidad)){
+    alert("Uups! No es número.");
+    return false;
+  }
 
   let subtotal = calcularSubtotal(cantidad, precio);
   let items = {}; //items del detalle
@@ -530,7 +531,7 @@ function buscarProducto(){
         },
         success: function(data){
           //console.log(data)
-          window.location.href = 'listado.php';
+          window.location.href = 'listado.php?mensaje=2';
         }
       })
     } else {

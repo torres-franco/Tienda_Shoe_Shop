@@ -30,6 +30,27 @@
       </div><!-- /.container-fluid -->
     </section>
 
+      <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+      <div class="content">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="fas text-white fa-exclamation-triangle"></i>
+          <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+      <?php
+          unset($_SESSION['mensaje_error']);
+          endif;
+      ?>
+
+      <h5 class="text-center">
+        <div id="mensajeError" class="text-danger"></div>
+      </h5>
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -43,7 +64,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" method="POST" action="procesar/guardar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
                 <div class="card-body">
 
 
@@ -52,11 +73,9 @@
                     <div class="col-sm-12">
                       <div class="form-group">
                         <label for="txtDescripcion">N° talle:</label>
-                        <input type="number" class="form-control" name="txtDescripcion">
+                        <input type="number" class="form-control" name="txtDescripcion" id="txtDescripcion">
                       </div>
                     </div>
-
-                    
 
                   </div>
 
@@ -66,10 +85,10 @@
 
                 <div class="card-body">
                 
-                      <a href="../productos/alta.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="../talles/listado.php" class="btn btn-secondary" role="button"></i> Cancelar</a>
                   
                   
-                      <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatosTalle();" value="Guardar">
                    
                 </div>
               </form>

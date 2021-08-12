@@ -4,14 +4,14 @@ require_once "../../../class/Pedido.php";
 	$fechaPedido = $_POST['fecha'];
 	$cliente = $_POST['cliente'];
     //$metodoPago = $_POST['metodoPago'];
-    $estadoPedido = $_POST['estado'];
+    //$estadoPedido = $_POST['estado'];
 
 	
     $pedido = new Pedido(); // guardamos la cabecera
     $pedido->setFechaPedido($fechaPedido);
     $pedido->setIdCliente($cliente);
     //$pedido->setMetodoPago($metodoPago);
-    $pedido->setIdPedidoEstado($estadoPedido); //agregar en el construct
+    //$pedido->setIdPedidoEstado($estadoPedido); //agregar en el construct
     $pedido->guardar();
 
     var_dump($pedido);  

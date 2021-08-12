@@ -2,8 +2,21 @@
 
 require_once '../../class/Barrio.php';
 
-$listadoBarrio = Barrio::obtenerTodos();
 
+const BARRIO_GUARDADO = 1;
+const BARRIO_MODIFICADO = 2;
+const BARRIO_ELIMINADO = 3;
+
+if (isset($_GET['mensaje'])) {
+    $mensaje = $_GET['mensaje'];
+
+} else {
+    
+    $mensaje = 0;
+
+}
+
+$listadoBarrio = Barrio::obtenerTodos();
 
 
 ?>
@@ -39,6 +52,37 @@ $listadoBarrio = Barrio::obtenerTodos();
       </div><!-- /.container-fluid -->
     </div>
 
+    <?php if ($mensaje == BARRIO_GUARDADO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Barrio guardado correctamente.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+    <?php elseif ($mensaje == BARRIO_MODIFICADO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Barrio actualizado correctamente.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+    <?php elseif ($mensaje == BARRIO_ELIMINADO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Barrio eliminado correctamente.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+    <?php endif ?>
+
 
     <section class="content">
     	<div class="row">
@@ -52,7 +96,7 @@ $listadoBarrio = Barrio::obtenerTodos();
                 
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
+              <div class="card-body p-0">
                 <table class="table table-hover text-center">
                   <thead>
                     <tr>
@@ -70,9 +114,13 @@ $listadoBarrio = Barrio::obtenerTodos();
                   
                       <tr>
 						            <td> <?php echo $barrio->getIdBarrio(); ?> </td>
-						            <td> <?php echo $barrio->getDescripcion(); ?> </td>
+						            <td> <?php echo utf8_encode($barrio->getDescripcion()); ?> </td>
                         
                         <td>
+
+                          <a class="btn btn-info btn-sm" href="detalle.php?id=<?php echo $barrio->getIdBarrio(); ?>" role="button" title="Ver">
+                              <i class="fas fa-eye"></i>
+                          </a>
 
                           <a class="btn btn-success btn-sm" href="actualizar.php?id=<?php echo $barrio->getIdBarrio(); ?>" role="button" title="Editar">
                               <i class="fas fa-pen"></i>

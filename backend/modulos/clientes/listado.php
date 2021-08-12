@@ -83,18 +83,20 @@ $listadoClientes = Cliente::obtenerTodos();
                 </h3>
 
                 <div class="card-tools">
+                <form action="listadoPorId.php" method="POST">
                   <div class="input-group input-group-sm pt-1" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Buscar por DNI">
+                    <input type="text" name="idCliente" class="form-control float-right" placeholder="Buscar por DNI">
 
                     <div class="input-group-append">
                       <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                     </div>
                   </div>
+                </form>
                 </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
-                <table class="table table-responsive-lg table-hover text-center">
+                <table class="table text-center">
                   <thead>
                     <tr>
                       <th>DNI</th>

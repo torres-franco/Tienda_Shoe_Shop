@@ -12,6 +12,6 @@ $ciudad->setCodigoPostal($codigoPostal);
 
 $ciudad->actualizar();
 
-header("location: ../listado.php");
+header("location: ../listado.php?mensaje=2");
 
 ?>

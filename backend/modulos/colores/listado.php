@@ -5,6 +5,22 @@ require_once '../../class/Color.php';
 $listadoColor = Color::obtenerTodos();
 
 
+require_once '../../class/Cliente.php';
+
+const COLOR_GUARDADO = 1;
+const COLOR_MODIFICADO = 2;
+const COLOR_ELIMINADO = 3;
+
+if (isset($_GET['mensaje'])) {
+    $mensaje = $_GET['mensaje'];
+
+} else {
+    
+    $mensaje = 0;
+
+}
+
+
 
 ?>
 
@@ -30,14 +46,57 @@ $listadoColor = Color::obtenerTodos();
             <h1 class="m-0 text-dark">Listado de Colores</h1>
           </div><!-- /.col -->
 
-          <!--<div class="col-sm-6">
+          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right pt-1">
-              <li class="breadcrumb-item"><a href="#"><i class="fas fa-arrow-left pt-2"></i> Atrás</a></li>   
+              <li class="breadcrumb-item">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <
+                    Volver a productos
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="../productos/alta.php">Alta</a>
+                      <a class="dropdown-item" href="../productos/listado.php">Listado</a>
+                    </div>
+                </div>
+              </li>   
             </ol>
-          </div>-->
+          </div>
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
+
+    <?php if ($mensaje == COLOR_GUARDADO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Color guardado correctamente.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+    <?php elseif ($mensaje == COLOR_MODIFICADO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Color actualizado correctamente.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+    <?php elseif ($mensaje == COLOR_ELIMINADO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Color eliminado correctamente.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+    <?php endif ?>
 
 
     <section class="content">
@@ -52,7 +111,7 @@ $listadoColor = Color::obtenerTodos();
                 
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
+              <div class="card-body p-0">
                 <table class="table table-hover text-center">
                   <thead>
                     <tr>
@@ -70,7 +129,7 @@ $listadoColor = Color::obtenerTodos();
                   
                       <tr>
 						            <td> <?php echo $color->getIdColor(); ?> </td>
-						            <td> <?php echo $color->getDescripcion(); ?> </td>
+						            <td> <?php echo utf8_encode($color->getDescripcion()); ?> </td>
                         
                         <td>
 

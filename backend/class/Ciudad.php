@@ -1,7 +1,7 @@
 <?php 
 
 require_once 'MySQL.php';
-
+require_once 'Provincia.php';
 /**
  * 
  */
@@ -10,6 +10,7 @@ class Ciudad {
 	private $_idCiudad;
 	private $_nombre;
 	private $_codigoPostal;
+    private $_idProvincia;
 
     public function __construct($nombre, $codigoPostal) {
         $this->_nombre = $nombre;
@@ -76,6 +77,26 @@ class Ciudad {
         return $this;
     }
 
+        /**
+     * @return mixed
+     */
+    public function getIdProvincia()
+    {
+        return $this->_idProvincia;
+    }
+
+    /**
+     * @param mixed $_idProvincia
+     *
+     * @return self
+     */
+    public function setIdProvincia($_idProvincia)
+    {
+        $this->_idProvincia = $_idProvincia;
+
+        return $this;
+    }
+
 
     public static function obtenerTodos() {
         $sql = "SELECT * FROM ciudad";
@@ -94,6 +115,7 @@ class Ciudad {
             $ciudad = new Ciudad ($registro['nombre'], $registro['codigo_postal']);
             $ciudad->_idCiudad = $registro['id_ciudad'];
             $ciudad->_idProvincia = $registro['id_provincia'];
+            //$ciudad->setProvincia();
             $listado[] = $ciudad;
         }
         return $listado;
@@ -118,6 +140,8 @@ class Ciudad {
 
         $ciudad = new Ciudad($registro['nombre'], $registro['codigo_postal']);
         $ciudad->_idCiudad = $registro['id_ciudad'];
+        $ciudad->_idProvincia = $registro['id_provincia'];
+        $ciudad->setProvincia();
 
         return $ciudad;
 
@@ -131,7 +155,9 @@ class Ciudad {
 
     public function guardar() {
 
-        $sql = "INSERT INTO ciudad (id_ciudad, nombre, codigo_postal) VALUES (NULL, '$this->_nombre', $this->_codigoPostal)";
+        $sql = "INSERT INTO ciudad (id_ciudad, id_provincia, nombre, codigo_postal) VALUES (NULL, $this->_idProvincia, '$this->_nombre', $this->_codigoPostal)";
+
+        echo $sql;
 
 
         $mysql = new MySQL();
@@ -142,7 +168,7 @@ class Ciudad {
 
     public function actualizar() {
         
-        $sql = "UPDATE ciudad SET nombre = '$this->_nombre', codigo_postal = $this->_codigoPostal WHERE id_ciudad = $this->_idCiudad";
+        $sql = "UPDATE ciudad SET nombre = '$this->_nombre', codigo_postal = $this->_codigoPostal, id_provincia = $this->_idProvincia WHERE id_ciudad = $this->_idCiudad";
         
 
         $mysql = new MySQL();
@@ -156,8 +182,76 @@ class Ciudad {
         $mysql = new MySQL();
         $mysql->eliminar($sql);
     }
-     
 
+    public static function obtenerPorIdBarrio($idBarrio) {
+        
+        $sql = "SELECT barrio.id_barrio, ciudad.id_ciudad, ciudad.nombre, ciudad.codigo_postal, ciudad.id_provincia FROM barrio INNER JOIN ciudad ON barrio.id_ciudad = ciudad.id_ciudad WHERE id_barrio = " . $idBarrio;
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $registro = $datos->fetch_assoc();
+
+        $ciudad = new Ciudad($registro['nombre'], $registro['codigo_postal']);
+        $ciudad->_idCiudad = $registro['id_ciudad'];
+        $ciudad->_idBarrio = $registro['id_barrio'];
+        $ciudad->_idProvincia = $registro['id_provincia'];
+        $ciudad->setProvincia();
+
+        return $ciudad;
+
+    }
+
+    public static function obtenerPorIdProvincia($idCiudad){
+        $sql = "SELECT ciudad.id_ciudad,ciudad.nombre, ciudad.codigo_postal, ciudad.id_provincia FROM ciudad INNER JOIN provincia ON provincia.id_provincia = ciudad.id_provincia WHERE ciudad.id_provincia =". $idCiudad;
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $listado = self::_generarListadoCiudad($datos);
+        return $listado;
+    } 
+
+
+    public function _generarListadoCiudad($datos){
+        $listado = array();
+        while ($registro = $datos->fetch_assoc())
+            {
+            $ciudad = self::_generarListaCiudad($registro);
+            $listado[] = $ciudad;
+            }
+        return $listado;
+    } 
+
+    public function _generarListaCiudad($registro){
+        $ciudad = new Ciudad($registro['nombre'], $registro['codigo_postal']);
+        $ciudad->_idCiudad = $registro ['id_ciudad'];
+        $ciudad->_idProvincia = $registro ['id_provincia'];
+        $ciudad->setProvincia();
+        return $ciudad;        
+    }
+
+
+    public function setProvincia() {
+        $this->provincia = Provincia::obtenerPorIdCiudad($this->_idCiudad);
+    }
+
+    function comprobarExistenciaCiudad($nombre){
+        $sql = "SELECT ciudad.nombre FROM ciudad WHERE nombre = '$nombre' ";
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        if ($result->num_rows > 0 ) {
+            $_SESSION['mensaje_error'] = "La ciudad ya existe en el sistema.";
+            header('Location: ../alta.php');
+            exit;
+        } 
+    }
+     
 }
 
 

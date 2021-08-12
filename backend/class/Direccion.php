@@ -2,6 +2,7 @@
 
 require_once 'MySQL.php';
 require_once 'Provincia.php';
+require_once 'Barrio.php';
 
 /**
  * 
@@ -235,6 +236,7 @@ class Direccion {
             $direccion->_piso = $data['piso'];
             $direccion->_manzana = $data['manzana'];
             $direccion->_idBarrio = $data['id_barrio'];
+            $direccion->setBarrio();
             $direccion->_idPersona = $data['id_persona'];
     
         }
@@ -291,6 +293,10 @@ class Direccion {
         $this->_idPersona = $_idPersona;
 
         return $this;
+    }
+
+    public function setBarrio() {
+        $this->barrio = Barrio::obtenerPorIdDireccion($this->_idDireccion);
     }
 
 }

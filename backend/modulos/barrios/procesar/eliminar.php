@@ -13,6 +13,6 @@ $barrio = Barrio::obtenerPorId($id);
 
 $barrio->eliminar();
 
-header("location: ../listado.php");
+header("location: ../listado.php?mensaje=3");
 
 ?>

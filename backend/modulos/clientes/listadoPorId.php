@@ -1,8 +1,12 @@
 <?php
 
-require_once '../../class/Cliente.php';
+require_once '../../class/PersonaFisica.php';
+require_once '../../class/cliente.php';
 
-$cliente = Cliente::obtenerPorId($_POST['numID']);
+$idCliente = $_POST['idCliente'];
+
+$cliente = Cliente::obtenerPorId($idCliente);
+
 
 ?>
 
@@ -50,14 +54,9 @@ $cliente = Cliente::obtenerPorId($_POST['numID']);
 
 		<tbody>
 			<tr>
-				<th scope="row"> <?php echo $cliente->getIdCliente(); ?> </th>
-				<td> <?php echo $cliente->getIdPersona(); ?> </td>
+        		<td> <?php echo $cliente->getIdCliente(); ?> </td>
 				<td> <?php echo $cliente->getNombre(); ?> </td>
-				<td> <?php echo $cliente->getApellido(); ?> </td>
-				<td> <?php echo $cliente->getNumeroDocumento(); ?> </td>
-				<td> <?php echo $cliente->getFechaNacimiento(); ?> </td>
-				<td> <?php echo $cliente->getCbu(); ?> </td>
-				<td> <?php echo $cliente->getEstado(); ?> </td>
+			
 			</tr>
 		</tbody>
 

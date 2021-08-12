@@ -108,8 +108,8 @@ $compra = Compra::obtenerPorId($id);
 
                     <thead>
                       <tr>
-                        <th>Cantidad</th>
                         <th>Descripción</th>
+                        <th>Cantidad</th>
                         <th>Importe Compra</th>
                         <th>Subtotal</th>
                       </tr>
@@ -119,15 +119,16 @@ $compra = Compra::obtenerPorId($id);
                       <?php foreach($compra->getArrDetalleCompra() as $detalleCompra) :?>
                       <tr>
                         <td> 
-
-                          <?php echo $detalleCompra->getCantidad(); ?>
-
-                        </td>
-                        <td> 
                           <?php echo $detalleCompra->producto->categoria->getDescripcion(); ?>
 
                           <?php echo $detalleCompra->producto->marca->getDescripcion(); ?>
                           <?php echo $detalleCompra->producto->getDescripcion(); ?>
+
+                        </td>
+
+                        <td> 
+
+                          <?php echo $detalleCompra->getCantidad(); ?>
 
                         </td>
 
@@ -177,16 +178,7 @@ $compra = Compra::obtenerPorId($id);
               <!-- this row will not appear when printing -->
               <div class="row no-print mt-3 pt-3">
                 <div class="col-12">
-                  <!--<a href="imprimirFactura.php?id=<?php echo $pedido->getIdCompra(); ?>" target="_blank" class="btn btn-default">
-                    <i class="fas fa-print"></i> Imprimir
-                  </a>
-
-                  <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Cobrar
-                  </button>
-
-                  <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                    <i class="fas fa-download"></i> Generar PDF
-                  </button>-->
+                  
 
                 </div>
               </div>

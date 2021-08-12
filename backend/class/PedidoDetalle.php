@@ -134,7 +134,10 @@ class PedidoDetalle {
 
     public static function obtenerPorIdPedido($idPedido) {
         
-        $sql = "SELECT * FROM pedidodetalle INNER JOIN pedido ON pedidodetalle.id_pedido = pedido.id_pedido WHERE pedido.id_pedido = " . $idPedido;
+        $sql = "SELECT * FROM pedidodetalle 
+            INNER JOIN producto ON pedidodetalle.id_producto = producto.id_producto 
+            INNER JOIN pedido ON pedido.id_pedido = pedidodetalle.id_pedido 
+            WHERE pedido.id_pedido = " . $idPedido;
 
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);

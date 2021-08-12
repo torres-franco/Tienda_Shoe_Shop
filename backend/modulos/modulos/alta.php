@@ -1,42 +1,6 @@
 <!doctype html>
 <html lang="es">
 
-<!--<script type="text/javascript">
-    function validarDatos() {
-    /*alert(88998989898);*/
-    var divMensajeError = document.getElementById("mensajeError");
-    var razonSocial = document.getElementById("txtRazonSocial").value;
-    if (razonSocial.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "La razón social no debe estar vacio *";
-        return;
-    }
-
-    if (razonSocial.length < 2) {
-        //alert("El nombre debe contener al menos 3 caracteres");
-        divMensajeError.input = "El nombre debe contener al menos 1 caracteres";
-        return;
-    }
-
-    var cuit = document.getElementById("txtCuit").value;
-    if (cuit.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El CUIT no debe estar vacio *";
-        return;
-    }
-
-    if (cuit.length < 10) {
-        //alert("El nombre debe contener al menos 3 caracteres");
-        divMensajeError.input = "El CUIT debe contener 10 caracteres";
-        return;
-    }
-    
-
-    var form = document.getElementById("frmDatos");
-    form.submit();
-    }
-
-</script>-->
 
 <body>
 
@@ -56,6 +20,26 @@
       </div><!-- /.container-fluid -->
     </section>
 
+    <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+      <div class="content">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="fas text-white fa-exclamation-triangle"></i>
+          <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+      <?php
+          unset($_SESSION['mensaje_error']);
+          endif;
+      ?>
+
+      <h5 class="text-center">
+        <div id="mensajeError" class="text-danger"></div>
+      </h5>
 
     <!-- Main content -->
     <section class="content">
@@ -70,7 +54,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" method="POST" action="procesar/guardar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
                 <div class="card-body">
 
                   
@@ -97,7 +81,7 @@
                 
                       <a href="listado.php" class="btn btn-secondary" role="button">Cancelar</a>
                   
-                      <input class="btn btn-primary float-right" type="submit" onclick="validarDatos();" value="Guardar">
+                      <input class="btn btn-primary float-right" type="button" onclick="validarModulo();" value="Guardar">
                    
                 </div>
               </form>

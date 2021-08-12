@@ -1,6 +1,7 @@
 <?php
 
 require_once "../../../class/Direccion.php";
+require_once "../../../class/Ciudad.php";
 
 $idPersona = $_POST['txtIdPersona'];
 $idLlamada = $_POST['txtIdLlamada'];
@@ -11,6 +12,11 @@ $calle = $_POST['txtCalle'];
 $altura = $_POST['txtAltura'];
 $piso = $_POST['txtPiso'];
 $manzana = $_POST['txtManzana'];
+$idCiudad = $_POST['cboCiudad'];
+$idProvincia = $_POST['cboProvincia'];
+
+//highlight_string(var_export($idProvincia, true));
+//exit;
 
 
 if (empty(trim($calle))) {
@@ -36,6 +42,11 @@ $direccion->setPiso($piso);
 $direccion->setManzana($manzana);
 
 $direccion->actualizar($idDireccion);
+
+//$barrio = Ciudad::obtenerPorIdBarrio($barrio);
+//$barrio->setIdCiudad($idCiudad);
+
+//$barrio->actualizar();
 
 //highlight_string(var_export($direccion, true));
 //exit;

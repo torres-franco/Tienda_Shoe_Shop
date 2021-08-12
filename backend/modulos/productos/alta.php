@@ -14,85 +14,6 @@ $listadoColor = Color::obtenerTodos();
 <!doctype html>
 <html lang="es">
 
-<!--<script type="text/javascript">
-    function validarDatos() {
-    /*alert(88998989898);*/
-    var divMensajeError = document.getElementById("mensajeError");
-    
-    var marca = document.getElementById("cboMarca").value;
-    if (marca.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El campo marca no debe estar vacio *";
-        return;
-    } else if (marca.length < 3) {
-      
-        divMensajeError.innerHTML = "El campo marca debe tener al menos 3 carácteres *";
-        return;
-    }
-
-    var descripcion = document.getElementById("txtDescripcion").value;
-    if (descripcion.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El campo descripción no debe estar vacio *";
-        return;
-    } else if (descripcion.length < 3) {
-      
-        divMensajeError.innerHTML = "El campo descripción debe tener al menos 3 carácteres *";
-        return;
-    }
-
-    var precio = document.getElementById("txtPrecio").value;
-    if (precio.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El campo precio no debe estar vacio *";
-        return;
-
-    var stockActual = document.getElementById("txtStockActual").value;
-    if (stockActual.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El campo stock actual no debe estar vacio *";
-        return;
-
-    var stockMinimo = document.getElementById("txtStockMinimo").value;
-    if (stockMinimo.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El campo stock minimo no debe estar vacio *";
-        return;
-
-    var categoria = document.getElementById("cboCategoria").value;
-    if (categoria.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El campo categoría no debe estar vacio *";
-        return;
-    } else if (categoria.length < 2) {
-      
-        divMensajeError.innerHTML = "El campo categoría debe tener al menos 3 carácteres *";
-        return;
-    }
-
-    var color = document.getElementById("cboColor").value;
-    if (color.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El campo color no debe estar vacio *";
-        return;
-    } else if (color.length < 3) {
-      
-        divMensajeError.innerHTML = "El campo color debe tener al menos 3 carácteres *";
-        return;
-    }
-
-    var talle = document.getElementById("cboTalle").value;
-    if (talle.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El campo talle no debe estar vacio *";
-        return;
-
-
-    var form = document.getElementById("frmDatos");
-    form.submit();
-    }
-
-</script>-->
 
 <body>
 
@@ -193,7 +114,7 @@ $listadoColor = Color::obtenerTodos();
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php" enctype="multipart/form-data">
                 <div class="card-body">
 
                   
@@ -302,6 +223,17 @@ $listadoColor = Color::obtenerTodos();
                               <?php endforeach ?>
 
                           </select>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                      <div class="form-group">
+                        <label for="fileImagen"></label>
+                          <div class="input-group">
+                            <div class="custom-file">
+                              <input type="hidden" name="fileImagen" id="fileImagen">
+                            </div>
+                          </div>
                       </div>
                     </div>
 

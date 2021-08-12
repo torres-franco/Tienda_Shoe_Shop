@@ -1,27 +1,16 @@
+<?php
+
+require_once '../../class/Ciudad.php';
+
+$listadoCiudad = Ciudad::obtenerTodos();
+
+
+?>
+
+
 <!doctype html>
 <html lang="es">
 
-<script type="text/javascript">
-    function validarDatos() {
-    /*alert(88998989898);*/
-    var divMensajeError = document.getElementById("mensajeError");
-    var descripcion = document.getElementById("txtDescripcion").value;
-    if (descripcion.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El campo barrio es requerido *";
-        return;
-    } else if (descripcion.length < 2) {
-      
-        divMensajeError.innerHTML = "El campo barrio debe contener al menos 2 caratéres *";
-        return;
-    }
-    
-
-    var form = document.getElementById("frmDatos");
-    form.submit();
-    }
-
-</script>
 
 <body>
 
@@ -82,10 +71,29 @@
 
                   <div class="row">
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtDescripcion">Barrio:</label>
                         <input type="text" class="form-control" name="txtDescripcion" id="txtDescripcion">
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="cboCiudad">Selecciona la ciudad a la que pertenece el barrio:</label>
+                          <select name="cboCiudad" id="cboCiudad" class="form-control">
+                              
+
+                            <option value="0">Seleccionar</option>
+                              
+                            <?php foreach ($listadoCiudad as $ciudad): ?>   
+                            
+                              <option value="<?php echo $ciudad->getIdCiudad(); ?>">
+                                <?php echo $ciudad->getNombre(); ?>
+                              </option>
+
+                            <?php endforeach ?>                  
+
+                          </select>
                       </div>
                     </div>
 
@@ -102,7 +110,7 @@
                       <a href="../barrios/listado.php" class="btn btn-secondary" role="button"> Cancelar</a>
                   
                   
-                      <input class="btn btn-primary float-right" type="button" onclick="validarDatos();" value="Guardar">
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatosBarrio();" value="Guardar">
                    
                 </div>
               </form>

@@ -30,30 +30,13 @@ class Cliente extends PersonaFisica {
 
         $data = $datos->fetch_assoc();
         $cliente = self::_generarCliente($data);
+        
         return $cliente;
-
-
-        $registro = $datos->fetch_assoc();
-
-        //highlight_string(var_export($registro, true));
-
-        //exit();
-
-        $cliente = new Cliente($registro['nombre'], $registro['apellido']);   
-        $cliente->_idCliente = $registro['id_cliente'];
-        $cliente->_idPersona = $registro['id_persona'];
-        $cliente->_idPersonaFisica = $registro['id_persona_fisica'];
-        $cliente->_dni = $registro['dni'];
-        $cliente->_fechaNacimiento = $registro['fecha_nacimiento'];
-        $cliente->_genero = $registro['genero'];
-
-        return $cliente;
-
 
     }
 
     public static function obtenerTodos() {
-    	$sql = "SELECT personafisica.id_persona_fisica, personafisica.nombre, personafisica.apellido, personafisica.dni, personafisica.fecha_nacimiento, personafisica.genero, cliente.id_cliente "
+    	$sql = "SELECT personafisica.id_persona, personafisica.id_persona_fisica, personafisica.nombre, personafisica.apellido, personafisica.dni, personafisica.fecha_nacimiento, personafisica.genero, cliente.id_cliente "
              . "FROM personafisica "
              . "INNER JOIN cliente ON cliente.id_persona_fisica = personafisica.id_persona_fisica";
 
@@ -84,12 +67,8 @@ class Cliente extends PersonaFisica {
     private function _generarListadoCliente($datos) {
     	$listado = array();
 		while ($registro = $datos->fetch_assoc()) {
-			$cliente = new Cliente($registro['nombre'], $registro['apellido']);
-			$cliente->_idCliente = $registro['id_cliente'];
-			$cliente->_idPersonaFisica = $registro['id_persona_fisica'];
-			$cliente->_dni = $registro['dni'];
-            $cliente->_fechaNacimiento = $registro['fecha_nacimiento'];
-            $cliente->_genero= $registro['genero'];
+
+            $cliente = self::_generarCliente($registro);
 
 			$listado[] = $cliente;
 		}
@@ -109,17 +88,9 @@ class Cliente extends PersonaFisica {
         $mysql->desconectar();
 
         $registro = $datos->fetch_assoc();
-        
-        $cliente = new Cliente($registro['nombre'], $registro['apellido']);   
-        $cliente->_idCliente = $registro['id_cliente'];
-        $cliente->_idPersona = $registro['id_persona'];
-        $cliente->_idPersonaFisica = $registro['id_persona_fisica'];
-        $cliente->_dni = $registro['dni'];
-        $cliente->_fechaNacimiento = $registro['fecha_nacimiento'];
-        $cliente->_genero = $registro['genero'];
-        $cliente->setDireccion();
-        $cliente->setContactos();
 
+        $cliente = self::_generarCliente($registro);
+        
         return $cliente;
 
     }
@@ -145,7 +116,21 @@ class Cliente extends PersonaFisica {
         $mysql->actualizar($sql);
 
 
-    }  
+    }
+
+    public function comprobarDniExistente($dni){
+        $sql = "SELECT personafisica.dni FROM cliente INNER JOIN personafisica ON personafisica.id_persona_fisica = cliente.id_persona_fisica WHERE personafisica.dni = $dni";
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        if ($result->num_rows > 0 ) {
+            $_SESSION['mensaje_error'] = "El DNI ya se encuentra registrado";
+            header('Location: ../alta.php');
+            exit;
+        } 
+    }
     
 }
 

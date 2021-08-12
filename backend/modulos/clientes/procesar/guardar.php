@@ -7,6 +7,7 @@ require_once "../../../class/Cliente.php";
 $nombre = $_POST['txtNombre'];
 $apellido = $_POST['txtApellido'];
 $dni = $_POST['txtDni'];
+$comprobar = Cliente::comprobarDniExistente($dni);
 $fechaNacimiento = $_POST['txtFechaNacimiento'];
 $genero = $_POST['txtGenero'];
 
@@ -35,8 +36,8 @@ if (empty(trim($dni))) {
 	$_SESSION['mensaje_error'] = "El DNI no debe estar vacio";
 	header("location: ../alta.php");
 	exit;
-}elseif (strlen(trim($dni)) < 8) {
-	$_SESSION['mensaje_error'] = "El DNI debe contener 8 caracteres";
+}elseif (strlen(trim($dni)) < 7) {
+	$_SESSION['mensaje_error'] = "El DNI debe contener 7 caracteres";
 	header("location: ../alta.php");
 	exit;
 }

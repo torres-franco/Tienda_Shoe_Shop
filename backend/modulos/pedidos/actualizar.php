@@ -66,6 +66,14 @@ $listadoEstado = EstadoPedido::obtenerTodos();
 
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
+                        <label for="txtFecha">Fecha:</label>
+                        <input type="date" class="form-control" name="txtFecha" id="txtFecha" value="<?php echo $pedido->getFechaPedido(); ?>">
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <div class="form-group">
                         <label for="cboCliente">Cliente:</label>
                           <select name="cboCliente" class="form-control" id="cboCliente">
                             <?php foreach ($listadoCliente as $cliente):
@@ -90,18 +98,11 @@ $listadoEstado = EstadoPedido::obtenerTodos();
                       </div>
                     </div>
                   
-                    <div class="col-md-4 mb-3">
-                      <div class="form-group">
-                        <label for="txtFecha">Fecha:</label>
-                        <input type="date" class="form-control" name="txtFecha" id="txtFecha" value="<?php echo $pedido->getFechaPedido(); ?>">
-
-                      </div>
-                    </div>
 
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
                         <label for="cboEstado">Estado:</label>
-                          <select name="cboEstado" class="form-control" id="cboEstado">
+                          <select name="cboEstado" class="form-control" id="cboEstado" disabled="disabled">
 
                               <?php foreach ($listadoEstado as $estadoPedido):
                                 $selected = '';
@@ -168,10 +169,10 @@ $listadoEstado = EstadoPedido::obtenerTodos();
                         <!-- /.card -->
                       </div>
                 <div class="col-6 mt-3 pt-3">
-                  <p class="lead">Métodos de pagos:</p>
+                  <!--<p class="lead">Métodos de pagos:</p>
                   <img src="../../static/dist/img/credit/visa.png" alt="Visa">
                   <img src="../../static/dist/img/credit/mastercard.png" alt="Mastercard">
-                  <img src="../../static/dist/img/credit/paypal2.png" alt="Paypal">
+                  <img src="../../static/dist/img/credit/paypal2.png" alt="Paypal">-->
 
                  
                 </div>
@@ -347,6 +348,10 @@ function setCantidadProducto(id, descripcion, precio, stockActual){
   let cantidad = prompt('Ingrese la cantidad')
 
   if (cantidad == null || cantidad == ""){ //validación de agregar productos
+    return false;
+  }
+  if(isNaN(cantidad)){
+    alert("Uups! No es número.");
     return false;
   }
   if(cantidad > stockActual){

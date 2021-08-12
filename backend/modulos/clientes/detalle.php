@@ -47,7 +47,7 @@ exit;*/
               
 
             <div class="card-body p-0">
-              <table class="table table-hover text-center table-responsive-lg">
+              <table class="table table-hover text-center">
   		          <thead>
                   <tr>
                     <th>ID</th>
@@ -83,9 +83,7 @@ exit;*/
   
       </div>
 
-    </section>
-
-  <section class="content">
+    
 
       <div class="row">
           <div class="col-6">
@@ -124,7 +122,7 @@ exit;*/
 
                         <br>
 
-                      <?php endforeach?>
+                      <?php endforeach ?>
 
                     </td>                   
                     
@@ -158,7 +156,7 @@ exit;*/
 
                       <?php else: ?>
 
-                        <a href="/proyecto_shoe_shop/backend/modulos/direcciones/actualizar.php?idDireccion=<?php echo $cliente->direccion->getIdDireccion(); ?>&idPersona=<?php echo $cliente->getIdPersona(); ?>&idLlamada=<?php echo $cliente->getIdCliente(); ?>&modulo=clientes">
+                      <a href="/proyecto_shoe_shop/backend/modulos/direcciones/actualizar.php?idDireccion=<?php echo $cliente->direccion->getIdDireccion(); ?>&idPersona=<?php echo $cliente->getIdPersona(); ?>&idLlamada=<?php echo $cliente->getIdCliente(); ?>&modulo=clientes">
                       <i class="fas fa-edit" title="Editar dirección"></i>
                       </a>
 
@@ -169,17 +167,26 @@ exit;*/
                 <tbody class="text-center">
                   <tr>    
 
-                    <td> 
-
+                  <td><strong>Dirección:</strong><br> 
+                    <?php echo $cliente->direccion; ?> 
+                  </td>
+                  <td><strong>Barrio:</strong><br> 
+                    <?php echo utf8_encode($cliente->direccion->barrio->getDescripcion()); ?> </td>
+                  <td><strong>Ciudad:</strong><br>
+                    <?php echo utf8_encode($cliente->direccion->barrio->ciudad->getNombre()); ?> 
+                  </td>
+                  <td><strong>Código Postal:</strong><br>
+                    <?php echo utf8_encode($cliente->direccion->barrio->ciudad->getCodigoPostal()); ?> 
+                  </td>
+                  <td><strong>Provincia:</strong><br>
+                    <?php echo utf8_encode($cliente->direccion->barrio->ciudad->provincia->getNombre()); ?> 
+                  </td>
+                  <td><strong>Calle:</strong><br>
+                    <?php echo utf8_encode($cliente->direccion->getCalle()); ?> 
+                  </td>    
                     
 
-                      <?php echo $cliente->direccion; ?>
-                      
-                      
-
-                    <?php endif ?>
-
-                    </td>                  
+                  <?php endif ?>                 
                     
                   </tr>
                 </tbody>

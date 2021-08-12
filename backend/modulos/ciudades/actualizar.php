@@ -31,6 +31,27 @@ $ciudad = Ciudad::obtenerPorId($id);
       </div><!-- /.container-fluid -->
     </section>
 
+    <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+    <div class="content">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas text-white fa-exclamation-triangle"></i>
+        <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
+
+            <?php
+                unset($_SESSION['mensaje_error']);
+                endif;
+            ?>
+
+    <h5 class="text-center">
+      <div id="mensajeError" class="text-danger"></div>
+    </h5>
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -44,7 +65,7 @@ $ciudad = Ciudad::obtenerPorId($id);
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" method="POST" action="procesar/modificar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/modificar.php">
                 <div class="card-body">
                     <div class="#">
                       <label for="txtId"></label>
@@ -56,14 +77,14 @@ $ciudad = Ciudad::obtenerPorId($id);
                      <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtCodigoPostal">Código Postal:</label>
-                        <input type="text" class="form-control" name="txtCodigoPostal" value="<?php echo $ciudad->getCodigoPostal(); ?>">
+                        <input type="text" class="form-control" name="txtCodigoPostal" value="<?php echo $ciudad->getCodigoPostal(); ?>" id="txtCodigoPostal">
                       </div>
                     </div>
 
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtNombre">Ciudad:</label>
-                        <input type="text" class="form-control" name="txtNombre" value="<?php echo $ciudad->getNombre(); ?>">
+                        <input type="text" class="form-control" name="txtNombre" value="<?php echo $ciudad->getNombre(); ?>" id="txtNombre">
                       </div>
                     </div>
 
@@ -75,10 +96,10 @@ $ciudad = Ciudad::obtenerPorId($id);
 
                 <div class="card-body">
                 
-                      <a href="../barrios/listado.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="../ciudades/listado.php" class="btn btn-secondary" role="button">Cancelar</a>
                   
                   
-                      <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatosCiudad();" value="Guardar">
                    
                 </div>
               </form>

@@ -11,8 +11,8 @@ $idPersona = $_GET['idPersona'];
 $idLlamada = $_GET['idLlamada'];
 $moduloLlamada = $_GET['modulo'];
 
-$listadoBarrio = Barrio::obtenerTodos();
-$listadoCiudad = Ciudad::obtenerTodos();
+//$listadoBarrio = Barrio::obtenerTodos();
+//$listadoCiudad = Ciudad::obtenerTodos();
 $listadoProvincia = Provincia::obtenerTodos();
 
 ?>
@@ -40,14 +40,14 @@ $listadoProvincia = Provincia::obtenerTodos();
               <li class="breadcrumb-item">
                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                   
-                  <div class="btn-group">
+                  <!--<div class="btn-group">
                     <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Provincia
                     </button>
                     <div class="dropdown-menu">
                       <a class="dropdown-item" href="../provincias/alta.php">Agregar</a>
                       <a class="dropdown-item" href="../provincias/listado.php">Ver listado</a>
                     </div>
-                  </div>
+                  </div>-->
 
                   <div class="btn-group">
                     <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ciudad
@@ -76,6 +76,27 @@ $listadoProvincia = Provincia::obtenerTodos();
       </div><!-- /.container-fluid -->
     </section>
 
+    <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+      <div class="content">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="fas text-white fa-exclamation-triangle"></i>
+          <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+      <?php
+          unset($_SESSION['mensaje_error']);
+          endif;
+      ?>
+
+      <h5 class="text-center">
+        <div id="mensajeError" class="text-danger"></div>
+      </h5>
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -89,24 +110,26 @@ $listadoProvincia = Provincia::obtenerTodos();
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" method="POST" action="procesar/guardar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
                 <div class="card-body">
 
                   <div class="row">
 
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
-                        <label for="txtBarrio">Provincia:</label>
-                          <select name="cboBarrio" class="form-control">
-                              <option value="0">Seleccionar</option>
+                        <label for="cboProvincia">Provincia:</label>
+                          <select name="cboProvincia" id="cboProvincia" onchange="cargarCiudad();" class="form-control">
+                              
 
-                              <?php foreach ($listadoProvincia as $provincia): ?>
-
+                            <option value="0">Seleccionar</option>
+                              
+                            <?php foreach ($listadoProvincia as $provincia): ?>   
+                            
                               <option value="<?php echo $provincia->getIdProvincia(); ?>">
-                              <?php echo $provincia; ?>
+                                <?php echo $provincia->getNombre(); ?>
                               </option>
 
-                              <?php endforeach ?>
+                            <?php endforeach ?>                  
 
                           </select>
                       </div>
@@ -114,39 +137,23 @@ $listadoProvincia = Provincia::obtenerTodos();
 
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
-                        <label for="txtCiudad">Ciudad:</label>
-                          <select name="cboCiudad" class="form-control">
-                              <option value="0">Seleccionar</option>
-
-                              <?php foreach ($listadoCiudad as $ciudad): ?>
-
-                              <option value="<?php echo $ciudad->getIdCiudad(); ?>">
-                              <?php echo $ciudad; ?>
-                              </option>
-
-                              <?php endforeach ?>
-
+                        <label for="cboCiudad">Ciudad:</label>
+                          <select name="cboCiudad" class="form-control" id="cboCiudad" onchange="cargarBarrio();">
+                            <option value="0">Seleccionar</option>
                           </select>
                       </div>
                     </div>
 
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
-                        <label for="txtBarrio">Barrio:</label>
-                          <select name="cboBarrio" class="form-control">
+                        <label for="cboBarrio">Barrio:</label>
+                          <select name="cboBarrio" class="form-control" id="cboBarrio">
                               <option value="0">Seleccionar</option>
-
-                              <?php foreach ($listadoBarrio as $barrio): ?>
-
-                              <option value="<?php echo $barrio->getIdBarrio(); ?>">
-                              <?php echo $barrio; ?>
-                              </option>
-
-                              <?php endforeach ?>
 
                           </select>
                       </div>
                     </div>
+
 
                   </div>
 
@@ -174,14 +181,14 @@ $listadoProvincia = Provincia::obtenerTodos();
                     <div class="col-sm-6">
                     <div class="form-group">
                       <label for="txtCalle">Calle:</label>
-                      <input type="text" class="form-control" name="txtCalle">
+                      <input type="text" class="form-control" name="txtCalle" id="txtCalle">
                     </div>
                     </div>
                   
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtAltura">Altura:</label>
-                        <input type="text" class="form-control" name="txtAltura">
+                        <input type="text" class="form-control" name="txtAltura" id="txtAltura">
                       </div>
                     </div>
                   </div>
@@ -210,10 +217,10 @@ $listadoProvincia = Provincia::obtenerTodos();
 
                 <div class="card-body">
                 
-                      <a href="../<?php echo $moduloLlamada ?>/detalle.php?id=<?php echo $idLlamada ?>" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="../<?php echo $moduloLlamada ?>/detalle.php?id=<?php echo $idLlamada ?>" class="btn btn-secondary" role="button"> Cancelar</a>
                   
                   
-                      <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>
+                       <input class="btn btn-primary float-right" type="button" onclick="validarDireccion();" value="Guardar">
                    
                 </div>
               </form>
@@ -235,4 +242,30 @@ $listadoProvincia = Provincia::obtenerTodos();
   include('../../footer.php');
 ?>
 </body>
+
+ <script type="text/javascript">
+
+    function cargarCiudad(){
+      var idProvincia = $("#cboProvincia").val();
+
+      var params = {id: idProvincia};
+
+      $.get("obtenerCiudad.php", params, function(datos){
+
+        $("#cboCiudad").html(datos);
+      });
+    }
+
+    function cargarBarrio(){
+      var idCiudad = $("#cboCiudad").val();
+
+      var params = {id: idCiudad};
+
+      $.get("obtenerBarrio.php", params, function(datos){
+
+        $("#cboBarrio").html(datos);
+      });
+    }
+  </script>
+
 </html>

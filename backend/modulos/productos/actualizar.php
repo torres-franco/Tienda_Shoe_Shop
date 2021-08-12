@@ -40,6 +40,27 @@ $listadoColor = Color::obtenerTodos();
       </div><!-- /.container-fluid -->
     </section>
 
+    <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+    <div class="content">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas text-white fa-exclamation-triangle"></i>
+        <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
+
+      <?php
+          unset($_SESSION['mensaje_error']);
+          endif;
+      ?>
+
+    <h5 class="text-center">
+      <div id="mensajeError" class="text-danger"></div>
+    </h5>
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -53,7 +74,7 @@ $listadoColor = Color::obtenerTodos();
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" method="POST" action="procesar/modificar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/modificar.php">
                 <div class="card-body">
 
                   <div class="#">
@@ -67,8 +88,8 @@ $listadoColor = Color::obtenerTodos();
 
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
-                        <label for="txtProvincia">Marca:</label>
-                          <select name="cboMarca" class="form-control">
+                        <label for="cboMarca">Marca:</label>
+                          <select name="cboMarca" class="form-control" id="cboMarca">
                               <option value="0">Seleccionar</option>
 
                               <?php foreach ($listadoMarca as $marca):
@@ -95,14 +116,14 @@ $listadoColor = Color::obtenerTodos();
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
                         <label for="txtDescripcion">Descripción:</label>
-                        <input type="text" class="form-control" name="txtDescripcion" value="<?php echo $producto->getDescripcion(); ?>">
+                        <input type="text" class="form-control" name="txtDescripcion" value="<?php echo $producto->getDescripcion(); ?>" id="txtDescripcion">
                       </div>
                     </div>
 
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
                         <label for="txtPrecio">Precio:</label>
-                        <input type="text" class="form-control" name="txtPrecio" value="<?php echo $producto->getPrecio(); ?>">
+                        <input type="text" class="form-control" name="txtPrecio" value="<?php echo $producto->getPrecio(); ?>" id="txtPrecio">
                       </div>
                     </div>
 
@@ -112,14 +133,14 @@ $listadoColor = Color::obtenerTodos();
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtStockActual">Stock Actual:</label>
-                        <input type="number" class="form-control" name="txtStockActual" value="<?php echo $producto->getStockActual(); ?>">
+                        <input type="number" class="form-control" name="txtStockActual" value="<?php echo $producto->getStockActual(); ?>" id="txtStockActual">
                       </div>
                     </div>
                   
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtStockMinimo">Stock Mínimo:</label>
-                        <input type="number" class="form-control" name="txtStockMinimo" value="<?php echo $producto->getStockMinimo(); ?>">
+                        <input type="number" class="form-control" name="txtStockMinimo" value="<?php echo $producto->getStockMinimo(); ?>" id="txtStockMinimo">
                       </div>
                     </div>
                   </div>
@@ -127,8 +148,8 @@ $listadoColor = Color::obtenerTodos();
                   <div class="row">
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
-                        <label for="optCategoria">Categorías:</label>
-                          <select name="cboCategoria" class="form-control">
+                        <label for="cboCategoria">Categorías:</label>
+                          <select name="cboCategoria" class="form-control" id="cboCategoria">
                               <option value="0">Seleccionar</option>
 
                               <?php foreach ($listadoCategoria as $categoria):
@@ -155,7 +176,7 @@ $listadoColor = Color::obtenerTodos();
                     <div class="col-md-4 mb-3">
                       <div class="form-group">
                         <label for="txtColor">Color:</label>
-                          <select name="cboColor" class="form-control">
+                          <select name="cboColor" class="form-control" id="cboColor">
                               <option value="0">Seleccionar</option>
 
                               <?php foreach ($listadoColor as $color):
@@ -184,7 +205,7 @@ $listadoColor = Color::obtenerTodos();
                       <div class="form-group">
 
                         <label for="txtTalle">Talle:</label>
-                          <select name="cboTalle" class="form-control">
+                          <select name="cboTalle" class="form-control" id="cboTalle">
                               <option value="0">Seleccionar</option>
 
                               <?php foreach ($listadoTalle as $talle):
@@ -215,10 +236,9 @@ $listadoColor = Color::obtenerTodos();
 
                 <div class="card-body">
                 
-                      <a href="listado.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="listado.php" class="btn btn-secondary" role="button">Cancelar</a>
                   
-                  
-                      <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatosProductos();" value="Guardar">
                    
                 </div>
               </form>

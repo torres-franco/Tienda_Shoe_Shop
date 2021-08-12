@@ -6,6 +6,7 @@ require_once "../../../class/Proveedor.php";
 
 $razon_social = $_POST['txtRazonSocial'];
 $cuit = $_POST['txtCuit'];
+$comprobar = Proveedor::comprobarExistenciaCuit($cuit);
 
 
 if (empty(trim($razon_social))) {

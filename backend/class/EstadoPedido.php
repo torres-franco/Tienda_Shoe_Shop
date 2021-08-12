@@ -5,8 +5,15 @@ require_once 'MySQL.php';
 
 class EstadoPedido {
 
+
     private $_idPedidoEstado;
     private $_descripcion;
+
+    const PENDIENTE = 1;
+    const EN_PROCESO = 2;
+    const A_FACTURAR = 3;
+    const FACTURADO = 4;
+    const ANULADO = 5;
 
     public function __construct($descripcion) {
         $this->_descripcion = $descripcion;

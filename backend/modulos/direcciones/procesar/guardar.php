@@ -12,7 +12,8 @@ $piso = $_POST['txtPiso'];
 $manzana = $_POST['txtManzana'];
 
 
-$provincia = $_POST['cboProvincia'];
+//$provincia = $_POST['cboProvincia'];
+//$ciudad = $_POST['cboCiudad'];
 
 
 $direccion = new Direccion();

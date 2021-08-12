@@ -135,6 +135,7 @@ class Usuario extends PersonaFisica {
         $usuario->_idPersonaFisica = $registro['id_persona_fisica'];
         $usuario->_idPerfil = $registro['id_perfil'];
         $usuario->_user = $registro['user'];
+        $usuario->_clave = $registro['clave'];
         $usuario->_imagen = $registro['imagen'];
 
         $usuario->perfil = Perfil::obtenerPorId($usuario->_idPerfil);
@@ -249,6 +250,21 @@ class Usuario extends PersonaFisica {
 
         return $usuario;
     }
+
+    function comprobarExistenciaUsuario($user){
+        $sql = "SELECT * FROM usuario WHERE user = '$user' ";
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        if ($result->num_rows > 0 ) {
+            $_SESSION['mensaje_error'] = "El usuario ya está registrado, prueba con otro.";
+            header('Location: ../alta.php');
+            exit;
+        } 
+    }
+
 
     public function __toString() {
         return $this->_user;

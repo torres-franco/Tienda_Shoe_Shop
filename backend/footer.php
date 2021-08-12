@@ -53,5 +53,19 @@
 <script src="../../static/dist/validaciones/producto.js"></script>
 <script src="../../static/dist/validaciones/proveedor.js"></script>
 <script src="../../static/dist/validaciones/usuario.js"></script>
+<script src="../../static/dist/validaciones/color.js"></script>
+<script src="../../static/dist/validaciones/marca.js"></script>
+<script src="../../static/dist/validaciones/categoria.js"></script>
+<script src="../../static/dist/validaciones/talle.js"></script>
+<script src="../../static/dist/validaciones/direccion.js"></script>
+<script src="../../static/dist/validaciones/ciudad.js"></script>
+<script src="../../static/dist/validaciones/barrio.js"></script>
+<script src="../../static/dist/validaciones/modulo.js"></script>
+<script src="../../static/dist/validaciones/perfil.js"></script>
+<script src="../../static/dist/validaciones/factura.js"></script>
+<script src="../../static/dist/validaciones/contacto.js"></script>
+<script src="../../static/dist/validaciones/notaCredito.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 </body>
 </html>

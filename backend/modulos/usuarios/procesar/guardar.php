@@ -5,12 +5,15 @@ session_start();
 require_once "../../../class/Usuario.php";
 require_once "../../../config.php";
 
+
 $nombre = $_POST['txtNombre'];
 $apellido = $_POST['txtApellido'];
 $perfil = $_POST['cboPerfil'];
 $user = $_POST['txtUser'];
+$comprobar = Usuario::comprobarExistenciaUsuario($user);
 $clave = $_POST['txtClave'];
 $imagen = $_FILES['fileImagen'];
+
 
 
 $extension = pathinfo($imagen['name'], PATHINFO_EXTENSION);

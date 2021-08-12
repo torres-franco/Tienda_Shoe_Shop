@@ -6,7 +6,9 @@ require_once '../../../class/Ciudad.php';
 
 
 $nombre = $_POST['txtNombre'];
+$comprobar = Ciudad::comprobarExistenciaCiudad($nombre);
 $codigoPostal = $_POST['txtCodigoPostal'];
+$idProvincia = $_POST['txtIdProvincia'];
 
 
 if (empty(trim($nombre))) {
@@ -32,11 +34,12 @@ if (empty(trim($codigoPostal))) {
 
 
 $ciudad = new Ciudad($nombre, $codigoPostal);
+$ciudad->setIdProvincia($idProvincia);
 
 $ciudad->guardar();
 
-header("location: ../listado.php");
+header("location: ../listado.php?mensaje=1");
 
-//highlight_string(var_export($barrio, true));
+//highlight_string(var_export($ciudad, true));
 
 ?>

@@ -9,9 +9,9 @@ require_once 'PedidoDetalle.php';
   */
  class Pedido {
 	
-	  public $_idPedido;
+	public $_idPedido;
     public $_fechaPedido;
-	  public $_idCliente;
+	public $_idCliente;
     public $_arrDetallePedido;
     public $_idPedidoEstado;
     //public $_metodoPago;
@@ -19,6 +19,10 @@ require_once 'PedidoDetalle.php';
     public $cliente;
     public $estadoPedido;
 
+    const PENDIENTE = 1;
+    public function __construct(){
+        $this->_idPedidoEstado = self::PENDIENTE;
+    }
 
     /**
      * @return mixed
@@ -105,7 +109,7 @@ require_once 'PedidoDetalle.php';
     
 
     public static function obtenerTodo() {
-    	$sql = "SELECT * FROM pedido";
+    	$sql = "SELECT * FROM pedido ORDER BY id_pedido DESC LIMIT 7";
 
     	$mysql = new MySQL();
     	$datos = $mysql->consultar($sql);
@@ -250,8 +254,6 @@ require_once 'PedidoDetalle.php';
 
         return $total;
     }
-
-
 
 
     /**

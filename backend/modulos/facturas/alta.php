@@ -44,8 +44,29 @@ $listadoTipoPago = TipoPago::obtenerTodos();
         </div><!-- /.row -->
         </div><!-- /.container-fluid -->
       </div>
+
+    <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+    <div class="content">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas text-white fa-exclamation-triangle"></i>
+        <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
+
+            <?php
+                unset($_SESSION['mensaje_error']);
+                endif;
+            ?>
+
+    <h5 class="text-center">
+      <div id="mensajeError" class="text-danger"></div>
+    </h5>
   
-      
+    <form name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
     <section class="content">
       <div class="row">
           <div class="col-12">
@@ -63,43 +84,29 @@ $listadoTipoPago = TipoPago::obtenerTodos();
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="cboEstado">Tipo Factura:</label>
-                    <select name="cboEstado" class="form-control" id="cboEstado">
-                      
-                      <option value="0">Seleccionar</option>     
-                      <option value="1">A</option>
-                      <option value="2">B</option>
-                      <option value="3">C</option>
+                  <label for="txtFechaEmision">Fecha Facturación:</label>
+                  <input type="date" class="form-control" name="txtFechaEmision" value="<?php echo date("Y-m-d");?>">
 
-                    </select>
                 </div>
               </div>
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="txtFecha">N° Factura:</label>
-                    <input type="text" class="form-control" name="txtFecha" id="txtFecha">
+                  <label for="txtNumero">N° Factura:</label>
+                    <input type="number" class="form-control" name="txtNumero" id="txtNumero">
 
                 </div>
               </div>
-
 
             </div>
             <div class="row">
 
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="txtFecha">Fecha Facturación:</label>
-                  <input type="date" class="form-control" name="txtFecha" id="txtFecha" value="<?php echo date("Y-m-d");?>" disabled>
-
-                </div>
-              </div>
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="cboEstado">Tipo de pago:</label>
+                  <label for="cboTipoPago">Tipo de pago:</label>
 
-                    <select name="cboEstado" class="form-control" id="cboEstado">
+                    <select name="cboTipoPago" class="form-control" id="cboTipoPago">
 
                         <option value="0">Seleccionar</option>
 
@@ -110,6 +117,20 @@ $listadoTipoPago = TipoPago::obtenerTodos();
                           </option>
 
                         <?php endforeach ?>
+
+                    </select>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="cboTipoFactura">Tipo Factura:</label>
+                    <select name="cboTipoFactura" class="form-control" id="cboTipoFactura">
+                      
+                      <option value="0">Seleccionar</option>     
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
 
                     </select>
                 </div>
@@ -207,6 +228,12 @@ $listadoTipoPago = TipoPago::obtenerTodos();
               <div class="row">
                 <!-- accepted payments column -->
                 <div class="col-6 mt-3 pt-3">
+
+                  
+                  <p class="lead">Métodos de pagos:</p>
+                  <img src="../../static/dist/img/credit/visa.png" alt="Visa">
+                  <img src="../../static/dist/img/credit/mastercard.png" alt="Mastercard">
+                  <img src="../../static/dist/img/credit/paypal2.png" alt="Paypal">
                  
                 </div>
                 <!-- /.col -->
@@ -235,25 +262,28 @@ $listadoTipoPago = TipoPago::obtenerTodos();
               <!-- this row will not appear when printing -->
               <div class="row no-print mt-3 pt-3">
                 <div class="col-12">
-                  <a href="imprimirFactura.php?id=<?php echo $pedido->getIdPedido(); ?>" target="_blank" class="btn btn-info">
+                  <!--<a href="#" class="btn btn-info">
                     <i class="fas fa-print"></i> Imprimir Factura
-                  </a>
+                  </a>-->
 
-                  <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Cobrar
+                  <input class="btn btn-primary float-right" type="button" onclick="validarDatosFactura();" value="Facturar">
+                  <!--<button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Cobrar
                   </button>
 
-                  <!--<button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                  <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
                     <i class="fas fa-download"></i> Generar PDF
                   </button>-->
 
                 </div>
               </div>
+
             </div>
         </div>
   
       </div>
 
     </section>
+  </form>
 
   </div>
 

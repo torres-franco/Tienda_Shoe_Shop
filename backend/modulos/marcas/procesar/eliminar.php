@@ -13,6 +13,6 @@ $marca = Marca::obtenerPorId($id);
 
 $marca->eliminar();
 
-header("location: ../listado.php");
+header("location: ../listado.php?mensaje=3");
 
 ?>

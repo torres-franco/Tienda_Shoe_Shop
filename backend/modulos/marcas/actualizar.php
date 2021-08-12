@@ -30,6 +30,27 @@ $marca = Marca::obtenerPorId($id);
       </div><!-- /.container-fluid -->
     </section>
 
+    <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+      <div class="content">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="fas text-white fa-exclamation-triangle"></i>
+          <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+      <?php
+          unset($_SESSION['mensaje_error']);
+          endif;
+      ?>
+
+      <h5 class="text-center">
+        <div id="mensajeError" class="text-danger"></div>
+      </h5>
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -43,7 +64,7 @@ $marca = Marca::obtenerPorId($id);
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" method="POST" action="procesar/modificar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/modificar.php">
                 <div class="card-body">
 
                 	<div class="#">
@@ -55,8 +76,8 @@ $marca = Marca::obtenerPorId($id);
 
                     <div class="col-sm-12">
                       <div class="form-group">
-                        <label for="txtDescripcion">Color:</label>
-                        <input type="text" class="form-control" name="txtDescripcion" value="<?php echo $marca->getDescripcion(); ?>">
+                        <label for="txtDescripcion">Marca:</label>
+                        <input type="text" class="form-control" name="txtDescripcion" value="<?php echo $marca->getDescripcion(); ?>" id="txtDescripcion">
                       </div>
                     </div>
 
@@ -70,10 +91,9 @@ $marca = Marca::obtenerPorId($id);
 
                 <div class="card-body">
                 
-                      <a href="../marcas/listado.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
-                  
-                  
-                      <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>
+                      <a href="../marcas/listado.php" class="btn btn-secondary" role="button"></i> Cancelar</a>
+
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatosMarcas();" value="Guardar">
                    
                 </div>
               </form>

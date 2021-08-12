@@ -32,6 +32,27 @@ $listadoModulos = Modulo::obtenerTodos();
       </div><!-- /.container-fluid -->
     </section>
 
+    <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+      <div class="content">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="fas text-white fa-exclamation-triangle"></i>
+          <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+      <?php
+        unset($_SESSION['mensaje_error']);
+        endif;
+      ?>
+
+      <h5 class="text-center">
+        <div id="mensajeError" class="text-danger"></div>
+      </h5>
+
 
     <!-- Main content -->
     <section class="content">
@@ -46,7 +67,7 @@ $listadoModulos = Modulo::obtenerTodos();
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" method="POST" action="procesar/modificar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/modificar.php">
                 <div class="card-body">
 
                   
@@ -66,8 +87,8 @@ $listadoModulos = Modulo::obtenerTodos();
                     
                     <div class="col-sm-6">
                     <div class="form-group">
-                      <label for="exampleFormControlSelect2">Asignar módulos</label>
-                      <select name="cboModulos[]" multiple class="form-control" id="#">
+                      <label for="cboModulos">Asignar módulos</label>
+                      <select name="cboModulos[]" multiple class="form-control" id="cboModulos">
 
                         <?php foreach ($listadoModulos as $modulo): ?>
 
@@ -101,10 +122,10 @@ $listadoModulos = Modulo::obtenerTodos();
 
                 <div class="card-body">
                 
-                      <a href="../perfiles/listado.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="../perfiles/listado.php" class="btn btn-secondary" role="button"> Cancelar</a>
                   
                   
-                      <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatosPerfil();" value="Guardar">
                    
                 </div>
               </form>

@@ -152,6 +152,20 @@ class Marca {
         $mysql->eliminar($sql);
     }
 
+    function comprobarExistenciaMarca($descripcion){
+        $sql = "SELECT * FROM marca WHERE descripcion = '$descripcion' ";
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        if ($result->num_rows > 0 ) {
+            $_SESSION['mensaje_error'] = "La marca ya existe en el sistema.";
+            header('Location: ../alta.php');
+            exit;
+        } 
+    }
+
 
 }
 

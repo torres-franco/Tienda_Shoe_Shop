@@ -139,6 +139,20 @@ class Perfil {
         return $this->_descripcion;
     }
 
+    function comprobarExistenciaPerfil($descripcion){
+        $sql = "SELECT perfil.descripcion FROM perfil WHERE descripcion = '$descripcion' ";
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        if ($result->num_rows > 0 ) {
+            $_SESSION['mensaje_error'] = "El perfil ya existe en el sistema.";
+            header('Location: ../alta.php');
+            exit;
+        } 
+    }
+
 
 }
 

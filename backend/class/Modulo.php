@@ -171,6 +171,21 @@ class Modulo {
     public function __toString() {
     	return $this->_descripcion;
     }
+
+    function comprobarExistenciaModulo($descripcion){
+        $sql = "SELECT modulo.descripcion FROM modulo WHERE descripcion = '$descripcion' ";
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        if ($result->num_rows > 0 ) {
+            $_SESSION['mensaje_error'] = "El módulo ya existe en el sistema.";
+            header('Location: ../alta.php');
+            exit;
+        } 
+    }
+
 }
 
 

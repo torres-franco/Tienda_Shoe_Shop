@@ -5,6 +5,7 @@ require_once '../../class/Producto.php';
 const PRODUCTO_GUARDADO = 1;
 const PRODUCTO_MODIFICADO = 2;
 const PRODUCTO_ELIMINADO = 3;
+const PRODUCTO_AUMENTADO = 4;
 
 if (isset($_GET['mensaje'])) {
     $mensaje = $_GET['mensaje'];
@@ -45,11 +46,59 @@ $listadoProducto = Producto::obtenerTodo();
         <div class="col-sm-6">
           <h1 class="m-0 text-dark">Registro de productos</h1>
         </div><!-- /.col -->
-      </div><!-- /.row -->
+                  <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right pt-2">
+              <li class="breadcrumb-item">
+                <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                  
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Marcas
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="../marcas/alta.php">Agregar</a>
+                      <a class="dropdown-item" href="../marcas/listado.php">Ver listado</a>
+                    </div>
+                  </div>
+
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorías
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="../categorias/alta.php">Agregar</a>
+                      <a class="dropdown-item" href="../categorias/listado.php">Ver listado</a>
+                    </div>
+                  </div>
+
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Colores
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="../colores/alta.php">Agregar</a>
+                      <a class="dropdown-item" href="../colores/listado.php">Ver listado</a>
+                    </div>
+                  </div>
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Talles
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="../talles/alta.php">Agregar</a>
+                    <a class="dropdown-item" href="../talles/listado.php">Ver listado</a>
+                  </div>
+                </div>
+                  
+                </div>
+              </li>   
+            </ol>
+          </div>
+      
+      </div>
+   
+      <!-- /.row -->
     </div><!-- /.container-fluid -->
   </div>
 
-  <?php if ($mensaje == PRODUCTO_GUARDADO): ?>
+    <?php if ($mensaje == PRODUCTO_GUARDADO): ?>
       <div class="content">
         <div class="alert alert-success alert-dismissible fade show" role="alert">
           <strong>Producto guardado correctamente.</strong>
@@ -79,6 +128,16 @@ $listadoProducto = Producto::obtenerTodo();
         </div>
       </div>
 
+    <?php elseif ($mensaje == PRODUCTO_AUMENTADO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Aumento aplicado correctamente.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
     <?php endif ?>
 
 	<section class="content">
@@ -91,6 +150,22 @@ $listadoProducto = Producto::obtenerTodo();
                 </h3>
 
                 <div class="card-tools">
+                    <div class="col-sm-6">
+                      <!--<ol class="breadcrumb float-sm-right pt-1">
+                        <li class="breadcrumb-item">-->
+                          <div class="btn-group">
+                              <button type="button" class="btn btn-secondary btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="fas fa-cog"></i>
+                              Config. Aumentos masivos
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" href="../aumentosMasivos/alta.php">Por marca</a>
+                                <a class="dropdown-item" href="../aumentosMasivos/altaCategoria.php">Por categoría</a>
+                              </div>
+                          </div>
+                        <!--</li>   
+                      </ol>-->
+                    </div>
                   <!--<div class="input-group input-group-sm pt-1" style="width: 150px;">
                     <input type="text" name="table_search" class="form-control float-right" placeholder="Buscar...">
 
@@ -119,6 +194,7 @@ $listadoProducto = Producto::obtenerTodo();
                   <tbody>
                   
                       <tr>
+                        
                         <td> <?php echo $producto->marca->getDescripcion(); ?> </td>
                         <td> <?php echo $producto->getDescripcion(); ?> </td>
                         <td>$ <?php echo $producto->getPrecio(); ?> </td>

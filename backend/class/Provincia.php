@@ -137,6 +137,24 @@ class Provincia {
         $mysql->eliminar($sql);
     }
 
+    public static function obtenerPorIdCiudad($idCiudad) {
+        
+        $sql = "SELECT ciudad.id_ciudad, provincia.id_provincia, provincia.nombre FROM ciudad INNER JOIN provincia ON ciudad.id_provincia = provincia.id_provincia WHERE id_ciudad = " . $idCiudad;
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $registro = $datos->fetch_assoc();
+
+        $provincia = new Provincia($registro['nombre']);
+        $provincia->_idCiudad = $registro['id_ciudad'];
+        $provincia->_idProvincia = $registro['id_provincia'];
+
+        return $provincia;
+
+    }
+
 }
 
 

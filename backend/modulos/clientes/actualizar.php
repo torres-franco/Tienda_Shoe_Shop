@@ -6,61 +6,16 @@ $id = $_GET['id'];
 
 $cliente = Cliente::obtenerPorId($id);
 
+//highlight_string(var_export($cliente, true));
+//exit;
+
 ?>
 
 
 <!doctype html>
 <html lang="es">
 
-<script type="text/javascript">
-    function validarDatos() {
 
-    /*alert(88998989898);*/
-    var divMensajeError = document.getElementById("mensajeError");
-    
-    var nombre = document.getElementById("txtNombre").value;
-    if (nombre.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El nombre no debe estar vacio *";
-        return;
-    } else if (nombre.length < 3) {
-      
-        divMensajeError.innerHTML = "El nombre debe tener al menos 3 carácteres *";
-        return;
-    }
-
-    var apellido = document.getElementById("txtApellido").value;
-    if (apellido.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El apellido no debe estar vacio *";
-        return;
-    } else if (apellido.length < 3) {
-      
-        divMensajeError.innerHTML = "El apellido debe tener al menos 3 carácteres *";
-        return;
-    }
-
-
-    var dni = document.getElementById("txtDni").value;
-    if (dni.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El DNI no debe estar vacio *";
-        return;
-    } else if (dni.length < 8) {
-      
-        divMensajeError.innerHTML = "El dni debe tener 8 carácteres *";
-        return;
-    }
-
-    
-
-    var form = document.getElementById("frmDatos");
-    form.submit();
-
-    }
-
-
-    </script>
 
 <body>
 
@@ -156,7 +111,7 @@ $cliente = Cliente::obtenerPorId($id);
 
                   <div class="form-group">
                     <label>Género</label>
-                    <select for="txtGenero" class="form-control" name="txtGenero">
+                    <select for="txtGenero" class="form-control" name="txtGenero" id="txtGenero">
                       <option><?php echo $cliente->getGenero(); ?></option>
                       <option value="Masculino">Masculino</option>
                       <option value="Femenino">Femenino</option>
@@ -171,7 +126,7 @@ $cliente = Cliente::obtenerPorId($id);
                       <a href="listado.php" class="btn btn-secondary" role="button"> Cancelar</a>
                   
                   
-                      <input class="btn btn-primary float-right" type="button" onclick="validarDatos();" value="Actualizar">
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatosClientes();" value="Actualizar">
 
                        <!--<input class="btn btn-primary float-right" type="submit" value="Guardar">-->
                    

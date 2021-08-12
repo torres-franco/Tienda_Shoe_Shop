@@ -1,15 +1,20 @@
 <?php
 require_once "../../class/Ciudad.php";
-$id = $_GET['id'];
 
-$listadoCiudad = Ciudad::obtenerPorIdProvincia($id);
-if ($id == 0){
+$idRecibido = $_GET['id'];
+
+$listadoCiudad = Ciudad::obtenerPorIdProvincia($idRecibido);
+
+//highlight_string(var_export($listadoCiudad, true));
+//exit;
+
+if ($idRecibido == 0){
 $options = "<option>Seleccionar</option>";}
 
-elseif ($id != 0) {
+elseif ($idRecibido != 0) {
 	$options = "<option value=0>Seleccionar</option>";
-	foreach ($listadoLocalidad as $localidad) {
-	$options .= '<option value="'.$localidad->getIdLocalidad().'">'.$localidad->getDescripcion().'</option>';
+	foreach ($listadoCiudad as $ciudad) {
+	$options .= '<option value="'.$ciudad->getIdCiudad().'">'.utf8_encode($ciudad->getNombre()).'</option>';
 	}
 }
 

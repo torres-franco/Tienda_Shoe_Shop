@@ -13,6 +13,6 @@ $talle = Talle::obtenerPorId($id);
 
 $talle->eliminar();
 
-header("location: ../listado.php");
+header("location: ../listado.php?mensaje=3");
 
 ?>

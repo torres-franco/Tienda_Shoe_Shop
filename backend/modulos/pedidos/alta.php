@@ -61,7 +61,15 @@ $listadoProducto = Producto::obtenerTodo();
 
                   <div class="row">
 
-                    <div class="col-md-4 mb-3">
+                     <div class="col-md-6 mb-3">
+                      <div class="form-group">
+                        <label for="txtFecha">Fecha:</label>
+                        <input type="date" class="form-control" name="txtFecha" id="txtFecha" value="<?php echo date("Y-m-d");?>">
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
                       <div class="form-group">
                         <label for="cboCliente">Cliente:</label>
                           <select name="cboCliente" class="form-control" id="cboCliente">
@@ -79,34 +87,7 @@ $listadoProducto = Producto::obtenerTodo();
                       </div>
                     </div>
                   
-                    <div class="col-md-4 mb-3">
-                      <div class="form-group">
-                        <label for="txtFecha">Fecha:</label>
-                        <input type="date" class="form-control" name="txtFecha" id="txtFecha" value="<?php echo date("Y-m-d");?>">
-
-                      </div>
-                    </div>
-
-                    <div class="col-md-4 mb-3">
-                      <div class="form-group">
-                        <label for="cboEstado">Estado:</label>
-                          <select name="cboEstado" class="form-control" id="cboEstado" disabled="disabled">
-                              
-                              <option value="1">En proceso</option>
-
-                              <?php foreach ($listadoEstado as $estado): ?>
-
-                              <option value="<?php echo $estado->getIdPedidoEstado(); ?>">
-                              <?php echo $estado; ?>
-                              </option>
-
-                              <?php endforeach ?>
-
-                          </select>
-                      </div>
-                    </div>
-
-                  
+                   
 
                   </div>
 
@@ -151,10 +132,7 @@ $listadoProducto = Producto::obtenerTodo();
                         <!-- /.card -->
                       </div>
                 <div class="col-6 mt-3 pt-3">
-                  <p class="lead">Métodos de pagos:</p>
-                  <img src="../../static/dist/img/credit/visa.png" alt="Visa">
-                  <img src="../../static/dist/img/credit/mastercard.png" alt="Mastercard">
-                  <img src="../../static/dist/img/credit/paypal2.png" alt="Paypal">              
+                               
                 </div>
                     <div class="col-6 mt-3 pt-3">
                       <p class="lead">Monto a pagar</p>
@@ -336,12 +314,17 @@ $.ajax({
 
 function setCantidadProducto(id, descripcion, precio, stockActual){
   let cantidad = prompt('Ingrese la cantidad')
+  //let color = prompt('Ingrese color')
 
   if (cantidad == null || cantidad == ""){ //validación de agregar productos
     return false;
   }
+  if(isNaN(cantidad)){
+    alert("Uups! No es número.");
+    return false;
+  }
   if(cantidad > stockActual){
-      alert("Uups! el stock insuficiente.");
+      alert("Uups! el stock es insuficiente.");
       return;
   }
 
@@ -393,11 +376,6 @@ $('#pago').on('keypress',function(e) {
     }
 });
 
-
-//Delegación de eventos.
-/*$('#detalleVenta' ).on( "click", ".eliminarProducto", function() {
-  $(this).parent().parent().remove();
-});*/
 
 /*function calcularVuelto(){
     let valor_pago = $('#pago').val();
@@ -485,7 +463,7 @@ function buscarProducto(){
         }
       })
     } else {
-      alert('Error! Debe cargar un producto.');
+      alert('Error! Detalle vacío.');
     }
   }
 

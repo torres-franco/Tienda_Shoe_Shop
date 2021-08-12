@@ -13,6 +13,6 @@ $categoria = Categoria::obtenerPorId($id);
 
 $categoria->eliminar();
 
-header("location: ../listado.php");
+header("location: ../listado.php?mensaje=3");
 
 ?>

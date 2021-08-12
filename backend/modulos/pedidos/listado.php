@@ -1,9 +1,15 @@
 <?php
 
 require_once '../../class/Pedido.php';
+require_once '../../class/EstadoPedido.php';
+
 
 const PEDIDO_GUARDADO = 1;
 const PEDIDO_MODIFICADO = 2;
+const ESTADO_EN_PROCESO = 3;
+const ESTADO_A_FACTURAR = 4;
+const ESTADO_ANULADO = 5;
+
 
 if (isset($_GET['mensaje'])) {
     $mensaje = $_GET['mensaje'];
@@ -15,7 +21,6 @@ if (isset($_GET['mensaje'])) {
 }
 
 $listadoPedidos = Pedido::obtenerTodo();
-
 
 
 ?>
@@ -60,7 +65,7 @@ $listadoPedidos = Pedido::obtenerTodo();
     <?php if ($mensaje == PEDIDO_GUARDADO): ?>
       <div class="content">
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-          <strong>Pedido guardado correctamente.</strong>
+          <strong>Se registró un nuevo pedido correctamente.</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -77,10 +82,37 @@ $listadoPedidos = Pedido::obtenerTodo();
         </div>
       </div>
 
+    <?php elseif ($mensaje == ESTADO_EN_PROCESO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>El estado del pedido cambió a "En proceso".</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+    <?php elseif ($mensaje == ESTADO_A_FACTURAR): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>El pedido está listo para facturar.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
+    <?php elseif ($mensaje == ESTADO_ANULADO): ?>
+      <div class="content">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Pedido anulado correctamente.</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+
     <?php endif ?>
-
-
-    
 
 
     <section class="content">
@@ -91,18 +123,21 @@ $listadoPedidos = Pedido::obtenerTodo();
                 <h3 class="card-title">
                 	<a href="alta.php" class="btn btn-primary btn-sm" role="button">+ Nuevo Pedido</a>
                 </h3>
-
+                <div class="card-tools">
+                  <a href="#" class="btn btn-danger btn-sm" role="button"><i class="fas fa-file-pdf"></i>  PDF</a>
+                  <a href="#" class="btn btn-success btn-sm" role="button"><i class="fas fa-file-excel"></i>  EXCEL</a>
+                  <a href="#" class="btn btn-default btn-sm" role="button"><i class="fas fa-file-csv"></i> CSV</a>
+                </div>
                 
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
-                <table class="table table-responsive-lg table-hover text-center">
+                <table class="table table-hover">
                   <thead>
                     <tr>
 
                       <th>Nro. Pedido</th>
 						          <th>Cliente</th>
-                     
                       <th>Fecha Pedido</th>
                       <th>Estado</th>
                       <th>Total</th>
@@ -123,23 +158,36 @@ $listadoPedidos = Pedido::obtenerTodo();
 
                         <?php  
 
-                        if ($pedido->estadoPedido->getIdPedidoEstado() == 1) {
+                        if ($pedido->estadoPedido->getIdPedidoEstado() == EstadoPedido::PENDIENTE) {
 
                           echo "<td><span class='badge bg-warning'>". $pedido->estadoPedido ."</span></td>";
                           
                         }
 
-                        if ($pedido->estadoPedido->getIdPedidoEstado() == 2) {
+                        if ($pedido->estadoPedido->getIdPedidoEstado() == EstadoPedido::EN_PROCESO) {
+
+                          echo "<td><span class='badge bg-info'>". $pedido->estadoPedido ."</span></td>";
+                          
+                        }
+
+                        if ($pedido->estadoPedido->getIdPedidoEstado() == EstadoPedido::A_FACTURAR) {
+
+                          echo "<td><span class='badge bg-primary'>". $pedido->estadoPedido ."</span></td>";
+                          
+                        }
+
+                        if ($pedido->estadoPedido->getIdPedidoEstado() == EstadoPedido::FACTURADO) {
+
+                          echo "<td><span class='badge bg-success'>". $pedido->estadoPedido ."</span></td>";
+                          
+                        }
+
+                        if ($pedido->estadoPedido->getIdPedidoEstado() == EstadoPedido::ANULADO) {
 
                           echo "<td><span class='badge bg-danger'>". $pedido->estadoPedido ."</span></td>";
                           
                         }
 
-                        if ($pedido->estadoPedido->getIdPedidoEstado() == 3) {
-
-                          echo "<td><span class='badge bg-success'>". $pedido->estadoPedido ."</span></td>";
-                          
-                        }
 
 
                         ?>
@@ -148,22 +196,30 @@ $listadoPedidos = Pedido::obtenerTodo();
 
                         <td>
                           
-                        <?php if($pedido->estadoPedido->getIdPedidoEstado() == 1) : ?>
-                          <a class='btn btn-primary btn-sm'  role='button' title='facturar' href='../facturas/alta.php?id=<?php echo $pedido->getIdPedido(); ?>'>
-                            <i class='fas fa-file-invoice-dollar'></i>
-                          </a>
-                          
-                        <?php elseif ($pedido->estadoPedido->getIdPedidoEstado() == 3): ?>
-                          <a class='btn btn-success btn-sm'  role='button' title='facturar' href='#'>
-                            <i class="fas fa-check"></i>
-                          </a>
+                        <?php if($pedido->estadoPedido->getIdPedidoEstado() == EstadoPedido::PENDIENTE) : ?>
+                        <a href="#" class="btn btn-warning btn-sm" onclick="cambiarEstado(<?php echo $pedido->getIdPedido(); ?>,<?php echo EstadoPedido::PENDIENTE ?>)">
+                          <i class="fas fa-spinner"></i>
+                        </a>
 
+                        <?php elseif ($pedido->estadoPedido->getIdPedidoEstado() == EstadoPedido::EN_PROCESO): ?>
+                        <a href="#" class="btn btn-info btn-sm" onclick="cambiarEstado(<?php echo $pedido->getIdPedido(); ?>, <?php echo EstadoPedido::EN_PROCESO ?>)">
+                          <i class="fas fa-tasks"></i>
+                        </a>
+
+                        <?php elseif ($pedido->estadoPedido->getIdPedidoEstado() == EstadoPedido::A_FACTURAR): ?>
+                        <a class='btn btn-primary btn-sm'  role='button' title='Facturar' href='../facturas/alta.php?id=<?php echo $pedido->getIdPedido(); ?>'>
+                          <i class='fas fa-file-invoice-dollar'></i>
+                        </a>
+
+                        <?php elseif ($pedido->estadoPedido->getIdPedidoEstado() == EstadoPedido::FACTURADO): ?>
+                        <a class='btn btn-success btn-sm'  role='button' title='Facturado' href="#">
+                          <i class="fas fa-check"></i>
+                        </a>
                         <?php else: ?>
-                          <a class='btn btn-danger btn-sm'  role='button' title='facturar' href='#'>
-                            <i class="fas fa-times"></i>
-                          </a>
-                        
-                        <?php endif?>
+                        <a class='btn btn-danger btn-sm'  role='button' title='Cancelado' href="#">
+                          <i class="fas fa-ban"></i>
+                        </a>
+                        <?php endif ?>
 
                         </td>
                       
@@ -172,9 +228,11 @@ $listadoPedidos = Pedido::obtenerTodo();
                           <a class="btn btn-info btn-sm" href="detalle.php?id=<?php echo $pedido->getIdPedido(); ?>" role="button" title="Ver">
                             <i class="fas fa-eye"></i>
                           </a>
+                          <?php if($pedido->estadoPedido->getIdPedidoEstado() == EstadoPedido::EN_PROCESO || $pedido->estadoPedido->getIdPedidoEstado() == EstadoPedido::PENDIENTE):  ?>
                           <a class="btn btn-success btn-sm" href="actualizar.php?id=<?php echo $pedido->getIdPedido(); ?>" role="button" title="Ver">
                             <i class="fas fa-edit"></i>
                           </a>
+                          <?php endif ?>
 								           
 							          </td>
 						          </tr>
@@ -193,6 +251,12 @@ $listadoPedidos = Pedido::obtenerTodo();
 
 </section>
 
+<?php
+
+require_once "cambiarEstado.php";
+
+?>
+
 </div>
 	
 <?php 
@@ -200,3 +264,17 @@ $listadoPedidos = Pedido::obtenerTodo();
 ?>
 
 </body>
+
+<script type="text/javascript">
+  
+  function cambiarEstado(id, idEstado){
+    $('#estado').modal('show');
+    $('#txtIdPedido').val(id)
+    $('#cboEstado').val(idEstado)
+  }
+
+
+
+</script>
+
+

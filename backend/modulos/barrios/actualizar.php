@@ -1,10 +1,13 @@
 <?php
 
 require_once '../../class/Barrio.php';
+require_once '../../class/Ciudad.php';
 
 $id = $_GET['id'];
 
 $barrio = Barrio::obtenerPorId($id);
+
+$listadoCiudad = Ciudad::obtenerTodos();
 
 ?>
 
@@ -29,6 +32,26 @@ $barrio = Barrio::obtenerPorId($id);
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </section>
+    <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+    <div class="content">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas text-white fa-exclamation-triangle"></i>
+        <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
+
+    <?php
+        unset($_SESSION['mensaje_error']);
+        endif;
+    ?>
+
+    <h5 class="text-center">
+      <div id="mensajeError" class="text-danger"></div>
+    </h5>
 
     <!-- Main content -->
     <section class="content">
@@ -43,7 +66,7 @@ $barrio = Barrio::obtenerPorId($id);
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" method="POST" action="procesar/modificar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/modificar.php">
                 <div class="card-body">
 
                 	<div class="#">
@@ -53,10 +76,39 @@ $barrio = Barrio::obtenerPorId($id);
 
                   <div class="row">
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtDescripcion">Barrio:</label>
-                        <input type="text" class="form-control" name="txtDescripcion" value="<?php echo $barrio->getDescripcion(); ?>">
+                        <input type="text" class="form-control" name="txtDescripcion" value="<?php echo utf8_encode($barrio->getDescripcion()); ?>" id="txtDescripcion">
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="cboCiudad">Selecciona la ciudad a la que pertenece el barrio:</label>
+                          <select name="cboCiudad" id="cboCiudad" class="form-control">
+                              
+
+                            <option value="0">Seleccionar</option>
+
+                              <?php foreach ($listadoCiudad as $ciudad):
+                                $selected = '';
+                                
+                                if ($barrio->ciudad->getIdCiudad() == $ciudad->getIdCiudad()) {
+                                  
+                                    $selected = "SELECTED";
+                                
+                                }
+                              ?>
+                            
+                              <option value="<?php echo $ciudad->getIdCiudad(); ?>"
+                                <?php echo $selected; ?>>
+                                <?php echo $ciudad; ?>
+                              </option>
+
+                              <?php endforeach ?>               
+
+                          </select>
                       </div>
                     </div>
 
@@ -70,10 +122,10 @@ $barrio = Barrio::obtenerPorId($id);
 
                 <div class="card-body">
                 
-                      <a href="../barrios/listado.php" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="../barrios/listado.php" class="btn btn-secondary" role="button"> Cancelar</a>
                   
                   
-                      <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatosBarrio();" value="Guardar">
                    
                 </div>
               </form>

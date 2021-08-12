@@ -36,8 +36,8 @@ if (empty(trim($dni))) {
 	$_SESSION['mensaje_error'] = "El DNI no debe estar vacio";
 	header("location: ../actualizar.php?id=$id");
 	exit;
-}elseif (strlen(trim($dni)) < 8) {
-	$_SESSION['mensaje_error'] = "El DNI debe contener 8 caracteres";
+}elseif (strlen(trim($dni)) < 7) {
+	$_SESSION['mensaje_error'] = "El DNI debe contener 7 caracteres";
 	header("location: ../actualizar.php?id=$id");
 	exit;
 }

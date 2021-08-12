@@ -194,6 +194,20 @@ class Proveedor extends Persona {
         return $this->_razon_social;
     }
 
+    function comprobarExistenciaCuit($cuit){
+        $sql = "SELECT * FROM proveedor WHERE cuit = '$cuit' ";
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        if ($result->num_rows > 0 ) {
+            $_SESSION['mensaje_error'] = "El CUIT ya se encuentra registrado";
+            header('Location: ../alta.php');
+            exit;
+        } 
+    }
+
 }
 
 ?>

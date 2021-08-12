@@ -31,9 +31,9 @@ $listadoPerfil = Perfil::ObtenerTodos();
     <?php if (isset($_SESSION['mensaje_error'])) : ?>
 
     <div class="content">
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <i class="fas text-white fa-exclamation-triangle"></i>
-        <strong class="text-white"> <?php echo $_SESSION['mensaje_error'] ?></strong>
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="fas text-black fa-exclamation-triangle"></i>
+        <strong class="text-black"> <?php echo $_SESSION['mensaje_error'] ?></strong>
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

@@ -1,39 +1,6 @@
 <!doctype html>
 <html lang="es">
 
-<script type="text/javascript">
-    function validarDatos() {
-    /*alert(88998989898);*/
-    var divMensajeError = document.getElementById("mensajeError");
-    var codigoPostal = document.getElementById("txtCodigoPostal").value;
-    if (codigoPostal.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El código postal es requerido*";
-        return;
-    } else if (codigoPostal.length < 4) {
-      
-        divMensajeError.innerHTML = "El código postal debe contener al menos 4 carácteres *";
-        return;
-    }
-
-    var nombre = document.getElementById("txtNombre").value;
-    if (nombre.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "La ciudad es requerida *";
-        return;
-    } else if (nombre.length < 2) {
-      
-        divMensajeError.innerHTML = "La ciudad debe tener al menos 2 carácteres *";
-        return;
-    }
-    
-
-    var form = document.getElementById("frmDatos");
-    form.submit();
-    }
-
-</script>
-
 <body>
 
 <?php
@@ -93,6 +60,8 @@
 
                   <div class="row">
 
+                      <input type="hidden" name="txtIdProvincia" value="1">
+
                      <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtCodigoPostal">Código Postal:</label>
@@ -118,7 +87,7 @@
                       <a href="../ciudades/listado.php" class="btn btn-secondary" role="button">Cancelar</a>
                   
                   
-                      <input class="btn btn-primary float-right" type="button" onclick="validarDatos();" value="Guardar">
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatosCiudad();" value="Guardar">
                    
                 </div>
               </form>

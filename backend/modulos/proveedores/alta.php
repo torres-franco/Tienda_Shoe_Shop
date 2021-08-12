@@ -68,7 +68,7 @@
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="txtCuit">CUIT:</label>
-                        <input type="text" class="form-control" name="txtCuit" id="txtCuit">
+                        <input type="number" class="form-control" name="txtCuit" id="txtCuit">
                       </div>
                     </div>
                   </div>
@@ -80,7 +80,7 @@
                 
                       <a href="listado.php" class="btn btn-secondary" role="button">Cancelar</a>
                   
-                      <input class="btn btn-primary float-right" type="button" onclick="validarDatos();" value="Guardar">
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatosProveedor();" value="Guardar">
                    
                 </div>
               </form>

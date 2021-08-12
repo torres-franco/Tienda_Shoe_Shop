@@ -10,13 +10,13 @@ $listadoProveedor = Proveedor::obtenerProveedor();
 
 $listadoEstado = EstadoCompra::obtenerTodos();
 
-$listadoCompra = Compra::obtenerTodos();
+//$listadoCompra = Compra::obtenerTodos();
 
 $listadoProducto = Producto::obtenerTodo();
 
 $listadoTipoPago = TipoPago::obtenerTodos();
 
-//highlight_string(var_export($detallePedido, true));
+//highlight_string(var_export($listadoCompra, true));
 //exit;
 
 
@@ -42,7 +42,9 @@ $listadoTipoPago = TipoPago::obtenerTodos();
       </div><!-- /.container-fluid -->
     </section>
 
-
+    <h5 class="text-center">
+      <div id="mensajeError" class="text-danger"></div>
+    </h5>
     <!-- Main content -->
     <section class="content col-md-12">
       <div class="container-fluid">
@@ -66,6 +68,14 @@ $listadoTipoPago = TipoPago::obtenerTodos();
 
                     <div class="col-md-3 mb-3">
                       <div class="form-group">
+                        <label for="txtFecha">Fecha:</label>
+                        <input type="date" class="form-control" name="txtFecha" id="txtFecha" value="<?php echo date("Y-m-d");?>">
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <div class="form-group">
                         <label for="cboProveedor">Proveedor:</label>
                           <select name="cboProveedor" class="form-control" id="cboProveedor">
                               <option value="0">Seleccionar</option>
@@ -81,19 +91,11 @@ $listadoTipoPago = TipoPago::obtenerTodos();
                           </select>
                       </div>
                     </div>
-                  
-                    <div class="col-md-3 mb-3">
-                      <div class="form-group">
-                        <label for="txtFecha">Fecha:</label>
-                        <input type="date" class="form-control" name="txtFecha" id="txtFecha" value="<?php echo date("Y-m-d");?>">
-
-                      </div>
-                    </div>
 
                     <div class="col-md-3 mb-3">
                       <div class="form-group">
                         <label for="cboEstado">Estado:</label>
-                          <select name="cboEstado" class="form-control" id="cboEstado">
+                          <select name="cboEstado" class="form-control" id="cboEstado" disabled="disabled">
                               
                               <!--<option value="0">Seleccionar</option>-->
 
@@ -358,6 +360,10 @@ function setCantidadProducto(id, descripcion, precio){
   if (cantidad == null || cantidad == ""){ //validación de agregar productos
     return false;
   }
+  if(isNaN(cantidad)){
+    alert("Uups! No es número.");
+    return false;
+  }
   /*if(cantidad > stockActual){
       alert("Uups! el stock insuficiente.");
       return;
@@ -372,7 +378,7 @@ function setCantidadProducto(id, descripcion, precio){
 
   detalle_compra.push(items); //armando detalle para el envio
 
-  $('#detalleCompra tr:last').after('<tr id=' + indice +'><td>' + id + '</td><td>' + descripcion + '</td><td>' + cantidad + '</td><td>$' + precio + '</td><td>$' + subtotal + '</td><td> <button type="button" onclick="eliminarArticulo(' + indice + ')" class="btn btn-danger"><i class="far fa-trash-alt"></i></button></td></tr>')
+  $('#detalleCompra tr:last').after('<tr id=' + indice + '><td>' + id + '</td><td>' + descripcion + '</td><td>' + cantidad + '</td><td>$' + precio + '</td><td>$' + subtotal + '</td><td> <button type="button" onclick="eliminarArticulo(' + indice + ')" class="btn btn-danger"><i class="far fa-trash-alt"></i></button></td></tr>')
 
   indice -= 1;
 
@@ -487,7 +493,18 @@ function buscarProducto(){
     let estado = $('#cboEstado').val();
     let tipoPago = $('#cboTipoPago').val();
 
-    if(detalle_compra.length >0){
+    var divMensajeError = document.getElementById("mensajeError"); 
+    if (proveedor == 0){
+        divMensajeError.innerHTML = "Debe seleccionar un proveedor *";
+        return;
+    }
+
+    if (tipoPago == 0){
+        divMensajeError.innerHTML = "Debe seleccionar un tipo de pago *";
+        return;
+    }
+
+    if(detalle_compra.length > 0){
       $.ajax({
         type: 'POST',
         url: 'procesar/guardar.php',
@@ -500,7 +517,7 @@ function buscarProducto(){
         },
         success: function(data){
           //console.log(data)
-          window.location.href = 'listado.php';
+          window.location.href = 'listado.php?mensaje=1';
         }
       })
     } else {

@@ -32,6 +32,10 @@ $moduloLlamada = $_GET['modulo'];
       </div><!-- /.container-fluid -->
     </section>
 
+    <h5 class="text-center">
+      <div id="mensajeError" class="text-danger"></div>
+    </h5>
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -45,7 +49,7 @@ $moduloLlamada = $_GET['modulo'];
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="frmDatos" method="POST" action="procesar/guardar.php">
+              <form name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
                 <div class="card-body">
 
                   
@@ -66,7 +70,7 @@ $moduloLlamada = $_GET['modulo'];
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="cboTipoContacto">Tipo de Contacto:</label>
-                          <select name="cboTipoContacto" class="form-control">
+                          <select name="cboTipoContacto" id="cboTipoContacto" class="form-control">
                               <option value="0">Seleccionar</option>
 
                               <?php foreach ($listadoContacto as $contacto): ?>
@@ -81,10 +85,11 @@ $moduloLlamada = $_GET['modulo'];
                       </div>
                     </div>
 
+
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="txtValor">Descripción de contacto:</label>
-                        <input type="text" class="form-control" name="txtValor">
+                        <input type="text" class="form-control" name="txtValor" id="txtValor">
                       </div>
                     </div>
 
@@ -96,10 +101,10 @@ $moduloLlamada = $_GET['modulo'];
 
                 <div class="card-body">
                 
-                      <a href="../<?php echo $moduloLlamada ?>/detalle.php?id=<?php echo $idLlamada ?>" class="btn btn-secondary" role="button"><i class="fas fa-arrow-left pt-2"></i> Cancelar</a>
+                      <a href="../<?php echo $moduloLlamada ?>/detalle.php?id=<?php echo $idLlamada ?>" class="btn btn-secondary" role="button">Cancelar</a>
                   
                   
-                      <button type="submit" class="btn btn-primary float-right">Guardar <i class="fas fa-save"></i></button>
+                       <input class="btn btn-primary float-right" type="button" onclick="validarDatosContacto();" value="Guardar">
                    
                 </div>
               </form>

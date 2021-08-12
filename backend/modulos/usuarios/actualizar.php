@@ -16,50 +16,7 @@ $listadoPerfil = Perfil::ObtenerTodos();
 <!doctype html>
 <html lang="es">
 
-<script type="text/javascript">
-    function validarDatos() {
-    /*alert(88998989898);*/
-    var divMensajeError = document.getElementById("mensajeError");
-    var nombre = document.getElementById("txtNombre").value;
-    if (nombre.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El nombre no debe estar vacio *";
-        return;
-    } else if (nombre.length < 3) {
-      
-        divMensajeError.innerHTML = "El nombre debe tener al menos 3 carácteres *";
-        return;
-    }
 
-    var apellido = document.getElementById("txtApellido").value;
-    if (apellido.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El apellido no debe estar vacio *";
-        return;
-    } else if (apellido.length < 3) {
-      
-        divMensajeError.innerHTML = "El apellido debe tener al menos 3 carácteres *";
-        return;
-    }
-
-
-    var user = document.getElementById("txtUser").value;
-    if (user.trim() == "") {
-        //alert("El nombre no debe estar vacio");
-        divMensajeError.innerHTML = "El usario no debe estar vacio *";
-        return;
-    } else if (user.length < 3) {
-      
-        divMensajeError.innerHTML = "El usario debe tener al menos 6 carácteres *";
-        return;
-    }
-
-    var form = document.getElementById("frmDatos");
-    form.submit();
-    }
-
-
-</script>
 
 <body>
 
@@ -171,7 +128,7 @@ $listadoPerfil = Perfil::ObtenerTodos();
                         <input type="text" class="form-control" name="txtUser" value="<?php echo $usuarioDetalle->getUser(); ?>" id="txtUser">
                       </div>
                     </div>
-
+                    <input type="hidden" class="form-control" name="txtClave" value="<?php echo $usuarioDetalle->getClave(); ?>" id="txtClave">
                     <div class="col-sm-12">
                       <div class="form-group">
                         <label for="fileImagen">Foto</label>
@@ -196,7 +153,7 @@ $listadoPerfil = Perfil::ObtenerTodos();
                       <a href="listado.php" class="btn btn-secondary" role="button"> Cancelar</a>
                   
                   
-                      <input class="btn btn-primary float-right" type="button" onclick="validarDatos();" value="Guardar">
+                      <input class="btn btn-primary float-right" type="button" onclick="validarDatosUsuario();" value="Guardar">
                    
                 </div>
               </form>

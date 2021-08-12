@@ -5,6 +5,7 @@ require_once 'Marca.php';
 require_once 'Categoria.php';
 require_once 'Color.php';
 require_once 'Talle.php';
+require_once 'Imagen.php';
 //require_once 'Config.php';
 
 /**
@@ -26,6 +27,8 @@ require_once 'Talle.php';
     public $categoria; /*clase Categoria*/
     public $color; /*clase color*/
     public $talle; /*clase talle*/
+
+    public $arrImagen;
 
     /**
      * @return mixed
@@ -237,6 +240,7 @@ require_once 'Talle.php';
 			$producto->_precio = $registro['precio'];
 			$producto->_stockActual = $registro['stock_actual'];
 			$producto->_stockMinimo = $registro['stock_minimo'];
+            $producto->setImagen();
 
 			$listado[] = $producto;
 		}
@@ -266,6 +270,7 @@ require_once 'Talle.php';
         $producto->setTalle();
         $producto->_precio = $registro['precio'];
         $producto->_descripcion = $registro['descripcion'];
+        $producto->setArrImagen();
 
         return $producto;
 
@@ -275,7 +280,7 @@ require_once 'Talle.php';
     public function guardar() {
 
         $sql = "INSERT INTO producto (id_producto, id_categoria, id_marca, id_talle, id_color, descripcion, precio, stock_actual, stock_minimo) "
-             . "VALUES (NULL, $this->_idCategoria, $this->_idMarca, $this->_idTalle, $this->_idColor, '$this->_descripcion', '$this->_precio', '$this->_stockActual', '$this->_stockMinimo')";
+             . "VALUES (NULL, $this->_idCategoria, $this->_idMarca, $this->_idTalle, $this->_idColor, '$this->_descripcion', $this->_precio, $this->_stockActual, $this->_stockMinimo)";
 
         //echo $sql;
         //exit;
@@ -314,6 +319,10 @@ require_once 'Talle.php';
 
     public function setTalle() {
         $this->talle = Talle::obtenerPorIdProducto($this->_idProducto);
+    }
+
+    public function setImagen() {
+        $this->imagen = Imagen::obtenerPorIdProducto($this->_idProducto);
     }
 
     public function __toString() {
@@ -394,15 +403,114 @@ require_once 'Talle.php';
         return $listado;
     }
 
-    /*public function consultarStock(){
-        $sql = "";
+    public function descontarStock($idPedido){
+        $sql = "UPDATE producto INNER JOIN pedidodetalle ON pedidodetalle.id_producto = producto.id_producto INNER JOIN pedido ON pedido.id_pedido = pedidodetalle.id_pedido SET producto.stock_actual = producto.stock_actual - pedidodetalle.cantidad WHERE pedido.id_pedido = $idPedido";
+
+        //echo $sql;
+
         $mysql = new MySQL();
-        $datos = $mysql->consultar($sql);
+        $mysql->actualizar($sql);
+
+
+    }
+
+    public static function obtenerPorIdPedido($idPedido) {
+        
+        $sql = "SELECT * FROM producto 
+            INNER JOIN pedidodetalle ON pedidodetalle.id_producto = producto.id_producto 
+            INNER JOIN pedido ON pedido.id_pedido = pedidodetalle.id_pedido 
+            WHERE pedido.id_pedido = " . $idPedido;
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
         $mysql->desconectar();
 
-    }*/
+        $data = $result->fetch_assoc();
+        $producto = self::_generarProductoPorIdPedido($data);
+        return $producto;
+
+    }
+
+    private function _generarProductoPorIdPedido($data) {
+
+        $producto = new Producto();
+        $producto->_idProducto = $data['id_producto'];
+        $producto->_idMarca = $data['id_marca'];
+        $producto->_idCategoria = $data['id_categoria'];
+        $producto->_idColor = $data['id_color'];
+        $producto->_idTalle = $data['id_talle'];
+        $producto->_descripcion = $data['descripcion'];
+        $producto->_precio = $data['precio'];
+        $producto->_stockActual = $data['stock_actual'];
+        $producto->_stockMinimo = $data['stock_minimo'];
+
+        return $producto;
+    }
 
 
+    public function aumentarStock($idCompra){
+
+        $sql = "UPDATE producto INNER JOIN detallecompra ON detallecompra.id_producto = producto.id_producto INNER JOIN compra ON compra.id_compra = detallecompra.id_compra SET producto.stock_actual = producto.stock_actual + detallecompra.cantidad WHERE compra.id_compra = $idCompra";
+
+        //echo $sql;
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+
+    }
+
+
+    public static function obtenerPorIdCompra($idCompra) {
+        
+        $sql = "SELECT * FROM producto INNER JOIN detallecompra ON detallecompra.id_producto = producto.id_producto INNER JOIN compra ON compra.id_compra = detallecompra.id_compra WHERE compra.id_compra = " . $idCompra;
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $producto = self::_generarProductoPorIdCompra($data);
+        return $producto;
+
+    }
+
+     private function _generarProductoPorIdCompra($data) {
+
+        $producto = new Producto();
+        $producto->_idProducto = $data['id_producto'];
+        $producto->_idMarca = $data['id_marca'];
+        $producto->_idCategoria = $data['id_categoria'];
+        $producto->_idColor = $data['id_color'];
+        $producto->_idTalle = $data['id_talle'];
+        $producto->_descripcion = $data['descripcion'];
+        $producto->_precio = $data['precio'];
+        $producto->_stockActual = $data['stock_actual'];
+        $producto->_stockMinimo = $data['stock_minimo'];
+
+        return $producto;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getArrImagen()
+    {
+        return $this->arrImagen;
+    }
+
+    /**
+     * @param mixed $arrImagen
+     *
+     * @return self
+     */
+    public function setArrImagen($arrImagen)
+    {
+        $this->arrImagen = $arrImagen;
+
+        return $this;
+    }
 }
 
 
